@@ -1,7 +1,7 @@
 package com.accenture.fe.dto.user;
 
-import com.accenture.fe.enums.Status;
-import com.accenture.fe.enums.UserRole;
+import com.accenture.fe.enums.user.UserStatus;
+import com.accenture.fe.enums.user.UserRole;
 
 import java.util.Date;
 
@@ -10,9 +10,7 @@ public class UserDTO {
     private String username;
     private String password;
     private String email;
-    private String firstName;
-    private String lastName;
-    private Status status;
+    private UserStatus status;
     private UserRole role;
     private Date createdAt;
     private Date updatedAt;
@@ -20,13 +18,11 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(long id, String username, String password, String email, String firstName, String lastName, Status status, UserRole role, Date createdAt, Date updatedAt) {
+    public UserDTO(long id, String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.status = status;
         this.role = role;
         this.createdAt = createdAt;
@@ -65,27 +61,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Status getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 

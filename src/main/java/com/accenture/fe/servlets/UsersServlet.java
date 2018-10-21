@@ -26,9 +26,6 @@ public class UsersServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
-        /*super.init(config);
-        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-                config.getServletContext());*/
     }
 
 

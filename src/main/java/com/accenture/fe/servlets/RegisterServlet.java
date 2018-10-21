@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
+
     private boolean registered = false;
 
     @Override

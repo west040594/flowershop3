@@ -1,9 +1,9 @@
 package com.accenture.be.entity.user;
 
 
-import com.accenture.be.entity.address.Address;
-import com.accenture.fe.enums.Status;
-import com.accenture.fe.enums.UserRole;
+import com.accenture.be.entity.customer.Customer;
+import com.accenture.fe.enums.user.UserStatus;
+import com.accenture.fe.enums.user.UserRole;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,23 +39,16 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name =  "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", columnDefinition = "smallint")
+    private UserStatus status;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "role", columnDefinition = "smallint")
     private UserRole role;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", columnDefinition = "smallint")
-    private Status status;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @OneToOne(mappedBy = "user")
+    private Customer customer;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -100,22 +93,13 @@ public class User {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
 
     public UserRole getRole() {
         return role;
@@ -125,20 +109,12 @@ public class User {
         this.role = role;
     }
 
-    public Status getStatus() {
-        return status;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Date getCreatedAt() {
@@ -180,11 +156,9 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
                 ", status=" + status +
-                ", address=" + address +
+                ", role=" + role +
+                ", customer=" + customer +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

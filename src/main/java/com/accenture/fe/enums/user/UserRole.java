@@ -1,4 +1,4 @@
-package com.accenture.fe.enums;
+package com.accenture.fe.enums.user;
 
 public enum  UserRole {
     ADMIN,

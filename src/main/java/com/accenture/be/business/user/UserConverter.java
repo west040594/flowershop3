@@ -8,10 +8,10 @@ public class UserConverter {
         UserDTO userDTO = null;
         if(userEntity != null) {
             userDTO = new UserDTO(
-                    userEntity.getId(), userEntity.getUsername(), userEntity.getPassword(),
-                    userEntity.getEmail(), userEntity.getFirstName(), userEntity.getLastName(),
-                    userEntity.getStatus(), userEntity.getRole(), userEntity.getCreatedAt(),
-                    userEntity.getUpdatedAt());
+                    userEntity.getId(), userEntity.getUsername(),
+                    userEntity.getPassword(), userEntity.getEmail(),
+                    userEntity.getStatus(), userEntity.getRole(),
+                    userEntity.getCreatedAt(), userEntity.getUpdatedAt());
         }
         return userDTO;
     }

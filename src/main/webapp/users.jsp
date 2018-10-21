@@ -11,8 +11,6 @@
             <th scope="col">Username</th>
             <th scope="col">Password</th>
             <th scope="col">Email</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
             <th scope="col">Status</th>
             <th scope="col">Role</th>
             <th scope="col">Created</th>
@@ -26,8 +24,6 @@
                 <td>${user.username}</td>
                 <td>${user.password}</td>
                 <td>${user.email}</td>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
                 <td>${user.status}</td>
                 <td>${user.role}</td>
                 <td>${user.createdAt}</td>
