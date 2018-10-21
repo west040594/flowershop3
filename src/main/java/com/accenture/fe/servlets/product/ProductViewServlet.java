@@ -32,6 +32,7 @@ public class ProductViewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String productId = req.getParameter("id");
         ProductDTO productDTO = null;
+
         if (productId != null) {
             productDTO = ProductConverter.convertToDTO(
                     productService.getProductById(Long.parseLong(productId)));

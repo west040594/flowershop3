@@ -35,13 +35,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<User> users = userService.findAllUser();
-        List<UserDTO> userDTOS = new ArrayList<>();
-        for (User user : users) {
-            UserDTO userDTO = UserConverter.convertToDTO(user);
-            if(userDTO != null) {
-                userDTOS.add(userDTO);
-            }
-        }
+        List<UserDTO> userDTOS = UserConverter.convertToDTO(users);
 
         req.setAttribute("users", userDTOS);
         req.getRequestDispatcher("/users.jsp").forward(req,resp);

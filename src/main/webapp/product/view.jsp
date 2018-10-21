@@ -17,7 +17,7 @@
                 <span class="badge badge-warning">${product.category.name}</span>
             </h4>
             <p class="card-text">${product.description}</p>
-            <h5>В наличие: <span class="badge badge-primary">${product.inStock}</span></h5>
+            <h5>В наличии: <span class="badge badge-primary">${product.inStock}</span></h5>
             <h5>Цена: <span class="badge badge-info">${product.price}</span></h5>
             <a href="#" class="btn btn-success w-100" role="button">В корзину</a>
         </div>

@@ -34,15 +34,7 @@ public class ProductIndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Product> products = productService.findAllProduct();
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        for (Product product : products) {
-            ProductDTO productDTO = ProductConverter.convertToDTO(product);
-            if(productDTO != null) {
-                productDTOS.add(productDTO);
-            }
-        }
-
+        List<ProductDTO> productDTOS = ProductConverter.convertToDto(productService.findAllProduct());
         req.setAttribute("products", productDTOS);
         req.getRequestDispatcher("/product/index.jsp").forward(req,resp);
     }
