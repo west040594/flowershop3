@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS tb_product (
   description TEXT,
   image_url VARCHAR(255),
   status SMALLINT DEFAULT 1,
-  in_stock INT,
+  in_stock INT DEFAULT 0,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS tb_order (
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   customer_id INT NOT NULL,
   total DECIMAL(8,2) NOT NULL,
-  status SMALLINT DEFAULT 1,
+  status SMALLINT DEFAULT 0,
   created_at TIMESTAMP NOT NULL,
   closet_at TIMESTAMP,
 

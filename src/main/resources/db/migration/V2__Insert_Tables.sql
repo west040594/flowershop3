@@ -37,8 +37,8 @@ VALUES ('Монтрекс', 70, 2, 'Описание Тюльпанов Монт
 INSERT INTO tb_product(name, price, category_id, description, image_url, status, in_stock, created_at, updated_at)
 VALUES ('Камбрия', 90, 3, 'Описание Орхидей Камбрия', 'cambriya.jpg', 1, 50, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO tb_product(name, price, category_id, description, image_url, status, in_stock, created_at, updated_at)
-VALUES ('Брассия', 100, 3, 'Описание Орихдей Брассия', 'brassiya.jpg', 1, 80, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO tb_product(name, price, category_id, description, image_url, status, created_at, updated_at)
+VALUES ('Брассия', 100, 3, 'Описание Орихдей Брассия', 'brassiya.jpg', 1,  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 

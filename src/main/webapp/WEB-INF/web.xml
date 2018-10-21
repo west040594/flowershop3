@@ -39,6 +39,11 @@
     <servlet-class>com.accenture.fe.servlets.UsersServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>Products</servlet-name>
+    <servlet-class>com.accenture.fe.servlets.ProductsServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>Home</servlet-name>
     <url-pattern>/index</url-pattern>
@@ -57,6 +62,11 @@
   <servlet-mapping>
     <servlet-name>Users</servlet-name>
     <url-pattern>/users</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Products</servlet-name>
+    <url-pattern>/products</url-pattern>
   </servlet-mapping>
 
 

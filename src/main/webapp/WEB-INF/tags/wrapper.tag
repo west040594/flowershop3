@@ -26,6 +26,9 @@
                 <a class="nav-link" href="/login">Вход</a>
             </li>
             <li class="nav-item">
+                <a href="/products" class="nav-link">Цветы</a>
+            </li>
+            <li class="nav-item">
                 <a href="/users" class="nav-link">Пользователи</a>
             </li>
         </ul>

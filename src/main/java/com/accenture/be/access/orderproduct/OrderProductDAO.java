@@ -32,7 +32,7 @@ public interface OrderProductDAO {
      * @param orderProduct Объект OrderProduct для вставки в репозиторий
      * @return Идентификатор записи в репозитории
      */
-    long save(OrderProduct orderProduct);
+    Long save(OrderProduct orderProduct);
 
 
 
