@@ -30,12 +30,12 @@ public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("image/jpg");
 
-        String imageName = req.getParameter("name");
+        String imageName = req.getParameter("img");
+        String imageFolder = req.getParameter("type");
 
-
-        if(imageName != null) {
+        if(imageName != null && imageFolder != null) {
             ServletContext sc = getServletContext();
-            InputStream is = sc.getResourceAsStream("images/" + imageName);
+            InputStream is = sc.getResourceAsStream("images/" + imageFolder + "/" + imageName);
 
             BufferedImage bi = ImageIO.read(is);
             OutputStream os = resp.getOutputStream();

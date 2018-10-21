@@ -7,11 +7,11 @@
     <div class="card mb-3">
         <div class="card-header">
             <span>
-                <a href="/products/index">Продукты</a> /
+                <a href="${pageContext.request.contextPath}/products/index">Продукты</a> /
                 ${product.name}
             </span>
         </div>
-        <img class="card-img-top" src="/image?name=products/${product.imageUrl}" alt="${product.imageUrl}">
+        <img class="card-img-top" src="${pageContext.request.contextPath}/image?type=product&img=${product.imageUrl}" alt="${product.imageUrl}">
         <div class="card-body">
             <h4 class="card-title">${product.name}
                 <span class="badge badge-warning">${product.category.name}</span>
