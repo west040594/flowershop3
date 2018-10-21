@@ -1,5 +1,6 @@
 package com.accenture.be.business.user;
 
+import com.accenture.be.business.customer.CustomerConverter;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
 
@@ -11,7 +12,9 @@ public class UserConverter {
                     userEntity.getId(), userEntity.getUsername(),
                     userEntity.getPassword(), userEntity.getEmail(),
                     userEntity.getStatus(), userEntity.getRole(),
-                    userEntity.getCreatedAt(), userEntity.getUpdatedAt());
+                    userEntity.getCreatedAt(), userEntity.getUpdatedAt(),
+                    CustomerConverter.convertToDTO(userEntity.getCustomer())
+                    );
         }
         return userDTO;
     }

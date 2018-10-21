@@ -8,13 +8,14 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Username</th>
-            <th scope="col">Password</th>
+            <th scope="col">Пользователь</th>
             <th scope="col">Email</th>
-            <th scope="col">Status</th>
-            <th scope="col">Role</th>
-            <th scope="col">Created</th>
-            <th scope="col">Updated</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Баланс</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Роль</th>
+            <th scope="col">Создан</th>
         </tr>
         </thead>
         <tbody>
@@ -22,12 +23,17 @@
             <tr>
                 <th scope="row">${user.id}</th>
                 <td>${user.username}</td>
-                <td>${user.password}</td>
                 <td>${user.email}</td>
+                <td>${user.customer.firstName} ${user.customer.lastName}</td>
+                <td>${user.customer.balance}</td>
+                <td>
+                    ${user.customer.street} /
+                    ${user.customer.city} /
+                    ${user.customer.country}
+                </td>
                 <td>${user.status}</td>
                 <td>${user.role}</td>
                 <td>${user.createdAt}</td>
-                <td>${user.updatedAt}</td>
             </tr>
         </c:forEach>
         </tbody>

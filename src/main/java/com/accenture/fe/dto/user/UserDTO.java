@@ -1,5 +1,6 @@
 package com.accenture.fe.dto.user;
 
+import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.enums.user.UserStatus;
 import com.accenture.fe.enums.user.UserRole;
 
@@ -14,11 +15,12 @@ public class UserDTO {
     private UserRole role;
     private Date createdAt;
     private Date updatedAt;
+    private CustomerDTO customer;
 
     public UserDTO() {
     }
 
-    public UserDTO(long id, String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt) {
+    public UserDTO(long id, String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt, CustomerDTO customer) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -27,6 +29,7 @@ public class UserDTO {
         this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.customer = customer;
     }
 
     public long getId() {
@@ -91,5 +94,13 @@ public class UserDTO {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public CustomerDTO getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerDTO customer) {
+        this.customer = customer;
     }
 }

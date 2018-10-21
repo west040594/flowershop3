@@ -12,12 +12,11 @@ public class CustomerDTO {
     private String street;
     private String city;
     private String country;
-    private long userId;
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(long id, String firstName, String lastName, BigDecimal balance, int discount, String phoneNumber, String street, String city, String country, long userId) {
+    public CustomerDTO(long id, String firstName, String lastName, BigDecimal balance, int discount, String phoneNumber, String street, String city, String country) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,7 +26,6 @@ public class CustomerDTO {
         this.street = street;
         this.city = city;
         this.country = country;
-        this.userId = userId;
     }
 
     public long getId() {
@@ -102,11 +100,4 @@ public class CustomerDTO {
         this.country = country;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 }
