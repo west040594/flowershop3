@@ -9,7 +9,7 @@
         <c:forEach var="product" items="${products}">
         <div class="col-sm-6 col-md-4 col-lg-4 mb-lg-4">
             <div class="card">
-                <img class="card-img-top" src="${product.imageUrl}" alt="${product.imageUrl}">
+                <img class="card-img-top" src="/image?name=products/${product.imageUrl}" alt="${product.imageUrl}">
                 <div class="card-body">
                     <h5 class="card-title">${product.name}
                         <span class="badge badge-warning">${product.category.name}</span>

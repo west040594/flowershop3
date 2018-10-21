@@ -11,7 +11,7 @@
                 ${product.name}
             </span>
         </div>
-        <img class="card-img-top" src="${product.imageUrl}" alt="${product.imageUrl}">
+        <img class="card-img-top" src="/image?name=products/${product.imageUrl}" alt="${product.imageUrl}">
         <div class="card-body">
             <h4 class="card-title">${product.name}
                 <span class="badge badge-warning">${product.category.name}</span>
