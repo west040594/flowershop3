@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
+    <title>Flowershop</title>
     <link rel="stylesheet"
               href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
 </head>
@@ -26,7 +26,7 @@
                 <a class="nav-link" href="/login">Вход</a>
             </li>
             <li class="nav-item">
-                <a href="/products" class="nav-link">Цветы</a>
+                <a href="/products/index" class="nav-link">Цветы</a>
             </li>
             <li class="nav-item">
                 <a href="/users" class="nav-link">Пользователи</a>

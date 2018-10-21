@@ -1,4 +1,4 @@
-package com.accenture.fe.servlets;
+package com.accenture.fe.servlets.product;
 
 import com.accenture.be.business.product.ProductConverter;
 import com.accenture.be.business.product.ProductService;
@@ -9,6 +9,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductsServlet extends HttpServlet {
+
+@WebServlet(urlPatterns = "/products/index")
+public class ProductIndexServlet extends HttpServlet {
 
     @Autowired
     private ProductService productService;
@@ -41,6 +44,6 @@ public class ProductsServlet extends HttpServlet {
         }
 
         req.setAttribute("products", productDTOS);
-        req.getRequestDispatcher("/products.jsp").forward(req,resp);
+        req.getRequestDispatcher("/product/index.jsp").forward(req,resp);
     }
 }

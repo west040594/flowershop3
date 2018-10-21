@@ -31,7 +31,16 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public Product findById(long productId) {
-        return null;
+        Product user = null;
+        try {
+            TypedQuery<Product> query  = entityManager.createNamedQuery("Product.findById", Product.class)
+                    .setParameter("id", productId);
+            user = query.getSingleResult();
+
+        }catch (NoResultException nr) {
+
+        }
+        return user;
     }
 
     @Override

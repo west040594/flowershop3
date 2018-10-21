@@ -4,7 +4,10 @@ import com.accenture.fe.dto.category.CategoryDTO;
 import com.accenture.fe.enums.product.ProductStatus;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ProductDTO {
 
@@ -51,8 +54,10 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public String getPrice() {
+        Locale loc = new Locale ("ru", "RU");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(loc);
+        return formatter.format(price);
     }
 
     public void setPrice(BigDecimal price) {
@@ -91,16 +96,18 @@ public class ProductDTO {
         this.inStock = inStock;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getCreatedAt() {
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        return newDateFormat.format(createdAt);
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public String getUpdatedAt() {
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        return newDateFormat.format(updatedAt);
     }
 
     public void setUpdatedAt(Date updatedAt) {
