@@ -1,7 +1,7 @@
 package com.accenture.fe.servlets;
 
-import com.accenture.be.business.user.UserRegisterService;
-import com.accenture.be.business.user.UserService;
+import com.accenture.be.business.user.exceptions.UserRegisterException;
+import com.accenture.be.business.user.interfaces.UserRegisterService;
 import com.accenture.be.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -39,10 +39,15 @@ public class RegisterServlet extends HttpServlet {
         registered = true;
         req.setCharacterEncoding("utf8");
 
-        User user = userRegisterService.register(
-                req.getParameter("firstName"), req.getParameter("lastName"),
-                req.getParameter("username"), req.getParameter("email"),
-                req.getParameter("password"), req.getParameter("passwordConfirm"));
+        User user = null;
+        try {
+            user = userRegisterService.register(
+                    req.getParameter("firstName"), req.getParameter("lastName"),
+                    req.getParameter("username"), req.getParameter("email"),
+                    req.getParameter("password"), req.getParameter("passwordConfirm"));
+        } catch (UserRegisterException e) {
+            req.setAttribute("error", e.getMessage());
+        }
 
 
         if(user != null) {

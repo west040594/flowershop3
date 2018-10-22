@@ -1,17 +1,15 @@
-package com.accenture.be.business.user;
+package com.accenture.be.business.user.implement;
 
-import com.accenture.be.access.customer.CustomerDAO;
 import com.accenture.be.access.user.UserDAO;
-import com.accenture.be.access.user.UserDAOImpl;
 import com.accenture.be.business.customer.CustomerService;
+import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
-import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("userService")
@@ -28,7 +26,7 @@ public class UserServiceImpl implements UserService {
         return userDAO.findAll();
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public User saveUser(User user) {
         Long userId = userDAO.save(user);

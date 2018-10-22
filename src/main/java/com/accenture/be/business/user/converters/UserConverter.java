@@ -1,4 +1,4 @@
-package com.accenture.be.business.user;
+package com.accenture.be.business.user.converters;
 
 import com.accenture.be.business.customer.CustomerConverter;
 import com.accenture.be.entity.user.User;

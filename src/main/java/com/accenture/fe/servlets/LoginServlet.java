@@ -1,7 +1,6 @@
 package com.accenture.fe.servlets;
 
-import com.accenture.be.business.user.UserLoginService;
-import com.accenture.be.business.user.UserService;
+import com.accenture.be.business.user.interfaces.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 

@@ -1,4 +1,4 @@
-package com.accenture.be.business.user;
+package com.accenture.be.business.user.interfaces;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;

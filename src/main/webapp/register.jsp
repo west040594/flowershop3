@@ -30,7 +30,6 @@
              <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Введите пароль">
           </div>
           <button type="submit" class="btn btn-primary">Подтвердить</button>
-          <span class="error">${error}</span>
         </form>
         <c:if test="${error != null}">
             <div class="my-lg-4 alert alert-danger" role="alert">

@@ -1,5 +1,6 @@
-package com.accenture.be.business.user;
+package com.accenture.be.business.user.implement;
 
+import com.accenture.be.business.user.interfaces.UserLoginService;
 import com.accenture.be.entity.user.User;
 import org.springframework.stereotype.Service;
 

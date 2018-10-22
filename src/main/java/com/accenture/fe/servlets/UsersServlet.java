@@ -1,8 +1,7 @@
 package com.accenture.fe.servlets;
 
-import com.accenture.be.business.user.UserConverter;
-import com.accenture.be.business.user.UserService;
-import com.accenture.be.business.user.UserServiceImpl;
+import com.accenture.be.business.user.converters.UserConverter;
+import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/users")
