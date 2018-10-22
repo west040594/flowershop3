@@ -26,16 +26,16 @@ public class Customer {
     @Column(name = "discount")
     private int discount;
 
-    @Column(name = "phone_number", length = 30, nullable = false)
+    @Column(name = "phone_number", length = 30)
     private String phoneNumber;
 
-    @Column(name = "street", length = 100, nullable = false)
+    @Column(name = "street", length = 100)
     private String street;
 
-    @Column(name = "city", length = 50, nullable = false)
+    @Column(name = "city", length = 50)
     private String city;
 
-    @Column(name = "country", length = 50, nullable = false)
+    @Column(name = "country", length = 50)
     private String country;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -43,6 +43,14 @@ public class Customer {
     private User user;
 
     public Customer() {
+    }
+
+    public Customer(String firstName, String lastName, BigDecimal balance, int discount, User user) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.balance = balance;
+        this.discount = discount;
+        this.user = user;
     }
 
     public long getId() {

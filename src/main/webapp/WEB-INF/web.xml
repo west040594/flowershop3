@@ -10,6 +10,23 @@
     <param-value>classpath:/config/application-context.xml</param-value>
   </context-param>
 
+  <filter>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+    <init-param>
+      <param-name>sessionFactoryBeanName</param-name>
+      <param-value>sessionFactory</param-value>
+    </init-param>
+    <init-param>
+      <param-name>flushMode</param-name>
+      <param-value>AUTO</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>OpenSessionInViewFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <!--<context-param>
     <param-name>persistence</param-name>
     <param-value>classpath:/config/persistence.xml</param-value>
@@ -18,6 +35,5 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-
 
 </web-app>

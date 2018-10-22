@@ -1,13 +1,19 @@
 package com.accenture.be.access.user;
 
 import com.accenture.be.entity.user.User;
+import org.hibernate.SessionFactory;
 import org.hibernate.mapping.Collection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 
 @Repository("userDao")
@@ -15,6 +21,10 @@ public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
 
     @Override
     public List<User> findAll() {
@@ -71,9 +81,11 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+
     @Override
     public Long save(User user) {
-        return null;
+        sessionFactory.getCurrentSession().save(user);
+        return user.getId();
     }
 
     @Override

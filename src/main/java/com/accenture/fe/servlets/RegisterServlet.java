@@ -1,5 +1,12 @@
 package com.accenture.fe.servlets;
 
+import com.accenture.be.business.user.UserRegisterService;
+import com.accenture.be.business.user.UserService;
+import com.accenture.be.entity.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +19,14 @@ public class RegisterServlet extends HttpServlet {
 
     private boolean registered = false;
 
+    @Autowired
+    private UserRegisterService userRegisterService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         registered = false;
@@ -23,11 +38,18 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         registered = true;
         req.setCharacterEncoding("utf8");
-        String username = req.getParameter("username");
-        String email = req.getParameter("email");
-        /*User user = new User(username, email);
-        userAccessService.registerUser(user);*/
-        req.setAttribute("registered", registered);
+
+        User user = userRegisterService.register(
+                req.getParameter("firstName"), req.getParameter("lastName"),
+                req.getParameter("username"), req.getParameter("email"),
+                req.getParameter("password"), req.getParameter("passwordConfirm"));
+
+
+        if(user != null) {
+            resp.sendRedirect("/index");
+            return;
+        }
+
         req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 }

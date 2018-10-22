@@ -1,5 +1,6 @@
 package com.accenture.fe.servlets;
 
+import com.accenture.be.business.user.UserLoginService;
 import com.accenture.be.business.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
     @Autowired
-    private UserService userService;
+    private UserLoginService userService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {

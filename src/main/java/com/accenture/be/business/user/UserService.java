@@ -1,5 +1,6 @@
 package com.accenture.be.business.user;
 
+import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
 
@@ -9,10 +10,8 @@ public interface UserService {
 
     List<User> findAllUser();
 
-    boolean login(String username, String password);
+    User saveUser(User user);
 
-    boolean checkPassword(User user, String password);
-
-
+    User saveUserWithCustomer(User user, Customer customer);
 
 }

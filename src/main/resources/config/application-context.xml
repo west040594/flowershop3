@@ -4,17 +4,63 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-
+       xmlns:tx="http://www.springframework.org/schema/cache"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
+
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.accenture" />
+
+
 
     <mvc:annotation-driven />
+    <!--<cache:annotation-driven />-->
+    <context:annotation-config/>
     <context:spring-configured/>
+    <context:component-scan base-package="com.accenture.be.access" />
+    <context:component-scan base-package="com.accenture.be.business" />
+<!--    <tx:annotation-driven transaction-manager="transactionManager" />-->
+
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="default" />
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.H2Dialect
+                </prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.accenture"/>
+    </bean>
+
+
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+    p:sessionFactory-ref="sessionFactory">
+
+    </bean>
+
+    <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
 
     <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
         <property name="driverClassName" value="org.h2.Driver"/>
@@ -29,18 +75,22 @@
         <property name="minEvictableIdleTimeMillis" value="1800000"/>
     </bean>
 
-    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="emf">
+    <!--<bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="emf">
         <property name="persistenceUnitName" value="DLSystemPU"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="com.accenture.be.entity"/>
-    </bean>
+    </bean>-->
 
-    <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <!--<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="emf" />
         <property name="jpaDialect" ref="jpaDialect"/>
     </bean>
+-->
+
 
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+
+
 
 
     <!--<bean id="userDao" class="com.accenture.be.access.user.UserDAOImpl" />

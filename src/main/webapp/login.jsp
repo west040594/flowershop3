@@ -15,6 +15,7 @@
         <input type="password" class="form-control" id="password" name="password" placeholder="Введите Пароль">
       </div>
       <button type="submit" class="btn btn-primary">Подтвердить</button>
+        <a  class="btn btn-success" href="/register">Регистрация</a>
     </form>
     <c:if test="${error != null}">
       <div class="my-lg-4 alert alert-danger" role="alert">

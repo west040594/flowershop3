@@ -21,12 +21,10 @@ public interface CustomerDAO {
 
     /**
      * Этот метод попытается вставить Customer в репозиторий
-     * и назначет ему соотвествующий ID Пользователя
-     * @param userId ID пользователя
      * @param customer Объект Customer для вставки в репозиторий
      * @return Идентификатор записи в репозитории
      */
-    Long save(Long userId, Customer customer);
+    Long save(Customer customer);
 
     /**
      * Обновляет существующего Покупателя в репозитории со значениями,
@@ -34,10 +32,9 @@ public interface CustomerDAO {
      * Параметр Customer должен содержать идентификатор,
      * соответствующий существующему ID в репозитории,
      * и все поля должны быть заполнены и действительны.
-     * @param userId ID пользователя у которого изменится соотвествующий адрес
      * @param customer Объект Покупателя содержащий информацию для обновления
      * @return true, если строка была обновлена.
      */
-    boolean update(Long userId, Customer customer);
+    boolean update(Customer customer);
 
 }

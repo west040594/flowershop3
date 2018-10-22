@@ -61,6 +61,20 @@ public class User {
     public User() {
     }
 
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    public User(String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt) {
+        this(username, password, email);
+        this.status = status;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public long getId() {
         return id;
     }
