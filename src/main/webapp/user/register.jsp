@@ -26,8 +26,8 @@
             <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль">
           </div>
           <div class="form-group">
-             <label for="passwordConfirm">Подтвердите пароль</label>
-             <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Введите пароль">
+             <label for="confirmPassword">Подтвердите пароль</label>
+             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Введите пароль">
           </div>
           <button type="submit" class="btn btn-primary">Подтвердить</button>
         </form>
