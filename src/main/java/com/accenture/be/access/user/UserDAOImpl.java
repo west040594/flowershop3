@@ -5,9 +5,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,7 +84,10 @@ public class UserDAOImpl implements UserDAO {
 
 
     @Override
+    @Transactional
     public Long save(User user) {
+        /*entityManager.persist(user);
+        entityManager.flush();*/
         sessionFactory.getCurrentSession().save(user);
         return user.getId();
     }

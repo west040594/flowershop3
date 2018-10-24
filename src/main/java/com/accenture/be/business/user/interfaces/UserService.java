@@ -1,5 +1,6 @@
 package com.accenture.be.business.user.interfaces;
 
+import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
@@ -13,5 +14,9 @@ public interface UserService {
     User saveUser(User user);
 
     User saveUserWithCustomer(User user, Customer customer);
+
+    User login(UserDTO userDTO) throws UserException;
+
+    User register(UserDTO userDTO) throws UserException;
 
 }

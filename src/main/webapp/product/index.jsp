@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h5 class="card-title">${product.name}
                         <span class="badge badge-warning">${product.category.name}</span>
-                        <span class="badge badge-info">${product.price}</span>
+                        <span class="badge badge-info">${product.priceRub}</span>
                     </h5>
                     <p class="card-text">${product.description}</p>
                     <div class="btn-group d-flex" role="group">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">${product.createdAt}</small>
+                    <small class="text-muted">${product.createdAtFormat}</small>
                 </div>
             </div>
         </div>

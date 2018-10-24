@@ -54,7 +54,11 @@ public class ProductDTO {
         this.name = name;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public String getPriceRub() {
         Locale loc = new Locale ("ru", "RU");
         NumberFormat formatter = NumberFormat.getCurrencyInstance(loc);
         return formatter.format(price);
@@ -96,16 +100,24 @@ public class ProductDTO {
         this.inStock = inStock;
     }
 
-    public String getCreatedAt() {
+    public String getCreatedAtFormat() {
         SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
         return newDateFormat.format(createdAt);
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getUpdatedFormat() {
         SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
         return newDateFormat.format(updatedAt);
     }

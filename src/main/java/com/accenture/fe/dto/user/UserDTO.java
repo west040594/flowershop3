@@ -7,9 +7,11 @@ import com.accenture.fe.enums.user.UserRole;
 import java.util.Date;
 
 public class UserDTO {
+
     private long id;
     private String username;
     private String password;
+    private String confirmPassword;
     private String email;
     private UserStatus status;
     private UserRole role;
@@ -20,11 +22,15 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(long id, String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt, CustomerDTO customer) {
-        this.id = id;
+    public UserDTO(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public UserDTO(long id, String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt, CustomerDTO customer) {
+        this(username, password, email);
+        this.id = id;
         this.status = status;
         this.role = role;
         this.createdAt = createdAt;
@@ -54,6 +60,14 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {
@@ -93,6 +107,11 @@ public class UserDTO {
     }
 
     public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCreatedUpdated(Date createdAt, Date updatedAt) {
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 

@@ -1,6 +1,10 @@
-package com.accenture.fe.servlets;
+package com.accenture.fe.servlets.user;
 
-import com.accenture.be.business.user.interfaces.UserLoginService;
+import com.accenture.be.business.user.converters.UserConverter;
+import com.accenture.be.business.user.exceptions.UserException;
+import com.accenture.be.business.user.interfaces.UserService;
+import com.accenture.be.entity.user.User;
+import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -10,13 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
     @Autowired
-    private UserLoginService userService;
+    private UserService userService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -27,17 +32,29 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        req.getRequestDispatcher("user/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        boolean isLogin = userService.login(req.getParameter("username"), req.getParameter("password"));
-        if(isLogin) {
-            req.getRequestDispatcher("/home.jsp").forward(req, resp);
+        UserDTO userDTO = new UserDTO(
+                req.getParameter("username"), req.getParameter("password"), req.getParameter("username") );
+
+        User user = null;
+        try {
+            user = userService.login(userDTO);
+        } catch (UserException e) {
+            req.setAttribute("error", e.getMessage());
+        }
+
+        //Если пользователь зарегестрирован то сохраняем его в сессию и делаем редирект
+        if(user != null) {
+            HttpSession session = req.getSession();
+            session.setAttribute("user", UserConverter.convertToDTO(user));
+            resp.sendRedirect("/products/index");
+            //Иначе перезагружаем страницу и выводим ошибки
         } else {
-            req.setAttribute("error", "Password or username incorrect");
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            doGet(req, resp);
         }
     }
 }

@@ -1,8 +1,8 @@
-package com.accenture.fe.servlets;
+package com.accenture.fe.servlets.user;
 
 import com.accenture.be.business.user.converters.UserConverter;
-import com.accenture.be.business.user.exceptions.UserRegisterException;
-import com.accenture.be.business.user.interfaces.UserRegisterService;
+import com.accenture.be.business.user.exceptions.UserException;
+import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.user.UserDTO;
@@ -26,7 +26,7 @@ import java.util.Date;
 public class RegisterServlet extends HttpServlet {
 
     @Autowired
-    private UserRegisterService userRegisterService;
+    private UserService userService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -35,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/user/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -45,7 +45,6 @@ public class RegisterServlet extends HttpServlet {
         //Покупателю назначается стартовый бонус в размере 2000 и скидка 0%
         CustomerDTO customerDTO = new CustomerDTO(req.getParameter("firstName"), req.getParameter("lastName"),
                 new BigDecimal(2000), 0);
-
         UserDTO userDTO = new UserDTO(
                 req.getParameter("username"), req.getParameter("password"), req.getParameter("email") );
 
@@ -57,8 +56,8 @@ public class RegisterServlet extends HttpServlet {
 
         User user = null;
         try {
-            user = userRegisterService.register(userDTO);
-        } catch (UserRegisterException e) {
+            user = userService.register(userDTO);
+        } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
         }
 
@@ -66,10 +65,11 @@ public class RegisterServlet extends HttpServlet {
         if(user != null) {
             HttpSession session = req.getSession();
             session.setAttribute("user", UserConverter.convertToDTO(user));
-            resp.sendRedirect("/index");
-            return;
+            resp.sendRedirect("/products/index");
+        //Иначе перезагружаем страницу и выводим ошибки
+        } else {
+            doGet(req, resp);
         }
 
-        doGet(req, resp);
     }
 }

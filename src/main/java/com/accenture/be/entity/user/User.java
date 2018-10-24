@@ -50,12 +50,12 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Customer customer;
 
-    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
-    @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     public User() {
@@ -67,12 +67,14 @@ public class User {
         this.email = email;
     }
 
-    public User(String username, String password, String email, UserStatus status, UserRole role, Date createdAt, Date updatedAt) {
+    public User(String username, String password,  String email, UserStatus status, UserRole role,
+                Date createdAt, Date updatedAt, Customer customer) {
         this(username, password, email);
         this.status = status;
         this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.customer = customer;
     }
 
     public long getId() {

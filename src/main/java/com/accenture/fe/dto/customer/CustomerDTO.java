@@ -1,6 +1,10 @@
 package com.accenture.fe.dto.customer;
 
+import com.accenture.fe.dto.user.UserDTO;
+
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class CustomerDTO {
     private long id;
@@ -12,16 +16,23 @@ public class CustomerDTO {
     private String street;
     private String city;
     private String country;
+    private UserDTO user;
 
     public CustomerDTO() {
     }
 
-    public CustomerDTO(long id, String firstName, String lastName, BigDecimal balance, int discount, String phoneNumber, String street, String city, String country) {
-        this.id = id;
+    public CustomerDTO(String firstName, String lastName,
+                       BigDecimal balance, int discount) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
         this.discount = discount;
+    }
+
+    public CustomerDTO(long id, String firstName, String lastName, BigDecimal balance,
+                       int discount, String phoneNumber, String street, String city, String country) {
+        this(firstName, lastName, balance, discount);
+        this.id = id;
         this.phoneNumber = phoneNumber;
         this.street = street;
         this.city = city;
@@ -56,12 +67,22 @@ public class CustomerDTO {
         return balance;
     }
 
+    public String getBalanceRub() {
+        Locale loc = new Locale ("ru", "RU");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(loc);
+        return formatter.format(balance);
+    }
+
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
     public int getDiscount() {
         return discount;
+    }
+
+    public String getDiscountPercent() {
+        return String.valueOf(discount) + "%";
     }
 
     public void setDiscount(int discount) {
@@ -100,4 +121,11 @@ public class CustomerDTO {
         this.country = country;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
 }

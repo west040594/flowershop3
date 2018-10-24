@@ -1,4 +1,4 @@
-package com.accenture.fe.servlets;
+package com.accenture.fe.servlets.user;
 
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.interfaces.UserService;
@@ -36,6 +36,6 @@ public class UsersServlet extends HttpServlet {
         List<UserDTO> userDTOS = UserConverter.convertToDTO(users);
 
         req.setAttribute("users", userDTOS);
-        req.getRequestDispatcher("/users.jsp").forward(req,resp);
+        req.getRequestDispatcher("/user/users.jsp").forward(req,resp);
     }
 }

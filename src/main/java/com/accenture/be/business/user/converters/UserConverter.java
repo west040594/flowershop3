@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserConverter {
+
     public static UserDTO convertToDTO(User userEntity) {
         UserDTO userDTO = null;
         if(userEntity != null) {
@@ -30,7 +31,18 @@ public class UserConverter {
                 userDTOS.add(userDTO);
             }
         }
-
         return userDTOS;
     }
+
+    public static User convertToEntity(UserDTO userDTO) {
+        User userEntity = null;
+        if(userDTO != null) {
+            userEntity = new User(
+                    userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail(),
+                    userDTO.getStatus(), userDTO.getRole(), userDTO.getCreatedAt(), userDTO.getUpdatedAt(),
+                    CustomerConverter.convertToEntity(userDTO.getCustomer()));
+        }
+        return userEntity;
+    }
+
 }

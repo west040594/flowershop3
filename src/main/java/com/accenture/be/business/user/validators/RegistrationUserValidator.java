@@ -1,17 +1,21 @@
 package com.accenture.be.business.user.validators;
 
-import com.accenture.be.business.user.forms.RegistrationForm;
+import com.accenture.be.access.user.UserDAO;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.user.UserDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Service("registrationFormValidator")
-public class RegistrationFormValidator implements Validator {
+public class RegistrationUserValidator implements Validator {
+
+    @Autowired
+    protected UserDAO userDAO;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -40,12 +44,18 @@ public class RegistrationFormValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "password", "user.password.empty",
                 "Пароль не должен быть пустым");
 
-        ValidationUtils.rejectIfEmpty(errors, "confirmPassword", "confirmPassword.empty",
-                "ПарольПовтор не должен быть пустым");
+        if(userDAO.findByUsername(user.getUsername()) != null) {
+            errors.reject("user.username.isBusy", "Пользователь с данным логином уже зарегестрирован");
+        }
+
+        if(userDAO.findByEmail(user.getEmail())!= null) {
+            errors.reject("user.email.isBusy", "Пользователь с данным email уже зарегестрирован");
+        }
+
 
         if(!user.getPassword().equals(user.getConfirmPassword())) {
-            errors.rejectValue("confirmPassword ", "user.passwordconfirm.incorrect",
-                    "Пароль не совпадают");
+            errors.reject("user.confirmPassword.notMatch",
+                    "Пароли не совпадают");
         }
 
 
