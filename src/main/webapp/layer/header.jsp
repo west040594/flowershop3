@@ -35,5 +35,13 @@
                 </li>
             </c:if>
         </ul>
+        <ul class="navbar-nav ml-auto">
+            <c:if test="${sessionScope.cart != null}">
+                <%--<span class="glyphicon glyphicon-shopping-cart"></span>--%>
+                <div class="navbar-text"><b>Корзина:</b> &nbsp;</div>
+                <div class="navbar-text">Количество: <span id ="cart-quantity">${sessionScope.cart.itemCount}</span>&nbsp;</div>
+                <div class="navbar-text">Цена: <span id= "cart-total">${sessionScope.cart.totalRub}</span>&nbsp;</div>
+            </c:if>
+        </ul>
     </div>
 </nav>

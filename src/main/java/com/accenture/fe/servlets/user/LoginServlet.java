@@ -1,5 +1,6 @@
 package com.accenture.fe.servlets.user;
 
+import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
@@ -49,8 +50,10 @@ public class LoginServlet extends HttpServlet {
 
         //Если пользователь зарегестрирован то сохраняем его в сессию и делаем редирект
         if(user != null) {
+            userDTO = UserConverter.convertToDTO(user);
             HttpSession session = req.getSession();
-            session.setAttribute("user", UserConverter.convertToDTO(user));
+            session.setAttribute("user", userDTO);
+            session.setAttribute("cart", new Cart(userDTO.getCustomer().getDiscount()));
             resp.sendRedirect("/products/index");
             //Иначе перезагружаем страницу и выводим ошибки
         } else {

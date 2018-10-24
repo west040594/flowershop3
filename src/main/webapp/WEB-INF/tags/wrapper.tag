@@ -5,6 +5,8 @@
         <title>Flowershop</title>
         <link rel="stylesheet"
                   href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
+
+        <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
     </head>
     <body>
         <jsp:include page="/layer/header.jsp"/>
@@ -12,5 +14,6 @@
             <jsp:doBody/>
         </div>
 
+    <script src="/js/addCartItem.js"></script>
     </body>
 </html>

@@ -18,7 +18,7 @@
                     <p class="card-text">${product.description}</p>
                     <div class="btn-group d-flex" role="group">
                         <a href="/products/view?id=${product.id}" class="btn btn-info w-100" role="button">Открыть</a>
-                        <a href="#" class="btn btn-success w-100" role="button">В корзину</a>
+                        <btn class="btn btn-success w-100" role="addCartItem" data-id="${product.id}">В корзину</btn>
                     </div>
                 </div>
                 <div class="card-footer">
