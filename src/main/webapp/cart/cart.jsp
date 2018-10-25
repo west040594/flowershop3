@@ -17,7 +17,7 @@
                 <c:forEach var="cartItem" items="${sessionScope.cart.items}">
                     <tr>
                       <td scope="row">Изображение</td>
-                      <!--<td>${cartItem}</td> -->
+                      <!--<td>${cartItem.product.name}</td> -->
                       <td>Количество</td>
                       <td>Цена</td>
                     </tr>
