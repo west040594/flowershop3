@@ -14,27 +14,7 @@
         </tr>
         <tr>
             <td>Имя</td>
-            <td>${order.customer.firstName}</td>
-        </tr>
-         <tr>
-            <td>Фамилия</td>
-            <td>${order.customer.lastName}</td>
-        </tr>
-        <tr>
-            <td>Телефон</td>
-            <td>${order.customer.phoneNumber}</td>
-        </tr>
-         <tr>
-            <td>Улица</td>
-            <td>${order.customer.street}</td>
-        </tr>
-        <tr>
-            <td>Город</td>
-            <td>${order.customer.city}</td>
-        </tr>
-        <tr>
-            <td>Страна</td>
-            <td>${order.customer.country}</td>
+            <td>${order.deliveryAddress}</td>
         </tr>
         <tr>
             <td>Статус</td>

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
@@ -24,7 +26,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public Customer findById(long customerId) {
-        return null;
+
+        Customer customer = null;
+        try {
+            TypedQuery<Customer> query  = entityManager.createNamedQuery("Customer.findById", Customer.class)
+                    .setParameter("id", customerId);
+            customer = query.getSingleResult();
+
+        }catch (NoResultException nr) {
+
+        }
+        return customer;
     }
 
     @Override

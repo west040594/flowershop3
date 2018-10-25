@@ -32,6 +32,9 @@ public class Order {
     @Column(name = "total", precision = 8, scale = 2, nullable = false)
     private BigDecimal total;
 
+    @Column(name = "delivery_address", nullable = false)
+    private String deliveryAddress;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", columnDefinition = "smallint")
     private OrderStatus status;
@@ -54,9 +57,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(Customer customer, BigDecimal total, OrderStatus status, Date createdAt, Date closetAt) {
+    public Order(Customer customer, BigDecimal total, String deliveryAddress, OrderStatus status, Date createdAt, Date closetAt) {
         this.customer = customer;
         this.total = total;
+        this.deliveryAddress = deliveryAddress;
         this.status = status;
         this.createdAt = createdAt;
         this.closetAt = closetAt;
@@ -84,6 +88,22 @@ public class Order {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public OrderStatus getStatus() {

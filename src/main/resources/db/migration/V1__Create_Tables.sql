@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS tb_order (
   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
   customer_id INT NOT NULL,
   total DECIMAL(8,2) NOT NULL,
+  delivery_address TEXT NOT NULL,
   status SMALLINT DEFAULT 0,
   created_at TIMESTAMP NOT NULL,
   closet_at TIMESTAMP,

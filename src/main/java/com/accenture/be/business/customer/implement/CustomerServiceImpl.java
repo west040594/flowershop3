@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
 
@@ -18,5 +20,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void saveCustomer(Customer customer) {
         customerDAO.save(customer);
+    }
+
+    @Override
+    public void withdrawFromBalance(BigDecimal withdrawCost, Long customerId) {
+        Customer customer = customerDAO.findById(customerId);
+        customer.setBalance(customer.getBalance().subtract(withdrawCost));
+        customerDAO.update(customer);
     }
 }

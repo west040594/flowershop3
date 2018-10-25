@@ -11,7 +11,7 @@ public class OrderConverter {
         if(orderEntity != null) {
             orderDTO = new OrderDTO(orderEntity.getId(),
                     CustomerConverter.convertToDTO(orderEntity.getCustomer()),
-                    orderEntity.getTotal(), orderEntity.getStatus(),
+                    orderEntity.getTotal(), orderEntity.getDeliveryAddress(), orderEntity.getStatus(),
                     orderEntity.getCreatedAt(), orderEntity.getClosetAt());
         }
         return orderDTO;
@@ -21,7 +21,7 @@ public class OrderConverter {
         Order orderEntity = null;
         if(orderDTO != null) {
             orderEntity = new Order(CustomerConverter.convertToEntity(orderDTO.getCustomer()),
-                    orderDTO.getTotal(), orderDTO.getStatus(),
+                    orderDTO.getTotal(), orderDTO.getDeliveryAddress(), orderDTO.getStatus(),
                     orderDTO.getCreatedAt(), orderDTO.getClosetAt()
             );
         }

@@ -15,6 +15,7 @@ public class OrderDTO {
 
     private long id;
     private BigDecimal total;
+    private String deliveryAddress;
     private OrderStatus status;
     private Date createdAt;
     private Date closetAt;
@@ -24,10 +25,11 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(long id, CustomerDTO customer, BigDecimal total, OrderStatus status, Date createdAt, Date closetAt) {
+    public OrderDTO(long id, CustomerDTO customer, BigDecimal total, String deliveryAddress, OrderStatus status, Date createdAt, Date closetAt) {
         this.id = id;
         this.customer = customer;
         this.total = total;
+        this.deliveryAddress = deliveryAddress;
         this.status = status;
         this.createdAt = createdAt;
         this.closetAt = closetAt;
@@ -61,6 +63,14 @@ public class OrderDTO {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     public OrderStatus getStatus() {
