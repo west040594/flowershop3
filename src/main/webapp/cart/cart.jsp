@@ -9,20 +9,31 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th colspan="3" scope="col">Корзина</th>
+                  <th colspan="4" scope="col">Корзина</th>
                   <th scope="col"><button class="btn btn-danger btn-sm">Удалить все</button></th>
                 </tr>
               </thead>
               <tbody>
                 <c:forEach var="cartItem" items="${sessionScope.cart.itemList}">
                     <tr>
-                      <td scope="row">Изображение</td>
+                      <td scope="row">
+                        <img style="height:70px; width:110px" class="card-img-top" src="${pageContext.request.contextPath}/image?type=product&img=${cartItem.product.imageUrl}" alt="${product.imageUrl}">
+                      </td>
                       <td>${cartItem.product.name}</td>
                       <td>${cartItem.quantity}</td>
-                      <td>${cartItem.cartItemTotal}</td>
+                      <td><del>${cartItem.cartItemTotalRub}</del></td>
+                      <td>${cartItem.cartItemTotalDiscountRub}</td>
                     </tr>
                 </c:forEach>
               </tbody>
+              <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <span class="text-warning">Цена с учетом общей скидки</span>
+                        <span id="cart-total"<b>${sessionScope.cart.totalRub}</b></span>
+                        </td>
+                </tr>
+              </tfoot>
             </table>
         </div>
         <div class="col-5">

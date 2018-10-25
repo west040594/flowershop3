@@ -33,6 +33,7 @@ public class Cart {
         //Иначае добавляем новый элемент в корзину
         } else {
             items.put(newItem.getProduct().getId(), newItem);
+            newItem.setDiscount(discount);
         }
         calculateTotalCost();
         calculateCount();
