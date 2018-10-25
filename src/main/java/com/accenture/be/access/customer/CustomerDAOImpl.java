@@ -49,7 +49,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Long save(Customer customer)
     {
-        Session session = sessionFactory.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         Long customerId = (Long)session.save(customer);
         session.getTransaction().commit();
@@ -59,7 +59,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void update(Customer customer) {
-        Session session = sessionFactory.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(customer);
         session.getTransaction().commit();

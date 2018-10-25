@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public interface CustomerService {
 
-    void saveCustomer(Customer customer);
+    Customer saveCustomer(Customer customer);
 
     void withdrawFromBalance(BigDecimal withdrawCost, Long customerId);
 }

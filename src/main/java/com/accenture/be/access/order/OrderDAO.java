@@ -51,7 +51,6 @@ public interface OrderDAO {
     /**
      * Удаляет существующий Заказ в репозитории, представленный указанным ID
      * @param orderId ID Заказа
-     * @return true, если строка была удалена
      */
-    boolean delete(long orderId);
+    void delete(long orderId);
 }

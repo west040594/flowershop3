@@ -1,6 +1,9 @@
 package com.accenture.be.access.product;
 
 import com.accenture.be.entity.product.Product;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,6 +18,9 @@ public class ProductDAOImpl implements ProductDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public List<Product> findAll() {
@@ -55,16 +61,26 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public Long save(Product product) {
-        return null;
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Long productId = (Long)session.save(product);
+        session.getTransaction().commit();
+        session.close();
+        return productId;
     }
 
     @Override
-    public boolean update(Product product) {
-        return false;
+    public void update(Product product) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(product);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
-    public boolean delete(long productId) {
-        return false;
+    public void delete(long productId) {
+        return;
     }
 }

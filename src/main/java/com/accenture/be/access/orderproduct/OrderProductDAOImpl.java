@@ -1,6 +1,7 @@
 package com.accenture.be.access.orderproduct;
 
 import com.accenture.be.entity.orderproduct.OrderProduct;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,12 +36,16 @@ public class OrderProductDAOImpl implements OrderProductDAO {
 
     @Override
     public Long save(OrderProduct orderProduct) {
-        sessionFactory.getCurrentSession().save(orderProduct);
-        return orderProduct.getId();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Long orderProductId = (Long)session.save(orderProduct);
+        session.getTransaction().commit();
+        session.close();
+        return orderProductId;
     }
 
     @Override
-    public boolean delete(long orderProductId) {
-        return false;
+    public void delete(long orderProductId) {
+        return;
     }
 }

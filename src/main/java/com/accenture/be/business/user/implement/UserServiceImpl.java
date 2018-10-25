@@ -41,22 +41,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.findAll();
     }
 
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public User saveUser(User user) {
-        Long userId = userDAO.save(user);
-        return userDAO.findById(userId);
-    }
-
-    @Override
-    public User saveUserWithCustomer(User user, Customer customer) {
-        customer.setUser(user);
-        customerService.saveCustomer(customer);
-        return this.saveUser(user);
-    }
-
-    @Override
-    public User register(UserDTO userDTO) throws UserException {
+    public UserDTO register(UserDTO userDTO) throws UserException {
 
         //Валидация формы регистрации
         StringBuilder errors = new StringBuilder();
@@ -70,16 +58,19 @@ public class UserServiceImpl implements UserService {
                     forEach(e -> errors.append(e.getDefaultMessage()).append("<br/>"));
 
             throw new UserException(errors.toString());
-            //Иначе сохраняем пользоватея и присваиваем ему покупателя, и возвращает
+            //Иначе сохраняем пользоватея и присваиваем ему покупателя, и возвращаем его
         } else {
             User user = UserConverter.convertToEntity(userDTO);
             Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
-            return saveUserWithCustomer(user, customer);
+            customer.setUser(user);
+
+            customer = customerService.saveCustomer(customer);
+            return  UserConverter.convertToDTO(customer.getUser());
         }
     }
 
     @Override
-    public User login(UserDTO userDTO) throws UserException {
+    public UserDTO login(UserDTO userDTO) throws UserException {
 
         //Валидация формы регистрации
         StringBuilder errors = new StringBuilder();
@@ -116,7 +107,7 @@ public class UserServiceImpl implements UserService {
             throw new UserException(errors.toString());
         }
 
-        return detectedUser;
+        return UserConverter.convertToDTO(detectedUser);
     }
 
     @Override

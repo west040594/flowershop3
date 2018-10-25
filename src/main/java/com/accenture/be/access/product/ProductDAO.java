@@ -48,16 +48,14 @@ public interface ProductDAO {
      * Параметр Product должен содержать идентификатор, соответствующий существующему ID в репозитории,
      * и все поля должны быть заполнены и действительны.
      * @param product Объект Продукта содержащий информацию для обновления
-     * @return true, если строка была обновлена.
      */
-    boolean update(Product product);
+    void update(Product product);
 
 
     /**
      * Удаляет существующий Продукт в репозитории, представленный указанным ID
      * @param productId ID Продукта
-     * @return true, если строка была удалена
      */
-    boolean delete(long productId);
+    void delete(long productId);
 
 }

@@ -63,18 +63,17 @@ public class CartOrderServlet extends HttpServlet {
             orderDTO.setCustomer(customerDTO);
 
             //Создаем новый заказ
-            Order order = null;
             try {
-                order = orderService.createOrder(orderDTO);
+                orderDTO = orderService.createOrder(orderDTO);
             } catch (OrderException e) {
                 req.setAttribute("error", e.getMessage());
             }
 
             //Если заказ сохранен то выгружаем корзину и делаем редирект успешной покупки
-            if(order != null) {
+            if(orderDTO != null) {
                 // TODO: 25.10.2018 Очистка корзины и страница оформленного заказа
-                userDTO.setCustomer(CustomerConverter.convertToDTO(order.getCustomer()));
-                resp.sendRedirect("/orders/view?id="+order.getId());
+                userDTO.setCustomer(orderDTO.getCustomer());
+                resp.sendRedirect("/orders/view?id="+orderDTO.getId());
                 //Иначе перезагружаем страницу и выводим ошибки
             } else {
                 doGet(req, resp);

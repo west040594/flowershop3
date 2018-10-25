@@ -18,8 +18,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void saveCustomer(Customer customer) {
-        customerDAO.save(customer);
+    public Customer saveCustomer(Customer customer) {
+        Long customerId = customerDAO.save(customer);
+        return customerDAO.findById(customerId);
     }
 
     @Override

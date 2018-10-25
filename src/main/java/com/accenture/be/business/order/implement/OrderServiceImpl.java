@@ -14,6 +14,8 @@ import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.enums.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
 import java.util.Date;
@@ -36,14 +38,9 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public Order saveOrder(Order order) {
-        Long orderId = orderDAO.save(order);
-        return orderDAO.findById(orderId);
-    }
-
-    @Override
-    public Order createOrder(OrderDTO orderDTO) throws OrderException {
+    public OrderDTO createOrder(OrderDTO orderDTO) throws OrderException {
 
         //Валидация формы заказа
         StringBuilder errors = new StringBuilder();
@@ -67,9 +64,10 @@ public class OrderServiceImpl implements OrderService {
             order.setDeliveryAddress(formDeliveryAddress(order.getCustomer()));
             customerService.withdrawFromBalance(order.getTotal(), order.getCustomer().getId());
 
-            order = saveOrder(order);
+            Long orderId = orderDAO.save(order);
+
             // TODO: 25.10.2018 Взять предметы из корзины и сформировать orderProduct
-            return order;
+            return OrderConverter.convertToDTO(orderDAO.findById(orderId));
         }
     }
     @Override

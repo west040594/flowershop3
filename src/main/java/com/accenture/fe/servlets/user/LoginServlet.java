@@ -41,16 +41,14 @@ public class LoginServlet extends HttpServlet {
                 req.getParameter("username"), req.getParameter("password"), req.getParameter("username") );
 
         //Авторизируем пользователя
-        User user = null;
         try {
-            user = userService.login(userDTO);
+            userDTO = userService.login(userDTO);
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
         }
 
         //Если пользователь зарегестрирован то сохраняем его в сессию и делаем редирект
-        if(user != null) {
-            userDTO = UserConverter.convertToDTO(user);
+        if(userDTO != null) {
             userService.setUserSession(req.getSession(), userDTO);
             resp.sendRedirect("/products/index");
             //Иначе перезагружаем страницу и выводим ошибки

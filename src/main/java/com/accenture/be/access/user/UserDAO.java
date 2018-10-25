@@ -46,14 +46,12 @@ public interface UserDAO {
      * Параметр User должен содержать идентификатор, соответствующий существующему ID в репозитории,
      * и все поля должны быть заполнены и действительны.
      * @param user Объект Пользователя содержащий информацию для обновления
-     * @return true, если строка была обновлена.
      */
-    boolean update(User user);
+    void update(User user);
 
     /**
      * Удаляет существующуего Пользователя в репозитории, представленный указанным ID
      * @param userId ID Пользователя
-     * @return true, если строка была удалена
      */
-    boolean delete(long userId);
+    void delete(long userId);
 }

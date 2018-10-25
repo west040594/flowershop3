@@ -11,8 +11,7 @@ import java.util.List;
 public interface OrderService {
 
     List<Order> findAllOrder();
-    Order saveOrder(Order order);
-    Order createOrder(OrderDTO orderDTO) throws OrderException;
+    OrderDTO createOrder(OrderDTO orderDTO) throws OrderException;
     Order getOrderById(long orderId);
     String formDeliveryAddress(Customer customer);
 }

@@ -49,7 +49,6 @@ public interface CategoryDAO {
     /**
      * Удаляет существующую Категорию в репозитории, представленный указанным ID
      * @param categoryId ID Категории
-     * @return true, если строка была удалена
      */
-    boolean delete(long categoryId);
+    void delete(long categoryId);
 }

@@ -1,6 +1,7 @@
 package com.accenture.be.access.user;
 
 import com.accenture.be.entity.user.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,23 +83,28 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-
     @Override
     @Transactional
     public Long save(User user) {
-        /*entityManager.persist(user);
-        entityManager.flush();*/
-        sessionFactory.getCurrentSession().save(user);
-        return user.getId();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Long customerId = (Long)session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return customerId;
     }
 
     @Override
-    public boolean update(User user) {
-        return false;
+    public void update(User user) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(user);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
-    public boolean delete(long userId) {
-        return false;
+    public void delete(long userId) {
+        return;
     }
 }

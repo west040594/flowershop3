@@ -35,11 +35,9 @@ public interface OrderProductDAO {
     Long save(OrderProduct orderProduct);
 
 
-
     /**
      * Удаляет существующий OrderProduct в репозитории, представленный указанным ID
      * @param orderProductId ID OrderProduct
-     * @return true, если строка была удалена
      */
-    boolean delete(long orderProductId);
+    void delete(long orderProductId);
 }

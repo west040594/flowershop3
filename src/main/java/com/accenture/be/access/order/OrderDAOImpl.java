@@ -59,18 +59,17 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Long save(Order order) {
-        Session session = sessionFactory.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Long customerId = (Long)session.save(order);
+        Long orderId = (Long)session.save(order);
         session.getTransaction().commit();
         session.close();
-        return customerId;
+        return orderId;
     }
 
     @Override
     public void update(Order order) {
-
-        Session session = sessionFactory.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(order);
         session.getTransaction().commit();
@@ -78,7 +77,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean delete(long orderId) {
-        return false;
+    public void delete(long orderId) {
+        return;
     }
 }
