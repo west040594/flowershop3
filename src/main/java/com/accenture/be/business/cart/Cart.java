@@ -4,10 +4,7 @@ import com.accenture.fe.dto.product.ProductDTO;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class Cart {
 
@@ -108,6 +105,11 @@ public class Cart {
             count+=quantity;
         }
         this.itemCount = count;
+    }
+
+    public List<CartItem> getItemList() {
+
+       return new ArrayList<CartItem>(items.values());
     }
 
 }

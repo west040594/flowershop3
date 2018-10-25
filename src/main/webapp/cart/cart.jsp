@@ -14,12 +14,12 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="cartItem" items="${sessionScope.cart.items}">
+                <c:forEach var="cartItem" items="${sessionScope.cart.itemList}">
                     <tr>
                       <td scope="row">Изображение</td>
-                      <!--<td>${cartItem.product.name}</td> -->
-                      <td>Количество</td>
-                      <td>Цена</td>
+                      <td>${cartItem.product.name}</td>
+                      <td>${cartItem.quantity}</td>
+                      <td>${cartItem.cartItemTotal}</td>
                     </tr>
                 </c:forEach>
               </tbody>
