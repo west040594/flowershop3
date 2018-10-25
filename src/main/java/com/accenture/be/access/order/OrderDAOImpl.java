@@ -2,6 +2,7 @@ package com.accenture.be.access.order;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -58,13 +59,22 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Long save(Order order) {
-        sessionFactory.getCurrentSession().save(order);
-        return order.getId();
+        Session session = sessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
+        Long customerId = (Long)session.save(order);
+        session.getTransaction().commit();
+        session.close();
+        return customerId;
     }
 
     @Override
-    public boolean update(Order order) {
-        return false;
+    public void update(Order order) {
+
+        Session session = sessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(order);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override

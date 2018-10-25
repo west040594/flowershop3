@@ -1,6 +1,7 @@
 package com.accenture.fe.servlets.cart;
 
 import com.accenture.be.business.cart.Cart;
+import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.entity.order.Order;
@@ -72,6 +73,7 @@ public class CartOrderServlet extends HttpServlet {
             //Если заказ сохранен то выгружаем корзину и делаем редирект успешной покупки
             if(order != null) {
                 // TODO: 25.10.2018 Очистка корзины и страница оформленного заказа
+                userDTO.setCustomer(CustomerConverter.convertToDTO(order.getCustomer()));
                 resp.sendRedirect("/orders/view?id="+order.getId());
                 //Иначе перезагружаем страницу и выводим ошибки
             } else {

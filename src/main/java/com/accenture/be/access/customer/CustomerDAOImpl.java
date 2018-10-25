@@ -2,6 +2,7 @@ package com.accenture.be.access.customer;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,12 +49,20 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Long save(Customer customer)
     {
-        sessionFactory.getCurrentSession().save(customer);
-        return customer.getId();
+        Session session = sessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
+        Long customerId = (Long)session.save(customer);
+        session.getTransaction().commit();
+        session.close();
+        return customerId;
     }
 
     @Override
     public void update(Customer customer) {
-        sessionFactory.getCurrentSession().update(customer);
+        Session session = sessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(customer);
+        session.getTransaction().commit();
+        session.close();
     }
 }

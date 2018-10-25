@@ -69,7 +69,6 @@ public class OrderServiceImpl implements OrderService {
 
             order = saveOrder(order);
             // TODO: 25.10.2018 Взять предметы из корзины и сформировать orderProduct
-            // TODO: 25.10.2018 Изменить customer balance
             return order;
         }
     }
