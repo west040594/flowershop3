@@ -41,7 +41,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean update(Customer customer) {
-        return false;
+    public void update(Customer customer) {
+        sessionFactory.getCurrentSession().update(customer);
     }
 }

@@ -48,19 +48,19 @@
                   </div>
                   <div class="form-group">
                      <label for="phone">Телефон</label>
-                     <input type="text" class="form-control" id="phone" name="phone" placeholder="Введите телефон">
+                     <input type="text" class="form-control" id="phone" name="phone" value="${sessionScope.user.customer.phoneNumber}" placeholder="Введите телефон">
                   </div>
                   <div class="form-group">
                     <label for="street">Улица</label>
-                    <input type="text" class="form-control" id="street" name="street" placeholder="Введите адрес">
+                    <input type="text" class="form-control" id="street" name="street" value="${sessionScope.user.customer.street}" placeholder="Введите адрес">
                   </div>
                   <div class="form-group">
                     <label for="city">Город</label>
-                    <input type="text" class="form-control" id="city" name="city" placeholder="Введите город">
+                    <input type="text" class="form-control" id="city" name="city" value="${sessionScope.user.customer.city}" placeholder="Введите город">
                   </div>
                   <div class="form-group">
                      <label for="country">Страна</label>
-                     <input type="text" class="form-control" id="country" name="country" placeholder="Введите страну">
+                     <input type="text" class="form-control" id="country" name="country" value="${sessionScope.user.customer.country}" placeholder="Введите страну">
                   </div>
                   <button type="submit" class="btn btn-primary">Подтвердить</button>
                 </form>

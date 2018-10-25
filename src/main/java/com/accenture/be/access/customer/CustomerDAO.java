@@ -35,6 +35,6 @@ public interface CustomerDAO {
      * @param customer Объект Покупателя содержащий информацию для обновления
      * @return true, если строка была обновлена.
      */
-    boolean update(Customer customer);
+    void update(Customer customer);
 
 }

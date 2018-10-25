@@ -58,6 +58,15 @@ public class Customer {
         this.user = user;
     }
 
+    public Customer(long id, String firstName, String lastName, BigDecimal balance, int discount, String phoneNumber, String street, String city, String country, User user) {
+        this(firstName, lastName, balance, discount, user);
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.street = street;
+        this.city = city;
+        this.country = country;
+    }
+
     public long getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package com.accenture.fe.dto.customer;
 
+import com.accenture.be.business.cart.Cart;
 import com.accenture.fe.dto.user.UserDTO;
 
 import java.math.BigDecimal;
@@ -17,6 +18,7 @@ public class CustomerDTO {
     private String city;
     private String country;
     private UserDTO user;
+    private Cart cart;
 
     public CustomerDTO() {
     }
@@ -127,5 +129,13 @@ public class CustomerDTO {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

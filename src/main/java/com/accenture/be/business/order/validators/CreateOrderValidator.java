@@ -39,5 +39,12 @@ public class CreateOrderValidator implements Validator {
 
         ValidationUtils.rejectIfEmpty(errors, "customer.country", "customer.country.empty",
                 "Страна не должна быть пустой");
+
+        //Сравниваем баланс покупателя и общую цену корзины, если денег на счету меньше чем требуется
+        //то выкидываем ошибку
+        if(order.getCustomer().getBalance().compareTo(order.getCustomer().getCart().getTotal()) < 0) {
+            errors.reject("customer.notEnoughBalance",
+                    "Не достаточно средств для совершения платежа");
+        }
     }
 }

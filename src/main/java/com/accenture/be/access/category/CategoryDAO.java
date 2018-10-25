@@ -42,9 +42,8 @@ public interface CategoryDAO {
      * Параметр Category должен содержать идентификатор, соответствующий существующему ID в репозитории,
      * и все поля должны быть заполнены и действительны.
      * @param category Объект Категории содержащий информацию для обновления
-     * @return true, если строка была обновлена.
      */
-    boolean update(Category category);
+    void update(Category category);
 
 
     /**

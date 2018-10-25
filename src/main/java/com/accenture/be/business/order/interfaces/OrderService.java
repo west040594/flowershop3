@@ -11,5 +11,6 @@ public interface OrderService {
 
     List<Order> findAllOrder();
     Order saveOrder(Order order);
-    Order createOrder(OrderDTO orderDTO, Cart cart) throws OrderException;
+    Order createOrder(OrderDTO orderDTO) throws OrderException;
+    Order getOrderById(long orderId);
 }

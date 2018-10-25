@@ -5,8 +5,11 @@ import com.accenture.fe.dto.orderproduct.OrderProductDTO;
 import com.accenture.fe.enums.order.OrderStatus;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderDTO {
 
@@ -50,6 +53,12 @@ public class OrderDTO {
         return total;
     }
 
+    public String getTotalRub() {
+        Locale loc = new Locale ("ru", "RU");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(loc);
+        return formatter.format(total);
+    }
+
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
@@ -66,12 +75,22 @@ public class OrderDTO {
         return createdAt;
     }
 
+    public String getCreatedAtFormat() {
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.getDefault());
+        return newDateFormat.format(createdAt);
+    }
+
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
     public Date getClosetAt() {
         return closetAt;
+    }
+
+    public String getClosetAtFormat() {
+        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.getDefault());
+        return newDateFormat.format(closetAt);
     }
 
     public void setClosetAt(Date closetAt) {

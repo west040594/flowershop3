@@ -22,11 +22,23 @@ public class CustomerConverter {
     public static Customer convertToEntity(CustomerDTO customerDTO) {
         Customer customerEntity = null;
         if(customerDTO != null) {
-            customerEntity = new Customer(
+            customerEntity = new Customer(customerDTO.getId(),
                     customerDTO.getFirstName(), customerDTO.getLastName(),
                     customerDTO.getBalance(), customerDTO.getDiscount(),
+                    customerDTO.getPhoneNumber(), customerDTO.getStreet(),
+                    customerDTO.getCity(), customerDTO.getCountry(),
                     UserConverter.convertToEntity(customerDTO.getUser()));
         }
         return customerEntity;
     }
+
+   /* public static Customer convertToEntity(CustomerDTO customerDTO) {
+        Customer customerEntity = null;
+        if(customerDTO != null) {
+            customerEntity = new Customer(customerDTO.getFirstName(), customerDTO.getLastName(),
+                    customerDTO.getBalance(), customerDTO.getDiscount(),
+                    UserConverter.convertToEntity(customerDTO.getUser()));
+        }
+        return customerEntity;
+    }*/
 }

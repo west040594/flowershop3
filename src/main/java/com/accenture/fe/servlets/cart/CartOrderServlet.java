@@ -45,7 +45,8 @@ public class CartOrderServlet extends HttpServlet {
         HttpSession session = req.getSession();
         if(session.getAttribute("user") != null && session.getAttribute("cart") != null) {
 
-            //Берем поля из формы и формируем новый заказ
+            //Берем поля из формы, заполняем покупателя
+            Cart cart = (Cart) session.getAttribute("cart");
             UserDTO userDTO = (UserDTO)session.getAttribute("user");
             CustomerDTO customerDTO = userDTO.getCustomer();
             customerDTO.setFirstName(req.getParameter("firstName"));
@@ -54,13 +55,16 @@ public class CartOrderServlet extends HttpServlet {
             customerDTO.setStreet(req.getParameter("street"));
             customerDTO.setCity(req.getParameter("city"));
             customerDTO.setCountry(req.getParameter("country"));
+            customerDTO.setCart(cart);
+
+            //формируем новый заказ DTO
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setCustomer(customerDTO);
-            Cart cart = (Cart) session.getAttribute("cart");
+
             //Создаем новый заказ
             Order order = null;
             try {
-                order = orderService.createOrder(orderDTO, cart);
+                order = orderService.createOrder(orderDTO);
             } catch (OrderException e) {
                 req.setAttribute("error", e.getMessage());
             }
@@ -68,7 +72,7 @@ public class CartOrderServlet extends HttpServlet {
             //Если заказ сохранен то выгружаем корзину и делаем редирект успешной покупки
             if(order != null) {
                 // TODO: 25.10.2018 Очистка корзины и страница оформленного заказа
-                resp.sendRedirect("/products/index");
+                resp.sendRedirect("/orders/view?id="+order.getId());
                 //Иначе перезагружаем страницу и выводим ошибки
             } else {
                 doGet(req, resp);
