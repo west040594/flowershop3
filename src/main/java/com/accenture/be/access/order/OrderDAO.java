@@ -1,5 +1,6 @@
 package com.accenture.be.access.order;
 
+import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.user.User;
 
@@ -23,10 +24,10 @@ public interface OrderDAO {
 
     /**
      * Возвращает список объектов Order, которые соотвествуют указанному пользователю
-     * @param user Пользоватеь
+     * @param customer Покупатель
      * @return Лист OrderDTO
      */
-    List<Order> findByUser(User user);
+    List<Order> findByCustomer(Customer customer);
 
 
     /**

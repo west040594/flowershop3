@@ -40,11 +40,11 @@
             <form method="post" action="cart">
                   <div class="form-group">
                     <label for="firstName">Имя</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Введите имя">
+                    <input type="text" class="form-control" id="firstName" name="firstName" value="${sessionScope.user.customer.firstName}" placeholder="Введите имя">
                   </div>
                   <div class="form-group">
                     <label for="lastName">Фамилия</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Введите фамилию">
+                    <input type="text" class="form-control" id="lastName" name="lastName" value="${sessionScope.user.customer.lastName}" placeholder="Введите фамилию">
                   </div>
                   <div class="form-group">
                      <label for="phone">Телефон</label>
@@ -59,7 +59,7 @@
                     <input type="text" class="form-control" id="city" name="city" placeholder="Введите город">
                   </div>
                   <div class="form-group">
-                     <label for="country">Подтвердите пароль</label>
+                     <label for="country">Страна</label>
                      <input type="text" class="form-control" id="country" name="country" placeholder="Введите страну">
                   </div>
                   <button type="submit" class="btn btn-primary">Подтвердить</button>

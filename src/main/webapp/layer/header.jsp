@@ -23,9 +23,12 @@
             <li class="nav-item">
                 <a href="/products/index" class="nav-link">Цветы</a>
             </li>
+
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
             <li class="nav-item">
                 <a href="/users" class="nav-link">Пользователи</a>
             </li>
+            </c:if>
             <c:if test="${sessionScope.user != null}">
                 <span class="navbar-text"><b>Логин:</b> ${sessionScope.user.username}&nbsp;</span>
                 <span class="navbar-text"><b>Баланс</b>: ${sessionScope.user.customer.balanceRub}&nbsp;</span>

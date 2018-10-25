@@ -1,4 +1,4 @@
-package com.accenture.be.business.customer;
+package com.accenture.be.business.customer.interfaces;
 
 import com.accenture.be.entity.customer.Customer;
 

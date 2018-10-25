@@ -1,8 +1,9 @@
 package com.accenture.be.business.user.implement;
 
 import com.accenture.be.access.user.UserDAO;
-import com.accenture.be.business.customer.CustomerConverter;
-import com.accenture.be.business.customer.CustomerService;
+import com.accenture.be.business.cart.Cart;
+import com.accenture.be.business.customer.converters.CustomerConverter;
+import com.accenture.be.business.customer.interfaces.CustomerService;
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service("userService")
@@ -117,4 +119,10 @@ public class UserServiceImpl implements UserService {
         return detectedUser;
     }
 
+    @Override
+    public void setUserSession(HttpSession session, UserDTO userDTO) {
+        session.setAttribute("user", userDTO);
+        int customerDiscount = userDTO.getCustomer().getDiscount();
+        session.setAttribute("cart", new Cart(customerDiscount));
+    }
 }

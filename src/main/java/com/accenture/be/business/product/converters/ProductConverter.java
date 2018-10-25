@@ -1,7 +1,6 @@
-package com.accenture.be.business.product;
+package com.accenture.be.business.product.converters;
 
 import com.accenture.be.business.category.CategoryConverter;
-import com.accenture.be.entity.category.Category;
 import com.accenture.be.entity.product.Product;
 import com.accenture.fe.dto.product.ProductDTO;
 

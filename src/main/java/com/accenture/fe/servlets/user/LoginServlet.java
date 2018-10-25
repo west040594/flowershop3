@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
         UserDTO userDTO = new UserDTO(
                 req.getParameter("username"), req.getParameter("password"), req.getParameter("username") );
 
+        //Авторизируем пользователя
         User user = null;
         try {
             user = userService.login(userDTO);
@@ -50,9 +51,7 @@ public class LoginServlet extends HttpServlet {
         //Если пользователь зарегестрирован то сохраняем его в сессию и делаем редирект
         if(user != null) {
             userDTO = UserConverter.convertToDTO(user);
-            HttpSession session = req.getSession();
-            session.setAttribute("user", userDTO);
-            session.setAttribute("cart", new Cart(userDTO.getCustomer().getDiscount()));
+            userService.setUserSession(req.getSession(), userDTO);
             resp.sendRedirect("/products/index");
             //Иначе перезагружаем страницу и выводим ошибки
         } else {

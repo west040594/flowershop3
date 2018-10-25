@@ -1,6 +1,7 @@
-package com.accenture.be.business.product;
+package com.accenture.be.business.product.implement;
 
 import com.accenture.be.access.product.ProductDAO;
+import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

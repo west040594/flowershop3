@@ -54,6 +54,7 @@ public class RegisterServlet extends HttpServlet {
         userDTO.setCreatedUpdated(new Date(), new Date());
         userDTO.setCustomer(customerDTO);
 
+        //Регистрируем пользователя
         User user = null;
         try {
             user = userService.register(userDTO);
@@ -63,8 +64,7 @@ public class RegisterServlet extends HttpServlet {
 
         //Если пользователь зарегестрирован то сохраняем его в сессию и делаем редирект
         if(user != null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("user", UserConverter.convertToDTO(user));
+            userService.setUserSession(req.getSession(), UserConverter.convertToDTO(user));
             resp.sendRedirect("/products/index");
         //Иначе перезагружаем страницу и выводим ошибки
         } else {

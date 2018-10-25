@@ -1,7 +1,7 @@
 package com.accenture.fe.servlets.product;
 
-import com.accenture.be.business.product.ProductConverter;
-import com.accenture.be.business.product.ProductService;
+import com.accenture.be.business.product.converters.ProductConverter;
+import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.fe.dto.product.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;

@@ -1,4 +1,4 @@
-package com.accenture.be.business.product;
+package com.accenture.be.business.product.interfaces;
 
 import com.accenture.be.entity.product.Product;
 

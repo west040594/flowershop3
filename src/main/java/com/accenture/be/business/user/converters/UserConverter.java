@@ -1,6 +1,6 @@
 package com.accenture.be.business.user.converters;
 
-import com.accenture.be.business.customer.CustomerConverter;
+import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
 

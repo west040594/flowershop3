@@ -2,24 +2,32 @@ package com.accenture.be.entity.order;
 
 
 import com.accenture.be.entity.customer.Customer;
+import com.accenture.be.entity.orderproduct.OrderProduct;
 import com.accenture.fe.enums.order.OrderStatus;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order")
+@NamedQueries({
+        @NamedQuery(name = "Order.findAll",
+                query = "SELECT o FROM Order o"),
+
+        @NamedQuery(name = "Order.findById",
+                query = "SELECT o FROM Order o WHERE o.id = :id"),
+
+        @NamedQuery(name = "Order.findByCustomer",
+                query = "SELECT o FROM Order o WHERE o.customer = :customer"),
+})
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
 
     @Column(name = "total", precision = 8, scale = 2, nullable = false)
     private BigDecimal total;
@@ -35,6 +43,13 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "closet_at")
     private Date closetAt;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderProduct> orderProducts;
 
     public Order() {
     }

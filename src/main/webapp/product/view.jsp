@@ -19,7 +19,7 @@
             <p class="card-text">${product.description}</p>
             <h5>В наличии: <span class="badge badge-primary">${product.inStock}</span></h5>
             <h5>Цена: <span class="badge badge-info">${product.priceRub}</span></h5>
-            <a href="#" class="btn btn-success w-100" role="button">В корзину</a>
+            <btn class="btn btn-success" role="addCartItem" data-id="${product.id}">В корзину</btn>
         </div>
         <div class="card-footer">
             <small class="text-muted">${product.createdAtFormat}</small>

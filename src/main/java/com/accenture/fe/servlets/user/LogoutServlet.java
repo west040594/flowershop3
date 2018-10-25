@@ -16,6 +16,8 @@ public class LogoutServlet extends HttpServlet {
         if(session.getAttribute("user") != null) {
             session.invalidate();
             resp.sendRedirect("/login");
+        } else {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
 }
