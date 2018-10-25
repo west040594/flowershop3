@@ -31,7 +31,7 @@
                 <span class="navbar-text"><b>Баланс</b>: ${sessionScope.user.customer.balanceRub}&nbsp;</span>
                 <span class="navbar-text"><b>Скидка:</b> ${sessionScope.user.customer.discountPercent}&nbsp;</span>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-danger" href="/logout">Выйти</a>
+                    <a class="nav-link btn btn-danger btn-sm" href="/logout">Выйти</a>
                 </li>
             </c:if>
         </ul>
@@ -41,6 +41,7 @@
                 <div class="navbar-text"><b>Корзина:</b> &nbsp;</div>
                 <div class="navbar-text">Количество: <span id ="cart-quantity">${sessionScope.cart.itemCount}</span>&nbsp;</div>
                 <div class="navbar-text">Цена: <span id= "cart-total">${sessionScope.cart.totalRub}</span>&nbsp;</div>
+                <div class="navbar-text"><a href="/cart" class="btn btn-warning btn-sm">Перейти</a></div>
             </c:if>
         </ul>
     </div>

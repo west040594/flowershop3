@@ -6,7 +6,8 @@ import com.accenture.fe.dto.product.ProductDTO;
 import java.math.BigDecimal;
 
 public class CartItem {
-    private ProductDTO product;
+
+    public ProductDTO product;
     private int quantity;
 
     public CartItem(ProductDTO product, int quantity) {
