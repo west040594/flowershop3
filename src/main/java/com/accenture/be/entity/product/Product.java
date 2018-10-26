@@ -1,11 +1,13 @@
 package com.accenture.be.entity.product;
 
 import com.accenture.be.entity.category.Category;
+import com.accenture.be.entity.order.Order;
 import com.accenture.fe.enums.product.ProductStatus;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,12 @@ import java.util.Objects;
 
         @NamedQuery(name = "Product.findByCategory",
                 query = "SELECT p FROM Product p WHERE p.category.name = :category"),
+
+        @NamedQuery(name = "Product.findByOrder",
+                query = " SELECT p FROM Product p JOIN p.orders o WHERE o.id = :orderId"),
+
+
+
 })
 public class Product {
 
@@ -59,6 +67,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToMany(mappedBy = "products")
+    private List<Order> orders;
 
     public Product() {
     }

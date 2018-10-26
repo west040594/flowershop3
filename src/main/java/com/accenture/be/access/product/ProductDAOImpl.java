@@ -60,6 +60,19 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public List<Product> findByOrder(Long orderId) {
+        List<Product> products = null;
+        try {
+            TypedQuery<Product> query  = entityManager.createNamedQuery("Product.findByOrder", Product.class)
+                    .setParameter("orderId", orderId);
+            products = query.getResultList();
+        } catch (NoResultException nr) {
+            products = Collections.emptyList();
+        }
+        return products;
+    }
+
+    @Override
     public Long save(Product product) {
 
         Session session = sessionFactory.openSession();

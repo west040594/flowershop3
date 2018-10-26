@@ -3,6 +3,7 @@ package com.accenture.be.entity.order;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.orderproduct.OrderProduct;
+import com.accenture.be.entity.product.Product;
 import com.accenture.fe.enums.order.OrderStatus;
 
 import javax.persistence.*;
@@ -53,6 +54,15 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> orderProducts;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "tb_order_product",
+            joinColumns = { @JoinColumn(name = "order_id") },
+            inverseJoinColumns = { @JoinColumn(name = "product_id") }
+    )
+    private List<Product> products;
+
 
     public Order() {
     }

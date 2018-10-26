@@ -33,6 +33,13 @@ public interface ProductDAO {
      */
     List<Product> findByCategory(String categoryName);
 
+    /**
+     * Возвращает список объектов Product, которые соответствую указанному id заказа
+     * @param orderId Название категории
+     * @return Лист Product
+     */
+    List<Product> findByOrder(Long orderId);
+
 
     /**
      * Этот метод попытается вставить Product в репозиторий.

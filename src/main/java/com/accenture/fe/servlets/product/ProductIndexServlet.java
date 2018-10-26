@@ -32,7 +32,7 @@ public class ProductIndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<ProductDTO> productDTOS = ProductConverter.convertToDto(productService.findAllProduct());
+        List<ProductDTO> productDTOS = ProductConverter.convertToDTO(productService.findAllProduct());
         req.setAttribute("products", productDTOS);
         req.getRequestDispatcher("/product/index.jsp").forward(req,resp);
     }

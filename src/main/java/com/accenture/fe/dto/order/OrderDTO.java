@@ -2,6 +2,7 @@ package com.accenture.fe.dto.order;
 
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.orderproduct.OrderProductDTO;
+import com.accenture.fe.dto.product.ProductDTO;
 import com.accenture.fe.enums.order.OrderStatus;
 
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ public class OrderDTO {
     private Date closetAt;
     private CustomerDTO customer;
     private List<OrderProductDTO> orderProducts;
+    private List<ProductDTO> products;
 
     public OrderDTO() {
     }
@@ -113,5 +115,13 @@ public class OrderDTO {
 
     public void setOrderProducts(List<OrderProductDTO> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    public List<ProductDTO> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductDTO> products) {
+        this.products = products;
     }
 }

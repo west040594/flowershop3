@@ -16,6 +16,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     protected CustomerDAO customerDAO;
 
+    public CustomerServiceImpl() {
+        System.out.println("customerService ACTIVE");
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Customer saveCustomer(Customer customer) {

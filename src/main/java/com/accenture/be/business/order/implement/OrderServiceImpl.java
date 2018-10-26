@@ -8,6 +8,8 @@ import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.order.validators.CreateOrderValidator;
+import com.accenture.be.business.orderproduct.converters.OrderProductConverter;
+import com.accenture.be.business.orderproduct.interfaces.OrderProductService;
 import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
@@ -35,11 +37,21 @@ public class OrderServiceImpl implements OrderService {
     private CustomerService customerService;
 
     @Autowired
+    private OrderProductService orderProductService;
+
+    @Autowired
     private CreateOrderValidator createOrderValidator;
 
     @Override
     public List<Order> findAllOrder() {
         return null;
+    }
+
+    @Transactional
+    @Override
+    public Order saveOrder(Order order) {
+        Long orderId = orderDAO.save(order);
+        return orderDAO.findById(orderId);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -78,10 +90,11 @@ public class OrderServiceImpl implements OrderService {
 
             //Очищаем корзину и сохраняем заказ
             orderDTO.getCustomer().getCart().removeAllItem();
-            Long orderId = orderDAO.save(order);
+            order = saveOrder(order);
+            orderProductService.saveOrderProducts(orderProducts);
 
             // TODO: 25.10.2018 Взять предметы из корзины и сформировать orderProduct
-            OrderDTO newOrderDTO= OrderConverter.convertToDTO(orderDAO.findById(orderId));
+            OrderDTO newOrderDTO= OrderConverter.convertToDTO(order);
             newOrderDTO.getCustomer().setCart(orderDTO.getCustomer().getCart());
             return newOrderDTO;
         }

@@ -1,21 +1,21 @@
 package com.accenture.fe.dto.orderproduct;
 
-import com.accenture.fe.dto.customer.CustomerDTO;
+import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.product.ProductDTO;
 
 public class OrderProductDTO {
     private long id;
     private ProductDTO product;
-    private CustomerDTO customer;
+    private OrderDTO order;
     private int quantity;
 
     public OrderProductDTO() {
     }
 
-    public OrderProductDTO(long id, ProductDTO product, CustomerDTO customer, int quantity) {
+    public OrderProductDTO(long id, ProductDTO product, OrderDTO order, int quantity) {
         this.id = id;
         this.product = product;
-        this.customer = customer;
+        this.order = order;
         this.quantity = quantity;
     }
 
@@ -35,12 +35,12 @@ public class OrderProductDTO {
         this.product = product;
     }
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public OrderDTO getOrder() {
+        return order;
     }
 
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
+    public void setOrder(OrderDTO order) {
+        this.order = order;
     }
 
     public int getQuantity() {

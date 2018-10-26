@@ -9,6 +9,16 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_product")
+@NamedQueries({
+        @NamedQuery(name = "OrderProduct.findAll",
+                query = "SELECT op FROM OrderProduct op"),
+
+        @NamedQuery(name = "OrderProduct.findById",
+                query = "SELECT op FROM OrderProduct op WHERE op.id = :id"),
+
+        @NamedQuery(name = "OrderProduct.findByOrder",
+                query = "SELECT op FROM OrderProduct op WHERE op.order.id = :orderId"),
+})
 public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +32,7 @@ public class OrderProduct {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @Column(name = "qunatity", nullable = false)
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
     public OrderProduct() {

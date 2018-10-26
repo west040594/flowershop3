@@ -1,7 +1,9 @@
 package com.accenture.be.business.product.converters;
 
 import com.accenture.be.business.category.converters.CategoryConverter;
+import com.accenture.be.entity.orderproduct.OrderProduct;
 import com.accenture.be.entity.product.Product;
+import com.accenture.fe.dto.orderproduct.OrderProductDTO;
 import com.accenture.fe.dto.product.ProductDTO;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class ProductConverter {
         return productDTO;
     }
 
-    public static List<ProductDTO> convertToDto(List<Product> productEntities) {
+    public static List<ProductDTO> convertToDTO(List<Product> productEntities) {
         List<ProductDTO> productDTOS = new ArrayList<>();
         for (Product product : productEntities) {
             ProductDTO productDTO = ProductConverter.convertToDTO(product);
@@ -45,5 +47,16 @@ public class ProductConverter {
                     CategoryConverter.convertToEntity(productDTO.getCategory()));
         }
         return productEntity;
+    }
+
+    public static List<Product> convertToEntity(List<ProductDTO> productDTOS) {
+        List<Product> products = new ArrayList<>();
+        for (ProductDTO product : productDTOS) {
+            Product productEntity = ProductConverter.convertToEntity(product);
+            if(productEntity != null) {
+                products.add(productEntity);
+            }
+        }
+        return products;
     }
 }

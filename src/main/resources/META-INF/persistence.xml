@@ -12,6 +12,8 @@
         <class>com.accenture.be.entity.customer.Customer</class>
         <class>com.accenture.be.entity.product.Product</class>
         <class>com.accenture.be.entity.category.Category</class>
+        <class>com.accenture.be.entity.order.Order</class>
+
 
         <properties>
             <property name="connection.driver_class" value="org.h2.Driver"/>
