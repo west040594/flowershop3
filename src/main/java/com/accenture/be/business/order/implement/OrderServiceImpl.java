@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         return orderDAO.findById(orderId);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     @Override
     public OrderDTO createOrder(OrderDTO orderDTO) throws OrderException {
 
@@ -103,6 +103,17 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderById(long orderId) {
         return orderDAO.findById(orderId);
     }
+
+
+    @Transactional
+    @Override
+    public void changerOrderStatusToPaid(Long orderId) {
+        Order order = orderDAO.findById(orderId);
+        order.setStatus(OrderStatus.PAID);
+        order.setClosetAt(new Date());
+        orderDAO.update(order);
+    }
+
 
     @Override
     public String formDeliveryAddress(Customer customer) {

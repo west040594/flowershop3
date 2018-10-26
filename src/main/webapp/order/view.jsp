@@ -7,7 +7,12 @@
       <thead>
             <tr>
                 <th colspan="1" scope="col">Заказ</th>
-                <th scope="col"><a href="/products/index" class="btn btn-success btn-sm">Перейти к другим покупкам</a></th>
+                <th scope="col">
+                <form method="post" action="view">
+                    <input type="hidden" name="orderId" value="${order.id}" />
+                    <button type="submit" class="btn btn-success">Оплатить</button>
+                </form>
+                </th>
            </tr>
       </thead>
       <tbody>
@@ -27,6 +32,12 @@
             <td>Создано</td>
             <td>${order.createdAtFormat}</td>
         </tr>
+        <c:if test="${order.closetAt != null}">
+            <tr>
+                <td>Закрыто</td>
+                <td>${order.closetAtFormat}</td>
+            </tr>
+        </c:if>
         <tr>
             <td>Общая стоимость</td>
             <td>${order.totalRub}</td>

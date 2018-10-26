@@ -54,4 +54,11 @@ public class OrderViewServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String orderId = req.getParameter("orderId");
+        orderService.changerOrderStatusToPaid(Long.parseLong(orderId));
+        resp.sendRedirect("/products/index");
+    }
 }

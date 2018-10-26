@@ -56,9 +56,9 @@ public class OrderProductDAOImpl implements OrderProductDAO {
     @Override
     public Long save(OrderProduct orderProduct) {
         Session session = sessionFactory.openSession();
-        //session.beginTransaction();
+        session.beginTransaction();
         Long orderProductId = (Long)session.save(orderProduct);
-        //session.getTransaction().commit();
+        session.getTransaction().commit();
         session.close();
         return orderProductId;
     }

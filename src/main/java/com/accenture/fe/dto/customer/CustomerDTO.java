@@ -23,10 +23,14 @@ public class CustomerDTO {
     public CustomerDTO() {
     }
 
-    public CustomerDTO(String firstName, String lastName,
-                       BigDecimal balance, int discount) {
+    public CustomerDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public CustomerDTO(String firstName, String lastName,
+                       BigDecimal balance, int discount) {
+        this(firstName, lastName);
         this.balance = balance;
         this.discount = discount;
     }

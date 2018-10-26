@@ -43,8 +43,8 @@ public class RegisterServlet extends HttpServlet {
         req.setCharacterEncoding("utf8");
         //Формируем Пользователя и соотвествующего ему Покупателя
         //Покупателю назначается стартовый бонус в размере 2000 и скидка 0%
-        CustomerDTO customerDTO = new CustomerDTO(req.getParameter("firstName"), req.getParameter("lastName"),
-                new BigDecimal(2000), 0);
+        CustomerDTO customerDTO = new CustomerDTO(
+                req.getParameter("firstName"), req.getParameter("lastName"));
         UserDTO userDTO = new UserDTO(
                 req.getParameter("username"), req.getParameter("password"), req.getParameter("email") );
 

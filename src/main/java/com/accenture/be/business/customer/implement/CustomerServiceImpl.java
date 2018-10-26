@@ -20,13 +20,14 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("customerService ACTIVE");
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     @Override
     public Customer saveCustomer(Customer customer) {
         Long customerId = customerDAO.save(customer);
         return customerDAO.findById(customerId);
     }
 
+    @Transactional
     @Override
     public void withdrawFromBalance(BigDecimal withdrawCost, Long customerId) {
         Customer customer = customerDAO.findById(customerId);

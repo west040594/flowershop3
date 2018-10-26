@@ -14,5 +14,6 @@ public interface OrderService {
     Order saveOrder(Order order);
     OrderDTO createOrder(OrderDTO orderDTO) throws OrderException;
     Order getOrderById(long orderId);
+    void changerOrderStatusToPaid(Long orderId);
     String formDeliveryAddress(Customer customer);
 }

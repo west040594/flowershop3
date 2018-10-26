@@ -60,9 +60,9 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Long save(Order order) {
         Session session = sessionFactory.openSession();
-        //session.beginTransaction();
+        session.beginTransaction();
         Long orderId = (Long)session.save(order);
-        //session.getTransaction().commit();
+        session.getTransaction().commit();
         session.close();
         return orderId;
     }

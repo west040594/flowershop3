@@ -84,7 +84,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
     public Long save(User user) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();

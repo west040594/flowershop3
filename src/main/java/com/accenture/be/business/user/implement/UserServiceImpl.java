@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    protected UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
     private RegistrationUserValidator registrationUserValidator;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional
     @Override
     public UserDTO register(UserDTO userDTO) throws UserException {
 
@@ -64,14 +65,20 @@ public class UserServiceImpl implements UserService {
             //Иначе сохраняем пользоватея и присваиваем ему покупателя, и возвращаем его
         } else {
             User user = UserConverter.convertToEntity(userDTO);
-            Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
-            customer.setUser(user);
-
             //Устаналвиваем дату роль и статус новому пользователю
             user.setStatus(UserStatus.ACTIVE);
             user.setRole(UserRole.USER);
             user.setCreatedUpdated(new Date(), new Date());
 
+            Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
+            //Устанавливаем начальный баланс и скидку покупателю
+            customer.setBalance(new BigDecimal(2000));
+            customer.setDiscount(3);
+
+
+
+            //Устанавливаем пользователя покупателю и сохраняем его
+            customer.setUser(user);
             customer = customerService.saveCustomer(customer);
             return  UserConverter.convertToDTO(customer.getUser());
         }

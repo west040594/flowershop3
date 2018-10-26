@@ -20,7 +20,11 @@
                         <img style="height:70px; width:110px" class="card-img-top" src="${pageContext.request.contextPath}/image?type=product&img=${cartItem.product.imageUrl}" alt="${product.imageUrl}">
                       </td>
                       <td>${cartItem.product.name}</td>
-                      <td>${cartItem.quantity}</td>
+                      <td>
+                        <btn class="btn btn-danger btn-sm" role="addCartItem" data-id="${cartItem.product.id}">-</btn>
+                        ${cartItem.quantity}
+                        <btn class="btn btn-success btn-sm" role="addCartItem" data-id="${cartItem.product.id}">+</btn>
+                      </td>
                       <td><del>${cartItem.cartItemTotalRub}</del></td>
                       <td>${cartItem.cartItemTotalDiscountRub}</td>
                     </tr>
