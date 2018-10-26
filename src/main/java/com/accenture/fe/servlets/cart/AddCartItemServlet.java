@@ -6,6 +6,7 @@ import com.accenture.be.business.cart.CartItem;
 import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.fe.dto.product.ProductDTO;
+import com.accenture.fe.dto.user.UserDTO;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -38,10 +39,10 @@ public class AddCartItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(session.getAttribute("cart") != null) {
+        if(session.getAttribute("user") != null) {
             //Берем данные с ajax запроса(id продукта) и добавляем его в корзину
             Long productId = Long.parseLong(req.getParameter("productId"));
-            Cart cart = (Cart)session.getAttribute("cart");
+            Cart cart = (Cart)((UserDTO)session.getAttribute("user")).getCustomer().getCart();
             ProductDTO productDTO = ProductConverter.convertToDTO(productService.getProductById(productId));
             CartItem cartItem = new CartItem(productDTO, 1);
             cart.addItem(cartItem);

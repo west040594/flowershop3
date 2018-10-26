@@ -110,11 +110,6 @@ public class UserDTO {
         this.updatedAt = updatedAt;
     }
 
-    public void setCreatedUpdated(Date createdAt, Date updatedAt) {
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
     public CustomerDTO getCustomer() {
         return customer;
     }

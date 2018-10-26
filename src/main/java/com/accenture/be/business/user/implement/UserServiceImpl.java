@@ -12,6 +12,8 @@ import com.accenture.be.business.user.validators.RegistrationUserValidator;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
+import com.accenture.fe.enums.user.UserRole;
+import com.accenture.fe.enums.user.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Service("userService")
@@ -63,6 +66,11 @@ public class UserServiceImpl implements UserService {
             User user = UserConverter.convertToEntity(userDTO);
             Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
             customer.setUser(user);
+
+            //Устаналвиваем дату роль и статус новому пользователю
+            user.setStatus(UserStatus.ACTIVE);
+            user.setRole(UserRole.USER);
+            user.setCreatedUpdated(new Date(), new Date());
 
             customer = customerService.saveCustomer(customer);
             return  UserConverter.convertToDTO(customer.getUser());
@@ -112,8 +120,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void setUserSession(HttpSession session, UserDTO userDTO) {
-        session.setAttribute("user", userDTO);
         int customerDiscount = userDTO.getCustomer().getDiscount();
-        session.setAttribute("cart", new Cart(customerDiscount));
+        userDTO.getCustomer().setCart(new Cart(customerDiscount));
+        session.setAttribute("user", userDTO);
     }
 }

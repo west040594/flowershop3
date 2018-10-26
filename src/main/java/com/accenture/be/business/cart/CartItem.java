@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class CartItem {
 
-    public ProductDTO product;
+    private ProductDTO product;
     private int quantity;
     private int discount;
 

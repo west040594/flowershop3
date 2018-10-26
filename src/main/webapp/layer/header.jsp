@@ -39,11 +39,11 @@
             </c:if>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <c:if test="${sessionScope.cart != null}">
+            <c:if test="${sessionScope.user.customer.cart != null}">
                 <%--<span class="glyphicon glyphicon-shopping-cart"></span>--%>
                 <div class="navbar-text"><b>Корзина:</b> &nbsp;</div>
-                <div class="navbar-text">Количество: <span id ="cart-quantity">${sessionScope.cart.itemCount}</span>&nbsp;</div>
-                <div class="navbar-text">Цена: <span id= "cart-total">${sessionScope.cart.totalRub}</span>&nbsp;</div>
+                <div class="navbar-text">Количество: <span id ="cart-quantity">${sessionScope.user.customer.cart.itemCount}</span>&nbsp;</div>
+                <div class="navbar-text">Цена: <span id= "cart-total">${sessionScope.user.customer.cart.totalRub}</span>&nbsp;</div>
                 <div class="navbar-text"><a href="/cart" class="btn btn-warning btn-sm">Перейти</a></div>
             </c:if>
         </ul>

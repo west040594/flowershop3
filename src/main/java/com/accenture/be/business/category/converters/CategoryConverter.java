@@ -1,4 +1,4 @@
-package com.accenture.be.business.category;
+package com.accenture.be.business.category.converters;
 
 import com.accenture.be.entity.category.Category;
 import com.accenture.fe.dto.category.CategoryDTO;
@@ -15,5 +15,14 @@ public class CategoryConverter {
             );
         }
         return categoryDTO;
+    }
+
+    public static Category convertToEntity(CategoryDTO categoryDTO) {
+        Category categoryEntity = null;
+        if(categoryDTO != null) {
+            categoryEntity = new Category(categoryDTO.getId(), categoryDTO.getName(),
+                    categoryDTO.getDescription(), categoryDTO.getImageUrl(), categoryDTO.getStatus());
+        }
+        return categoryEntity;
     }
 }

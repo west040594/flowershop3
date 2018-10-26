@@ -14,6 +14,7 @@ public class Cart {
     private int itemCount;
 
     public Cart() {
+        itemCount = 0;
         discount = 0;
         items = new HashMap<>();
         total = new BigDecimal(0);
@@ -45,6 +46,12 @@ public class Cart {
             return true;
         }
         return false;
+    }
+
+    public void removeAllItem() {
+        items.clear();
+        total = new BigDecimal(0);
+        itemCount = 0;
     }
 
     public int getDiscount() {

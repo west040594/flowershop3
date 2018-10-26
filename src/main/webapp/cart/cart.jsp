@@ -14,7 +14,7 @@
                 </tr>
               </thead>
               <tbody>
-                <c:forEach var="cartItem" items="${sessionScope.cart.itemList}">
+                <c:forEach var="cartItem" items="${sessionScope.user.customer.cart.itemList}">
                     <tr>
                       <td scope="row">
                         <img style="height:70px; width:110px" class="card-img-top" src="${pageContext.request.contextPath}/image?type=product&img=${cartItem.product.imageUrl}" alt="${product.imageUrl}">
@@ -30,7 +30,7 @@
                 <tr>
                     <td colspan="5">
                         <span class="text-warning">Цена с учетом общей скидки</span>
-                        <span id="cart-total"<b>${sessionScope.cart.totalRub}</b></span>
+                        <span id="cart-total"<b>${sessionScope.user.customer.cart.totalRub}</b></span>
                         </td>
                 </tr>
               </tfoot>

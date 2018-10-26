@@ -151,6 +151,11 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+    public void setCreatedUpdated(Date createdAt, Date updatedAt) {
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

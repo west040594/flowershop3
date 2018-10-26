@@ -63,6 +63,19 @@ public class Product {
     public Product() {
     }
 
+    public Product(long id, String name, BigDecimal price, String description, String imageUrl, ProductStatus status, int inStock, Date createdAt, Date updatedAt, Category category) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.status = status;
+        this.inStock = inStock;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.category = category;
+    }
+
     public long getId() {
         return id;
     }

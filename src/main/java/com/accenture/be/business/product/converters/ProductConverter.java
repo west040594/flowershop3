@@ -1,6 +1,6 @@
 package com.accenture.be.business.product.converters;
 
-import com.accenture.be.business.category.CategoryConverter;
+import com.accenture.be.business.category.converters.CategoryConverter;
 import com.accenture.be.entity.product.Product;
 import com.accenture.fe.dto.product.ProductDTO;
 
@@ -33,5 +33,17 @@ public class ProductConverter {
             }
         }
         return productDTOS;
+    }
+
+    public static Product convertToEntity(ProductDTO productDTO) {
+        Product productEntity = null;
+        if(productDTO != null) {
+            productEntity = new Product(
+                    productDTO.getId(), productDTO.getName(), productDTO.getPrice(), productDTO.getDescription(),
+                    productDTO.getImageUrl(), productDTO.getStatus(), productDTO.getInStock(),
+                    productDTO.getCreatedAt(), productDTO.getUpdatedAt(),
+                    CategoryConverter.convertToEntity(productDTO.getCategory()));
+        }
+        return productEntity;
     }
 }

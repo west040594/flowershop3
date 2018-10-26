@@ -28,6 +28,12 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
+    public OrderProduct(Product product, Order order, int quantity) {
+        this.product = product;
+        this.order = order;
+        this.quantity = quantity;
+    }
+
     public long getId() {
         return id;
     }

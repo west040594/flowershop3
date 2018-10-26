@@ -44,7 +44,7 @@ public class CreateOrderValidator implements Validator {
         //то выкидываем ошибку
         if(order.getCustomer().getBalance().compareTo(order.getCustomer().getCart().getTotal()) < 0) {
             errors.reject("customer.notEnoughBalance",
-                    "Не достаточно средств для совершения платежа");
+                    "Недостаточно средств для совершения платежа");
         }
     }
 }

@@ -8,8 +8,11 @@ import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.order.validators.CreateOrderValidator;
+import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
+import com.accenture.be.entity.orderproduct.OrderProduct;
+import com.accenture.be.entity.product.Product;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.enums.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,10 +68,22 @@ public class OrderServiceImpl implements OrderService {
             order.setDeliveryAddress(formDeliveryAddress(order.getCustomer()));
             customerService.withdrawFromBalance(order.getTotal(), order.getCustomer().getId());
 
+            //Берем предметы из корзины и формируем новые OrderProducts
+            List<OrderProduct> orderProducts = new ArrayList<>();
+            for (CartItem cartItem : orderDTO.getCustomer().getCart().getItemList()) {
+                Product product = ProductConverter.convertToEntity(cartItem.getProduct());
+                orderProducts.add(new OrderProduct(product, order, cartItem.getQuantity()));
+            }
+            order.setOrderProducts(orderProducts);
+
+            //Очищаем корзину и сохраняем заказ
+            orderDTO.getCustomer().getCart().removeAllItem();
             Long orderId = orderDAO.save(order);
 
             // TODO: 25.10.2018 Взять предметы из корзины и сформировать orderProduct
-            return OrderConverter.convertToDTO(orderDAO.findById(orderId));
+            OrderDTO newOrderDTO= OrderConverter.convertToDTO(orderDAO.findById(orderId));
+            newOrderDTO.getCustomer().setCart(orderDTO.getCustomer().getCart());
+            return newOrderDTO;
         }
     }
     @Override

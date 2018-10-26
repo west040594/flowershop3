@@ -34,7 +34,7 @@ public class CartOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(session.getAttribute("cart") != null) {
+        if(session.getAttribute("user") != null) {
             req.getRequestDispatcher("cart/cart.jsp").forward(req, resp);
         } else {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
@@ -44,10 +44,9 @@ public class CartOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if(session.getAttribute("user") != null && session.getAttribute("cart") != null) {
+        if(session.getAttribute("user") != null) {
 
             //Берем поля из формы, заполняем покупателя
-            Cart cart = (Cart) session.getAttribute("cart");
             UserDTO userDTO = (UserDTO)session.getAttribute("user");
             CustomerDTO customerDTO = userDTO.getCustomer();
             customerDTO.setFirstName(req.getParameter("firstName"));
@@ -56,28 +55,25 @@ public class CartOrderServlet extends HttpServlet {
             customerDTO.setStreet(req.getParameter("street"));
             customerDTO.setCity(req.getParameter("city"));
             customerDTO.setCountry(req.getParameter("country"));
-            customerDTO.setCart(cart);
 
             //формируем новый заказ DTO
             OrderDTO orderDTO = new OrderDTO();
             orderDTO.setCustomer(customerDTO);
 
-            //Создаем новый заказ
+            //Создаем новый заказ, при ошибки перезугружаем сраницу с списком errors
             try {
                 orderDTO = orderService.createOrder(orderDTO);
             } catch (OrderException e) {
                 req.setAttribute("error", e.getMessage());
+                doGet(req, resp);
+                return;
             }
 
-            //Если заказ сохранен то выгружаем корзину и делаем редирект успешной покупки
-            if(orderDTO != null) {
-                // TODO: 25.10.2018 Очистка корзины и страница оформленного заказа
-                userDTO.setCustomer(orderDTO.getCustomer());
-                resp.sendRedirect("/orders/view?id="+orderDTO.getId());
-                //Иначе перезагружаем страницу и выводим ошибки
-            } else {
-                doGet(req, resp);
-            }
+            //Если ошибки не возникло устаавливаем пользователю в сессии измененного покупателя
+            //Так как баланс изменился и корзина очистилась
+            userDTO.setCustomer(orderDTO.getCustomer());
+            resp.sendRedirect("/orders/view?id="+orderDTO.getId());
+
         } else {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }

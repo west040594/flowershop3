@@ -49,26 +49,18 @@ public class RegisterServlet extends HttpServlet {
                 req.getParameter("username"), req.getParameter("password"), req.getParameter("email") );
 
         userDTO.setConfirmPassword(req.getParameter("confirmPassword"));
-        userDTO.setStatus(UserStatus.ACTIVE);
-        userDTO.setRole(UserRole.USER);
-        userDTO.setCreatedUpdated(new Date(), new Date());
         userDTO.setCustomer(customerDTO);
 
-        //Регистрируем пользователя
+        //Регистрируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
             userDTO = userService.register(userDTO);
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
-        }
-
-        //Если пользователь зарегестрирован то сохраняем его в сессию и делаем редирект
-        if(userDTO != null) {
-            userService.setUserSession(req.getSession(), userDTO);
-            resp.sendRedirect("/products/index");
-        //Иначе перезагружаем страницу и выводим ошибки
-        } else {
             doGet(req, resp);
+            return;
         }
+        userService.setUserSession(req.getSession(), userDTO);
+        resp.sendRedirect("/products/index");
 
     }
 }
