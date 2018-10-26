@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<Order> findAllOrder();
+    List<OrderDTO> findAllOrder();
     Order saveOrder(Order order);
     OrderDTO createOrder(OrderDTO orderDTO) throws OrderException;
-    Order getOrderById(long orderId);
+    OrderDTO getOrderById(long orderId);
     void changerOrderStatusToPaid(Long orderId);
     String formDeliveryAddress(Customer customer);
 }

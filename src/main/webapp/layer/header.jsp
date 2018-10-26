@@ -26,7 +26,7 @@
 
             <c:if test="${sessionScope.user.role == 'ADMIN'}">
             <li class="nav-item">
-                <a href="/users" class="nav-link">Пользователи</a>
+                <a href="/orders/index" class="nav-link">Заказы</a>
             </li>
             </c:if>
             <c:if test="${sessionScope.user != null}">
@@ -40,7 +40,6 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user.customer.cart != null}">
-                <%--<span class="glyphicon glyphicon-shopping-cart"></span>--%>
                 <div class="navbar-text"><b>Корзина:</b> &nbsp;</div>
                 <div class="navbar-text">Количество: <span id ="cart-quantity">${sessionScope.user.customer.cart.itemCount}</span>&nbsp;</div>
                 <div class="navbar-text">Цена: <span id= "cart-total">${sessionScope.user.customer.cart.totalRub}</span>&nbsp;</div>

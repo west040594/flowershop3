@@ -4,6 +4,9 @@ import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.entity.order.Order;
 import com.accenture.fe.dto.order.OrderDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderConverter {
 
     public static OrderDTO convertToDTO(Order orderEntity) {
@@ -15,6 +18,17 @@ public class OrderConverter {
                     orderEntity.getCreatedAt(), orderEntity.getClosetAt());
         }
         return orderDTO;
+    }
+
+    public static List<OrderDTO> convertToDTO(List<Order> orders) {
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+        for (Order order : orders) {
+            OrderDTO orderDTO = OrderConverter.convertToDTO(order);
+            if(orderDTO != null) {
+                orderDTOS.add(orderDTO);
+            }
+        }
+        return orderDTOS;
     }
 
     public static Order convertToEntity(OrderDTO orderDTO) {

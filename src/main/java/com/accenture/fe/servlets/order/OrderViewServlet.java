@@ -39,8 +39,7 @@ public class OrderViewServlet extends HttpServlet {
         OrderDTO orderDTO = null;
 
         if (orderId != null) {
-            orderDTO = OrderConverter.convertToDTO(
-                    orderService.getOrderById(Long.parseLong(orderId)));
+            orderDTO = orderService.getOrderById(Long.parseLong(orderId));
             List<OrderProductDTO> orderProductDTOS = orderProductService.findOrderProductByOrder(orderDTO);
             orderDTO.setOrderProducts(orderProductDTOS);
         }

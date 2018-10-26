@@ -43,8 +43,8 @@ public class OrderServiceImpl implements OrderService {
     private CreateOrderValidator createOrderValidator;
 
     @Override
-    public List<Order> findAllOrder() {
-        return null;
+    public List<OrderDTO> findAllOrder() {
+        return OrderConverter.convertToDTO(orderDAO.findAll());
     }
 
     @Transactional
@@ -93,15 +93,14 @@ public class OrderServiceImpl implements OrderService {
             order = saveOrder(order);
             orderProductService.saveOrderProducts(orderProducts);
 
-            // TODO: 25.10.2018 Взять предметы из корзины и сформировать orderProduct
             OrderDTO newOrderDTO= OrderConverter.convertToDTO(order);
             newOrderDTO.getCustomer().setCart(orderDTO.getCustomer().getCart());
             return newOrderDTO;
         }
     }
     @Override
-    public Order getOrderById(long orderId) {
-        return orderDAO.findById(orderId);
+    public OrderDTO getOrderById(long orderId) {
+        return OrderConverter.convertToDTO(orderDAO.findById(orderId));
     }
 
 
