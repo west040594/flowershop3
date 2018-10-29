@@ -47,7 +47,7 @@ public class Customer {
     @Column(name = "country", length = 50)
     private String country;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 

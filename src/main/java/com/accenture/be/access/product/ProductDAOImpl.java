@@ -19,8 +19,8 @@ public class ProductDAOImpl implements ProductDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    /*@Autowired
+    private SessionFactory sessionFactory;*/
 
     @Override
     public List<Product> findAll() {
@@ -75,21 +75,24 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public Long save(Product product) {
 
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         Long productId = (Long)session.save(product);
         session.getTransaction().commit();
         session.close();
-        return productId;
+        return productId;*/
+        entityManager.persist(product);
+        entityManager.flush();
+        return product.getId();
     }
 
     @Override
     public void update(Product product) {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(product);
         session.getTransaction().commit();
-        session.close();
+        session.close();*/
     }
 
     @Override

@@ -15,15 +15,14 @@ import javax.persistence.TypedQuery;
 
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
-@Transactional
 @Repository("customerDao")
 public class CustomerDAOImpl implements CustomerDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    /*@Autowired
+    private SessionFactory sessionFactory;*/
 
     @Override
     public Customer findById(long customerId) {
@@ -49,20 +48,23 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Long save(Customer customer)
     {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         Long customerId = (Long)session.save(customer);
         session.getTransaction().commit();
         session.close();
-        return customerId;
+        return customerId;*/
+        entityManager.persist(customer);
+        //entityManager.flush();
+        return customer.getId();
     }
 
     @Override
     public void update(Customer customer) {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(customer);
         session.getTransaction().commit();
-        session.close();
+        session.close();*/
     }
 }

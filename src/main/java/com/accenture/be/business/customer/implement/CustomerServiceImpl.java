@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    protected CustomerDAO customerDAO;
+    private CustomerDAO customerDAO;
 
     public CustomerServiceImpl() {
         System.out.println("customerService ACTIVE");

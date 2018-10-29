@@ -70,17 +70,27 @@ public class UserServiceImpl implements UserService {
             user.setRole(UserRole.USER);
             user.setCreatedUpdated(new Date(), new Date());
 
+            /*user.setCustomer(null);
+            user = saveUser(user);*/
+
+
             Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
             //Устанавливаем начальный баланс и скидку покупателю
             customer.setBalance(new BigDecimal(2000));
             customer.setDiscount(3);
 
+            customerService.saveCustomer(customer);
 
+            user.setCustomer(customer);
+
+            user = saveUser(user);
+
+            return UserConverter.convertToDTO(user);
 
             //Устанавливаем пользователя покупателю и сохраняем его
-            customer.setUser(user);
+           /* customer.setUser(user);
             customer = customerService.saveCustomer(customer);
-            return  UserConverter.convertToDTO(customer.getUser());
+            return  UserConverter.convertToDTO(customer.getUser());*/
         }
     }
 
@@ -130,5 +140,12 @@ public class UserServiceImpl implements UserService {
         int customerDiscount = userDTO.getCustomer().getDiscount();
         userDTO.getCustomer().setCart(new Cart(customerDiscount));
         session.setAttribute("user", userDTO);
+    }
+
+
+    @Override
+    public User saveUser(User user) {
+        userDAO.save(user);
+        return userDAO.findById(user.getId());
     }
 }

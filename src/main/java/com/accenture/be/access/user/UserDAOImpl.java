@@ -24,8 +24,8 @@ public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    /*@Autowired
+    private SessionFactory sessionFactory;*/
 
 
     @Override
@@ -85,21 +85,26 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Long save(User user) {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         Long customerId = (Long)session.save(user);
         session.getTransaction().commit();
         session.close();
-        return customerId;
+        return customerId;*/
+        entityManager.persist(user);
+        //entityManager.flush();
+        return user.getId();
+        //entityManager.flush();
+        //return user.getId();
     }
 
     @Override
     public void update(User user) {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
-        session.close();
+        session.close();*/
     }
 
     @Override

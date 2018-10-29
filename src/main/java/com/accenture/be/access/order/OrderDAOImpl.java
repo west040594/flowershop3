@@ -20,8 +20,8 @@ public class OrderDAOImpl implements OrderDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    /*@Autowired
+    private SessionFactory sessionFactory;*/
 
     @Override
     public List<Order> findAll() {
@@ -59,21 +59,24 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Long save(Order order) {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         Long orderId = (Long)session.save(order);
         session.getTransaction().commit();
         session.close();
-        return orderId;
+        return orderId;*/
+        entityManager.persist(order);
+        entityManager.flush();
+        return order.getId();
     }
 
     @Override
     public void update(Order order) {
-        Session session = sessionFactory.openSession();
+        /*Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(order);
         session.getTransaction().commit();
-        session.close();
+        session.close();*/
     }
 
     @Override

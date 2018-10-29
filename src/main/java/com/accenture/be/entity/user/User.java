@@ -49,6 +49,7 @@ public class User {
     @Column(name = "role", columnDefinition = "smallint")
     private UserRole role;
 
+
     @OneToOne(mappedBy = "user")
     private Customer customer;
 
