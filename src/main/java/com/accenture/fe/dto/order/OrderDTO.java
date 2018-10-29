@@ -27,7 +27,8 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(long id, CustomerDTO customer, BigDecimal total, String deliveryAddress, OrderStatus status, Date createdAt, Date closetAt) {
+    public OrderDTO(long id, CustomerDTO customer, BigDecimal total, String deliveryAddress,
+                    OrderStatus status, Date createdAt, Date closetAt) {
         this.id = id;
         this.customer = customer;
         this.total = total;

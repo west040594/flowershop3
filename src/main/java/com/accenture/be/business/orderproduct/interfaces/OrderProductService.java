@@ -8,6 +8,6 @@ import com.accenture.fe.dto.orderproduct.OrderProductDTO;
 import java.util.List;
 
 public interface OrderProductService {
-    List<OrderProductDTO> findOrderProductByOrder(OrderDTO orderDTO);
+    List<OrderProduct> findOrderProductByOrder(Order order);
     void saveOrderProducts(List<OrderProduct> orderProducts);
 }

@@ -15,6 +15,7 @@
                         <span class="badge badge-warning">${product.category.name}</span>
                         <span class="badge badge-info">${product.priceRub}</span>
                     </h5>
+                    <p>В наличии: <span class="badge badge-primary">${product.inStock}</span> </p>
                     <p class="card-text">${product.description}</p>
                     <div class="btn-group d-flex" role="group">
                         <a href="/products/view?id=${product.id}" class="btn btn-info w-100" role="button">Открыть</a>

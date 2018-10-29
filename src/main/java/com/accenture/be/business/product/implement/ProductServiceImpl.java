@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
@@ -20,7 +21,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findAllProduct() {
-        return productDAO.findAll();
+
+        List<Product> products =  productDAO.findAll();
+        //Возращаем цветы которых на складе больше 0
+        return  products.stream().filter(product -> product.getInStock() > 0)
+                .collect(Collectors.toList());
+
     }
 
     @Override
@@ -32,5 +38,15 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> getProductsByOrder(OrderDTO order) {
         List<Product> products = productDAO.findByOrder(order.getId());
         return ProductConverter.convertToDTO(products);
+    }
+
+    @Override
+    public void changeProductQuantityInStock(Long productId, int quantity) {
+        Product product = productDAO.findById(productId);
+        int inStock = product.getInStock();
+        if(inStock > quantity) {
+            product.setInStock(inStock - quantity);
+        }
+        productDAO.update(product);
     }
 }

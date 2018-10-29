@@ -20,8 +20,8 @@ public class OrderProductServiceImpl implements OrderProductService {
     private OrderProductDAO orderProductDAO;
 
     @Override
-    public List<OrderProductDTO> findOrderProductByOrder(OrderDTO orderDTO) {
-        return OrderProductConverter.convertToDTO(orderProductDAO.findByOrder(orderDTO.getId()));
+    public List<OrderProduct> findOrderProductByOrder(Order order) {
+        return orderProductDAO.findByOrder(order.getId());
     }
 
     @Transactional

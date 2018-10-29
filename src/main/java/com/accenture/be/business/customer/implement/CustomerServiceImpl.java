@@ -29,9 +29,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public void withdrawFromBalance(BigDecimal withdrawCost, Long customerId) {
+    public Customer withdrawFromBalance(BigDecimal withdrawCost, Long customerId) {
         Customer customer = customerDAO.findById(customerId);
         customer.setBalance(customer.getBalance().subtract(withdrawCost));
         customerDAO.update(customer);
+        return customer;
     }
 }

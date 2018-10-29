@@ -52,7 +52,7 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderProduct> orderProducts;
 
     @ManyToMany(cascade = { CascadeType.ALL })
@@ -67,7 +67,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(Customer customer, BigDecimal total, String deliveryAddress, OrderStatus status, Date createdAt, Date closetAt) {
+    public Order(Customer customer, BigDecimal total, String deliveryAddress,
+                 OrderStatus status, Date createdAt, Date closetAt) {
         this.customer = customer;
         this.total = total;
         this.deliveryAddress = deliveryAddress;

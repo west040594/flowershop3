@@ -8,5 +8,5 @@ public interface CustomerService {
 
     Customer saveCustomer(Customer customer);
 
-    void withdrawFromBalance(BigDecimal withdrawCost, Long customerId);
+    Customer withdrawFromBalance(BigDecimal withdrawCost, Long customerId);
 }

@@ -1,6 +1,7 @@
 package com.accenture.be.business.order.converters;
 
 import com.accenture.be.business.customer.converters.CustomerConverter;
+import com.accenture.be.business.orderproduct.converters.OrderProductConverter;
 import com.accenture.be.entity.order.Order;
 import com.accenture.fe.dto.order.OrderDTO;
 
@@ -38,6 +39,11 @@ public class OrderConverter {
                     orderDTO.getTotal(), orderDTO.getDeliveryAddress(), orderDTO.getStatus(),
                     orderDTO.getCreatedAt(), orderDTO.getClosetAt()
             );
+
+            if(orderDTO.getOrderProducts() != null) {
+                orderEntity.setOrderProducts(
+                        OrderProductConverter.convertToEntity(orderDTO.getOrderProducts()));
+            }
         }
         return orderEntity;
     }

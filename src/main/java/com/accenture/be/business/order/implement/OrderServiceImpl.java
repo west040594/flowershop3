@@ -3,6 +3,7 @@ package com.accenture.be.business.order.implement;
 import com.accenture.be.access.order.OrderDAO;
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.cart.CartItem;
+import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.business.customer.interfaces.CustomerService;
 import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
@@ -11,12 +12,17 @@ import com.accenture.be.business.order.validators.CreateOrderValidator;
 import com.accenture.be.business.orderproduct.converters.OrderProductConverter;
 import com.accenture.be.business.orderproduct.interfaces.OrderProductService;
 import com.accenture.be.business.product.converters.ProductConverter;
+import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.orderproduct.OrderProduct;
 import com.accenture.be.entity.product.Product;
+import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.order.OrderDTO;
+import com.accenture.fe.dto.orderproduct.OrderProductDTO;
+import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.order.OrderStatus;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,6 +41,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private OrderProductService orderProductService;
@@ -78,7 +87,6 @@ public class OrderServiceImpl implements OrderService {
             order.setStatus(OrderStatus.CREATED);
             order.setCreatedAt(new Date());
             order.setDeliveryAddress(formDeliveryAddress(order.getCustomer()));
-            customerService.withdrawFromBalance(order.getTotal(), order.getCustomer().getId());
 
             //Берем предметы из корзины и формируем новые OrderProducts
             List<OrderProduct> orderProducts = new ArrayList<>();
@@ -93,24 +101,37 @@ public class OrderServiceImpl implements OrderService {
             order = saveOrder(order);
             orderProductService.saveOrderProducts(orderProducts);
 
-            OrderDTO newOrderDTO= OrderConverter.convertToDTO(order);
+            //Возвращаем orderDTO
+            OrderDTO newOrderDTO = OrderConverter.convertToDTO(order);
             newOrderDTO.getCustomer().setCart(orderDTO.getCustomer().getCart());
             return newOrderDTO;
         }
     }
     @Override
-    public OrderDTO getOrderById(long orderId) {
-        return OrderConverter.convertToDTO(orderDAO.findById(orderId));
+    public Order getOrderById(long orderId) {
+        return orderDAO.findById(orderId);
     }
 
 
     @Transactional
     @Override
-    public void changerOrderStatusToPaid(Long orderId) {
+    public void changerOrderStatusToPaid(UserDTO userDTO, Long orderId) {
+        //Изменяем дату закрытия заказа и статус в  -  Закрыто
         Order order = orderDAO.findById(orderId);
         order.setStatus(OrderStatus.PAID);
         order.setClosetAt(new Date());
         orderDAO.update(order);
+        //Снимаем деньги с покупателя и устанавливаем и обновляем сессиию покупаетеля
+        Customer customer = customerService.withdrawFromBalance(order.getTotal(), order.getCustomer().getId());
+        CustomerDTO customerDTO = CustomerConverter.convertToDTO(customer);
+        customerDTO.setCart(userDTO.getCustomer().getCart());
+        userDTO.setCustomer(customerDTO);
+        //Изменяем число "В наличиии" у продуктов
+        List<OrderProduct> orderProducts = orderProductService.findOrderProductByOrder(order);
+        for (OrderProduct orderProduct : orderProducts) {
+            productService.changeProductQuantityInStock(
+                    orderProduct.getProduct().getId(), orderProduct.getQuantity());
+        }
     }
 
 

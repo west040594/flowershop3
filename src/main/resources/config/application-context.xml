@@ -19,8 +19,6 @@
     http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 
-
-
     <mvc:annotation-driven />
     <!--<cache:annotation-driven />-->
     <context:annotation-config/>
@@ -53,8 +51,6 @@
         </property>
         <property name="packagesToScan" value="com.accenture"/>
     </bean>
-
-
 
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate5.HibernateTransactionManager"
@@ -91,10 +87,4 @@
 
 
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
-
-
-
-
-    <!--<bean id="userDao" class="com.accenture.be.access.user.UserDAOImpl" />
-    <bean id="userService" class="com.accenture.be.business.user.implement.UserServiceImpl" />-->
 </beans>
