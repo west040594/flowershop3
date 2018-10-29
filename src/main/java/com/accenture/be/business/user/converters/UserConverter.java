@@ -39,8 +39,7 @@ public class UserConverter {
         if(userDTO != null) {
             userEntity = new User(
                     userDTO.getUsername(), userDTO.getPassword(), userDTO.getEmail(),
-                    userDTO.getStatus(), userDTO.getRole(), userDTO.getCreatedAt(), userDTO.getUpdatedAt(),
-                    CustomerConverter.convertToEntity(userDTO.getCustomer()));
+                    userDTO.getStatus(), userDTO.getRole(), userDTO.getCreatedAt(), userDTO.getUpdatedAt());
         }
         return userEntity;
     }

@@ -2,6 +2,7 @@ package com.accenture.be.entity.customer;
 
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.user.User;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ import java.util.Objects;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name =  "first_name")

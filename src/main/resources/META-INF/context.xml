@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <Parameter name="AppName" value="cbr-clm"/>
+    <Resource
+                name="jdbc/flowerShopDS"
+                auth="Container"
+                type="javax.sql.DataSource"
+                driverClassName="org.h2.Driver"
+                url="jdbc:h2:~/flowershop"
+                maxActive="10"
+                maxIdle="3"
+                initialSize="1"
+                removeAbandoned="true"
+                removeAbandonedTimeout="30"
+                testWhileIdle="true"
+                validationQuery="Select 1 From dual"
+                maxWait="-1"/>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+</Context>

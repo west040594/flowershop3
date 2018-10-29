@@ -49,8 +49,7 @@ public class User {
     @Column(name = "role", columnDefinition = "smallint")
     private UserRole role;
 
-
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -71,13 +70,12 @@ public class User {
     }
 
     public User(String username, String password,  String email, UserStatus status, UserRole role,
-                Date createdAt, Date updatedAt, Customer customer) {
+                Date createdAt, Date updatedAt) {
         this(username, password, email);
         this.status = status;
         this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.customer = customer;
     }
 
     public long getId() {

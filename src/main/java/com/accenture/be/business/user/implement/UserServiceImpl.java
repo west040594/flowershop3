@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
                     forEach(e -> errors.append(e.getDefaultMessage()).append("<br/>"));
 
             throw new UserException(errors.toString());
-            //Иначе сохраняем пользоватея и присваиваем ему покупателя, и возвращаем его
+            //Иначе сохраняем пользоватея с присвоиным ему покупателем, и возвращаем его DTO
         } else {
             User user = UserConverter.convertToEntity(userDTO);
             //Устаналвиваем дату роль и статус новому пользователю
@@ -70,27 +70,15 @@ public class UserServiceImpl implements UserService {
             user.setRole(UserRole.USER);
             user.setCreatedUpdated(new Date(), new Date());
 
-            /*user.setCustomer(null);
-            user = saveUser(user);*/
-
-
             Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
             //Устанавливаем начальный баланс и скидку покупателю
             customer.setBalance(new BigDecimal(2000));
             customer.setDiscount(3);
 
-            customerService.saveCustomer(customer);
-
             user.setCustomer(customer);
-
+            customer.setUser(user);
             user = saveUser(user);
-
             return UserConverter.convertToDTO(user);
-
-            //Устанавливаем пользователя покупателю и сохраняем его
-           /* customer.setUser(user);
-            customer = customerService.saveCustomer(customer);
-            return  UserConverter.convertToDTO(customer.getUser());*/
         }
     }
 

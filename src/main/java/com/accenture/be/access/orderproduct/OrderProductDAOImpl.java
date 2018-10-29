@@ -62,7 +62,6 @@ public class OrderProductDAOImpl implements OrderProductDAO {
         session.close();
         return orderProductId;*/
         entityManager.persist(orderProduct);
-        entityManager.flush();
         return orderProduct.getId();
     }
 

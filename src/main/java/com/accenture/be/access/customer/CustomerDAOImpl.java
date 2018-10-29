@@ -55,7 +55,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         session.close();
         return customerId;*/
         entityManager.persist(customer);
-        //entityManager.flush();
         return customer.getId();
     }
 
@@ -66,5 +65,6 @@ public class CustomerDAOImpl implements CustomerDAO {
         session.update(customer);
         session.getTransaction().commit();
         session.close();*/
+        entityManager.merge(customer);
     }
 }

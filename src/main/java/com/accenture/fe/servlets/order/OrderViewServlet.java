@@ -3,7 +3,6 @@ package com.accenture.fe.servlets.order;
 import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.orderproduct.converters.OrderProductConverter;
-import com.accenture.be.business.orderproduct.interfaces.OrderProductService;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.entity.order.Order;
@@ -35,9 +34,6 @@ public class OrderViewServlet extends HttpServlet {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private OrderProductService orderProductService;
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
@@ -52,7 +48,7 @@ public class OrderViewServlet extends HttpServlet {
         //Если гет параметр на заказ присутствует формируем заказа и его предметы
         if (orderId != null) {
             order = orderService.getOrderById(Long.parseLong(orderId));
-            orderProducts = orderProductService.findOrderProductByOrder(order);
+            orderProducts = order.getOrderProducts();
         }
 
         //Конвертируем заказ и его предметы в DTO и одаем в jsp

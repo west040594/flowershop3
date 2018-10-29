@@ -66,7 +66,6 @@ public class OrderDAOImpl implements OrderDAO {
         session.close();
         return orderId;*/
         entityManager.persist(order);
-        entityManager.flush();
         return order.getId();
     }
 
@@ -77,6 +76,7 @@ public class OrderDAOImpl implements OrderDAO {
         session.update(order);
         session.getTransaction().commit();
         session.close();*/
+        entityManager.merge(order);
     }
 
     @Override

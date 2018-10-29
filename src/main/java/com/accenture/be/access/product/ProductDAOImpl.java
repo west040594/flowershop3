@@ -82,7 +82,6 @@ public class ProductDAOImpl implements ProductDAO {
         session.close();
         return productId;*/
         entityManager.persist(product);
-        entityManager.flush();
         return product.getId();
     }
 
@@ -93,6 +92,7 @@ public class ProductDAOImpl implements ProductDAO {
         session.update(product);
         session.getTransaction().commit();
         session.close();*/
+        entityManager.merge(product);
     }
 
     @Override

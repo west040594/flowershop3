@@ -27,7 +27,6 @@ public class UserDAOImpl implements UserDAO {
     /*@Autowired
     private SessionFactory sessionFactory;*/
 
-
     @Override
     public List<User> findAll() {
 
@@ -92,9 +91,7 @@ public class UserDAOImpl implements UserDAO {
         session.close();
         return customerId;*/
         entityManager.persist(user);
-        //entityManager.flush();
         return user.getId();
-        //entityManager.flush();
         //return user.getId();
     }
 
@@ -105,6 +102,7 @@ public class UserDAOImpl implements UserDAO {
         session.update(user);
         session.getTransaction().commit();
         session.close();*/
+        entityManager.merge(user);
     }
 
     @Override

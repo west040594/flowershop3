@@ -52,7 +52,7 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts;
 
     @ManyToMany(cascade = { CascadeType.ALL })
@@ -139,6 +139,14 @@ public class Order {
 
     public void setClosetAt(Date closetAt) {
         this.closetAt = closetAt;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override
