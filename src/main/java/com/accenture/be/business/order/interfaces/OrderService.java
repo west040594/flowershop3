@@ -13,8 +13,8 @@ public interface OrderService {
 
     List<OrderDTO> findAllOrder();
     Order saveOrder(Order order);
-    OrderDTO createOrder(OrderDTO orderDTO) throws OrderException;
+    Order createOrder(OrderDTO orderDTO) throws OrderException;
     Order getOrderById(long orderId);
-    void changerOrderStatusToPaid(UserDTO userDTO, Long orderId);
+    Order changerOrderStatusToPaid(Long orderId);
     String formDeliveryAddress(Customer customer);
 }

@@ -10,6 +10,5 @@ import java.util.List;
 public interface ProductService {
     List<Product> findAllProduct();
     Product getProductById(long productId);
-    List<ProductDTO> getProductsByOrder(OrderDTO order);
     void changeProductQuantityInStock(Long productId, int quantity);
 }

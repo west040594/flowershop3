@@ -2,6 +2,7 @@ package com.accenture.fe.servlets.cart;
 
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.customer.converters.CustomerConverter;
+import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.entity.order.Order;
@@ -62,16 +63,14 @@ public class CartOrderServlet extends HttpServlet {
 
             //Создаем новый заказ, при ошибки перезугружаем сраницу с списком errors
             try {
-                orderDTO = orderService.createOrder(orderDTO);
+                orderDTO = OrderConverter.convertToDTO(orderService.createOrder(orderDTO));
             } catch (OrderException e) {
                 req.setAttribute("error", e.getMessage());
                 doGet(req, resp);
                 return;
             }
-
-            //Если ошибки не возникло устаавливаем пользователю в сессии измененного покупателя
-            //Так как баланс изменился и корзина очистилась
-            userDTO.setCustomer(orderDTO.getCustomer());
+            //Если ошибки не возникло очищаем козину и показываем новый заказ
+            userDTO.getCustomer().getCart().removeAllItem();
             resp.sendRedirect("/orders/view?id="+orderDTO.getId());
 
         } else {

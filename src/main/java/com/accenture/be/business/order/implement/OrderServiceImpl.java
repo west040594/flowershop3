@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public OrderDTO createOrder(OrderDTO orderDTO) throws OrderException {
+    public Order createOrder(OrderDTO orderDTO) throws OrderException {
 
         //Валидация формы заказа
         StringBuilder errors = new StringBuilder();
@@ -86,17 +86,10 @@ public class OrderServiceImpl implements OrderService {
                 Product product = ProductConverter.convertToEntity(cartItem.getProduct());
                 orderProducts.add(new OrderProduct(product, order, cartItem.getQuantity()));
             }
-            //Устанавливаем заказу его orderProducts для сохранения строк в бд
+            //Устанавливаем заказу его orderProducts для сохранения строк в бд и сохраняем заказ
             order.setOrderProducts(orderProducts);
-
-            //Очищаем корзину и сохраняем заказ
-            orderDTO.getCustomer().getCart().removeAllItem();
             order = saveOrder(order);
-
-            //Возвращаем orderDTO
-            OrderDTO newOrderDTO = OrderConverter.convertToDTO(order);
-            newOrderDTO.getCustomer().setCart(orderDTO.getCustomer().getCart());
-            return newOrderDTO;
+            return order;
         }
     }
     @Override
@@ -106,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public void changerOrderStatusToPaid(UserDTO userDTO, Long orderId) {
+    public Order changerOrderStatusToPaid(Long orderId) {
         //Изменяем дату закрытия заказа и статус в  -  Закрыто
         Order order = orderDAO.findById(orderId);
         order.setStatus(OrderStatus.PAID);
@@ -122,10 +115,7 @@ public class OrderServiceImpl implements OrderService {
         order.getCustomer().setBalance(order.getCustomer().getBalance().subtract(order.getTotal()));
         orderDAO.update(order);
 
-        //Возвращаем обновленные данные покупателя, т.к его баланс обновился
-        CustomerDTO customerDTO = CustomerConverter.convertToDTO(order.getCustomer());
-        customerDTO.setCart(userDTO.getCustomer().getCart());
-        userDTO.setCustomer(customerDTO);
+        return order;
     }
 
 

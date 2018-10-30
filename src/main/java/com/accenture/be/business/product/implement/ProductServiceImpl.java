@@ -34,11 +34,6 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.findById(productId);
     }
 
-    @Override
-    public List<ProductDTO> getProductsByOrder(OrderDTO order) {
-        List<Product> products = productDAO.findByOrder(order.getId());
-        return ProductConverter.convertToDTO(products);
-    }
 
     @Override
     public void changeProductQuantityInStock(Long productId, int quantity) {

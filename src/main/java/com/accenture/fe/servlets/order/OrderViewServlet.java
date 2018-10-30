@@ -1,6 +1,7 @@
 package com.accenture.fe.servlets.order;
 
 import com.accenture.be.business.order.converters.OrderConverter;
+import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.orderproduct.converters.OrderProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
@@ -71,7 +72,10 @@ public class OrderViewServlet extends HttpServlet {
             //Берем пользователя из сессии, id заказа и оформляем заказ
             UserDTO userDTO = (UserDTO)session.getAttribute("user");
             String orderId = req.getParameter("orderId");
-            orderService.changerOrderStatusToPaid(userDTO, Long.parseLong(orderId));
+            OrderDTO orderDTO = OrderConverter.convertToDTO(
+                            orderService.changerOrderStatusToPaid(Long.parseLong(orderId)));
+            //Изменяем баланс у пользователя в сессии
+            userDTO.getCustomer().setBalance(orderDTO.getCustomer().getBalance());
             resp.sendRedirect("/products/index");
         } else {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
