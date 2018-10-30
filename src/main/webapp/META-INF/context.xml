@@ -1,13 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Context>
     <Parameter name="AppName" value="cbr-clm"/>
-    <Resource
-            name="flowershopDS"
+    <Resource name="jdbc/flowerShopDS"
             auth="Container"
             type="javax.sql.DataSource"
             driverClassName="org.h2.Driver"
             url="jdbc:h2:~/flowershop"
-            username="sa" password=""
             maxActive="10"
             maxIdle="3"
             initialSize="1"
