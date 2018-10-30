@@ -3,9 +3,9 @@ package com.accenture.be.business.user.implement;
 import com.accenture.be.access.user.UserDAO;
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.customer.converters.CustomerConverter;
-import com.accenture.be.business.customer.interfaces.CustomerService;
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
+import com.accenture.be.business.user.interfaces.UserMarshgallingService;
 import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.be.business.user.validators.LoginUserValidator;
 import com.accenture.be.business.user.validators.RegistrationUserValidator;
@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +33,13 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Autowired
+    private UserMarshgallingService userMarshgallingService;
+
+    @Autowired
     private RegistrationUserValidator registrationUserValidator;
 
     @Autowired
     private LoginUserValidator loginUserValidator;
-
-    @Autowired
-    private CustomerService customerService;
 
     @Override
     public List<User> findAllUser() {
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDTO register(UserDTO userDTO) throws UserException {
+    public User register(UserDTO userDTO) throws UserException {
 
         //Валидация формы регистрации
         StringBuilder errors = new StringBuilder();
@@ -78,12 +79,17 @@ public class UserServiceImpl implements UserService {
             user.setCustomer(customer);
             customer.setUser(user);
             user = saveUser(user);
-            return UserConverter.convertToDTO(user);
+            try {
+                userMarshgallingService.convertFromUserToXML(user);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return user;
         }
     }
 
     @Override
-    public UserDTO login(UserDTO userDTO) throws UserException {
+    public User login(UserDTO userDTO) throws UserException {
 
         //Валидация формы регистрации
         StringBuilder errors = new StringBuilder();
@@ -119,8 +125,7 @@ public class UserServiceImpl implements UserService {
             errors.append("Проверьте правильность пароля");
             throw new UserException(errors.toString());
         }
-
-        return UserConverter.convertToDTO(detectedUser);
+        return detectedUser;
     }
 
     @Override

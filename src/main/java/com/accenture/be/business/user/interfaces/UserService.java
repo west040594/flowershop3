@@ -13,11 +13,8 @@ public interface UserService {
 
     List<User> findAllUser();
     User saveUser(User user);
-
-    UserDTO login(UserDTO userDTO) throws UserException;
-
-    UserDTO register(UserDTO userDTO) throws UserException;
-
+    User login(UserDTO userDTO) throws UserException;
+    User register(UserDTO userDTO) throws UserException;
     void setUserSession(HttpSession session, UserDTO userDTO);
 
 }

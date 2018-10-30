@@ -4,7 +4,6 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:cache="http://www.springframework.org/schema/cache"
        xmlns:jee="http://www.springframework.org/schema/jee"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 
@@ -12,29 +11,23 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+    http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/jee
-    http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
-
-    http://www.springframework.org/schema/cache
-    http://www.springframework.org/schema/cache/spring-cache.xsd">
+    http://www.springframework.org/schema/jee/spring-jee.xsd">
 
 
 
     <mvc:annotation-driven />
-    <!--<cache:annotation-driven />-->
     <context:annotation-config/>
     <context:spring-configured/>
     <context:component-scan base-package="com.accenture.be.access" />
     <context:component-scan base-package="com.accenture.be.business" />
-    <!--<tx:annotation-driven proxy-target-class="true" />-->
-
     <tx:annotation-driven proxy-target-class="true"
                           transaction-manager="transactionManager" />
 
-    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
+    <!--<bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
         <property name="driverClassName" value="org.h2.Driver"/>
         <property name="url" value="jdbc:h2:~/flowershop"/>
         <property name="testOnBorrow" value="true"/>
@@ -43,10 +36,11 @@
         <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
         <property name="numTestsPerEvictionRun" value="3"/>
         <property name="minEvictableIdleTimeMillis" value="1800000"/>
-    </bean>
+    </bean>-->
 
 
-    <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/flowerShopDS "/>-->
+    <jee:jndi-lookup id="dataSource" jndi-name="flowershopDS"/>
+
     <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -71,29 +65,32 @@
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-        <property name="caches">
-            <set>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="default" />
-                </bean>
-            </set>
+    <bean id="XMLConverter" class="org.springframework.oxm.castor.CastorMarshaller"/>
+
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location">
+            <value>classpath:application.properties</value>
         </property>
     </bean>
 
+    <context:property-placeholder properties-ref="configProperties" />
 
-    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">
-                    org.hibernate.dialect.H2Dialect
-                </prop>
-                <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
-        <property name="packagesToScan" value="com.accenture"/>
-    </bean>-->
+
+
+
+
+        <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.dialect">
+                        org.hibernate.dialect.H2Dialect
+                    </prop>
+                    <prop key="hibernate.show_sql">true</prop>
+                </props>
+            </property>
+            <property name="packagesToScan" value="com.accenture"/>
+        </bean>-->
 
     <!--<bean id="transactionManager"
           class="org.springframework.orm.hibernate5.HibernateTransactionManager"

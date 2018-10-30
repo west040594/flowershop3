@@ -53,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
 
         //Регистрируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
-            userDTO = userService.register(userDTO);
+            userDTO = UserConverter.convertToDTO(userService.register(userDTO));
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);

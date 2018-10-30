@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
         //Авторизируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
-            userDTO = userService.login(userDTO);
+            userDTO = UserConverter.convertToDTO(userService.login(userDTO));
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);
