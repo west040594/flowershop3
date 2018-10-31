@@ -9,7 +9,7 @@ $(document).ready(function () {
                url: '/addCartItem',
                type: "POST",
                data: {productId: productId}
-                
+
             }).done(function (data) {
                 $('#cart-quantity').html(data.quantity);
                 $('#cart-total').html(data.totalRub);

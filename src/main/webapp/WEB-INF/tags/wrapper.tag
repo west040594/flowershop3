@@ -15,5 +15,6 @@
         </div>
 
     <script src="/js/addCartItem.js"></script>
+    <script src="/js/usernameValidation.js"></script>
     </body>
 </html>

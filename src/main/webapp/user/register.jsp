@@ -3,10 +3,11 @@
 <%@ page isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:wrapper>
-    <form method="post" action="register">
+    <form method="post" action="register" id="registerForm">
       <div class="form-group">
         <label for="firstName">Имя</label>
         <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Введите имя">
+
       </div>
       <div class="form-group">
         <label for="lastName">Фамилия</label>
@@ -31,8 +32,9 @@
       <button type="submit" class="btn btn-primary">Подтвердить</button>
     </form>
     <c:if test="${error != null}">
-        <div class="my-lg-4 alert alert-danger" role="alert">
+        <div class="my-lg-4 alert alert-danger" id="registerErrors" role="alert">
                 ${error}
         </div>
     </c:if>
+
 </t:wrapper>
