@@ -17,4 +17,6 @@ public interface UserService {
     User register(UserDTO userDTO) throws UserException;
     void setUserSession(HttpSession session, UserDTO userDTO);
 
+    void createUserXmlAndSent(User user);
+
 }

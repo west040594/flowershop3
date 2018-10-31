@@ -14,4 +14,13 @@
             testWhileIdle="true"
             validationQuery="Select 1 From dual"
             maxWait="-1"/>
+    <Resource name="jms/connectionFactory" auth="Container"
+              type="org.apache.activemq.ActiveMQConnectionFactory"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              brokerURL="tcp://localhost:61616" brokerName="MyActiveMqBroker"/>
+    <Resource name="jms/outQueue" auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="OUT_QUEUE"/>
+
 </Context>

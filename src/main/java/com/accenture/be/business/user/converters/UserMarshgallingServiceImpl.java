@@ -23,11 +23,11 @@ public class UserMarshgallingServiceImpl implements UserMarshgallingService {
     @Autowired
     private Unmarshaller unmarshaller;
 
-    @Value("${user.xml.path}")
-    private String filepath;
+    /*@Value("${user.xml.path}")
+    private String filepath;*/
 
     @Override
-    public void convertFromUserToXML(User user) throws IOException {
+    public void convertFromUserToXML(User user, String filepath) throws IOException {
         FileOutputStream os = null;
         try {
             os = new FileOutputStream(filepath);

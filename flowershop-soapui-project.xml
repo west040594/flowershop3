@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="3f385b8b-e2e3-4089-b6eb-f42caa498a48" activeEnvironment="Default" name="flowershop" resourceRoot="" soapui-version="5.4.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ff630263-3252-4376-a513-00177c7d2464" wsaVersion="NONE" name="ProductStockWebServiceImplServiceSoapBinding" type="wsdl" bindingName="{http://ws.fe.accenture.com/}ProductStockWebServiceImplServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/ws/ProductStockWebService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/ws/ProductStockWebService?wsdl"><con:part><con:url>http://localhost:8080/ws/ProductStockWebService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="ProductStockWebServiceImplService" targetNamespace="http://ws.fe.accenture.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.fe.accenture.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.fe.accenture.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="increaseProductStockSize" type="tns:increaseProductStockSize"/>
+      <xs:element name="increaseProductStockSizeResponse" type="tns:increaseProductStockSizeResponse"/>
+      <xs:complexType name="increaseProductStockSize">
+        <xs:sequence>
+          <xs:element name="count" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="increaseProductStockSizeResponse">
+        <xs:sequence/>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="increaseProductStockSizeResponse">
+    <wsdl:part element="tns:increaseProductStockSizeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="increaseProductStockSize">
+    <wsdl:part element="tns:increaseProductStockSize" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ProductStockWebService">
+    <wsdl:operation name="increaseProductStockSize">
+      <wsdl:input message="tns:increaseProductStockSize" name="increaseProductStockSize"></wsdl:input>
+      <wsdl:output message="tns:increaseProductStockSizeResponse" name="increaseProductStockSizeResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductStockWebServiceImplServiceSoapBinding" type="tns:ProductStockWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="increaseProductStockSize">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="increaseProductStockSize">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="increaseProductStockSizeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductStockWebServiceImplService">
+    <wsdl:port binding="tns:ProductStockWebServiceImplServiceSoapBinding" name="ProductStockWebServiceImplPort">
+      <soap:address location="http://localhost:8080/ws/ProductStockWebService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws/ProductStockWebService</con:endpoint></con:endpoints><con:operation id="47d55531-a513-4705-9afa-e34e7fb2381b" isOneWay="false" action="" name="increaseProductStockSize" bindingOperationName="increaseProductStockSize" type="Request-Response" outputName="increaseProductStockSizeResponse" inputName="increaseProductStockSize" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="afb5c4ac-7bcb-4ba8-b47a-5ef358cf820a" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/ProductStockWebService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.fe.accenture.com/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:increaseProductStockSize>\r
+         <count>5</count>\r
+      </ws:increaseProductStockSize>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.fe.accenture.com/ProductStockWebService/increaseProductStockSize"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

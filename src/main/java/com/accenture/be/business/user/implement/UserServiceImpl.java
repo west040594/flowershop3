@@ -3,6 +3,7 @@ package com.accenture.be.business.user.implement;
 import com.accenture.be.access.user.UserDAO;
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.customer.converters.CustomerConverter;
+import com.accenture.be.business.messages.JmsService;
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserMarshgallingService;
@@ -14,6 +15,7 @@ import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;
 import com.accenture.fe.enums.user.UserStatus;
+import org.apache.cxf.helpers.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,10 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -34,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMarshgallingService userMarshgallingService;
+
+    @Autowired
+    private JmsService jmsService;
 
     @Autowired
     private RegistrationUserValidator registrationUserValidator;
@@ -79,11 +85,7 @@ public class UserServiceImpl implements UserService {
             user.setCustomer(customer);
             customer.setUser(user);
             user = saveUser(user);
-            try {
-                userMarshgallingService.convertFromUserToXML(user);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            createUserXmlAndSent(user);
             return user;
         }
     }
@@ -140,5 +142,27 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         userDAO.save(user);
         return userDAO.findById(user.getId());
+    }
+
+    @Override
+    public void createUserXmlAndSent(User user) {
+        try {
+            //Загружаем проперти
+            Properties properties = new Properties();
+            InputStream propertyInputStream =
+                    getClass().getClassLoader().getResourceAsStream("application.properties");
+            properties.load(propertyInputStream);
+            //Создаем xml файл
+            userMarshgallingService.convertFromUserToXML(user, properties.getProperty("user.xml.path"));
+            //Читаем xml файл и отправляем на почту
+            FileInputStream xmlInputStream = new FileInputStream(properties.getProperty("user.xml.path"));
+            String message = IOUtils.toString(xmlInputStream, "UTF-8");
+            jmsService.sentMessage(message);
+            //Закрываем соединения
+            propertyInputStream.close();
+            xmlInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

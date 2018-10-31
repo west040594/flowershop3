@@ -6,12 +6,13 @@ import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-@Service("registrationFormValidator")
+@Component("registrationFormValidator")
 public class RegistrationUserValidator implements Validator {
 
     @Autowired
