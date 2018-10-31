@@ -27,8 +27,18 @@
     <context:spring-configured/>
     <context:component-scan base-package="com.accenture.be.access" />
     <context:component-scan base-package="com.accenture.be.business" />
+    <context:component-scan base-package="com.accenture.fe.ws" />
     <tx:annotation-driven proxy-target-class="true"
                           transaction-manager="transactionManager" />
+
+    <!-- import for web services -->
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+    <!-- -->
+
+    <jaxws:endpoint id="productStockWebService1" implementor="#productStockWebService"
+                    address="/ProductStockWebService"/>
+
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/flowerShopDS"/>
 
@@ -83,6 +93,8 @@
     </bean>
 
     <context:property-placeholder properties-ref="configProperties" />
+
+
 
         <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
             <property name="dataSource" ref="dataSource"/>

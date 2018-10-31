@@ -4,7 +4,6 @@ import com.accenture.be.business.user.interfaces.UserMarshgallingService;
 import com.accenture.be.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.io.IOException;
 
 @Service("marshgallingService")
 public class UserMarshgallingServiceImpl implements UserMarshgallingService {
-
 
     @Autowired
     private Marshaller marshaller;
