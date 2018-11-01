@@ -35,4 +35,15 @@ public class CustomerServiceImpl implements CustomerService {
         customerDAO.update(customer);
         return customer;
     }
+
+    @Transactional
+    @Override
+    public void changeCustomerDiscount(CustomerDiscount customerDiscount) {
+        Customer customer = customerDAO.findById(customerDiscount.getCustomerId());
+        if(customerDiscount.newDiscount > 0  &&  customerDiscount.newDiscount < 100)
+        {
+            customer.setDiscount(customerDiscount.newDiscount);
+            customerDAO.update(customer);
+        }
+    }
 }

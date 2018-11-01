@@ -18,6 +18,9 @@ public class JmsServiceImpl implements JmsService{
     @Autowired
     private ConnectionFactory connectionFactory;
 
+    @Autowired
+    private JmsConsumerMessageListener jmsConsumerMessageListener;
+
     private Queue outQueue;
     private Queue inQueue;
     private Connection connection;
@@ -37,7 +40,7 @@ public class JmsServiceImpl implements JmsService{
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             producer = session.createProducer(outQueue);
             consumer = session.createConsumer(inQueue);
-            consumer.setMessageListener(new JmsConsumerMessageListener());
+            consumer.setMessageListener(jmsConsumerMessageListener);
         } catch (JMSException e) {
             e.printStackTrace();
         }

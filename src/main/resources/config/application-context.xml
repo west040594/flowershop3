@@ -89,7 +89,15 @@
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-    <bean id="XMLConverter" class="org.springframework.oxm.castor.CastorMarshaller"/>
+    <bean id="XMLConverter" class="org.springframework.oxm.castor.CastorMarshaller">
+        <property name="targetClasses">
+            <list>
+                <value>com.accenture.be.business.customer.implement.CustomerDiscount</value>
+            </list>
+        </property>
+    </bean>
+
+
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location">

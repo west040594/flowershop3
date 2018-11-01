@@ -1,5 +1,7 @@
 package com.accenture.fe.servlets.user;
 
+import com.accenture.be.business.customer.implement.CustomerDiscount;
+import com.accenture.be.business.customer.interfaces.CustomerDiscountMarshgallingService;
 import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
@@ -22,6 +24,9 @@ public class LoginServlet extends HttpServlet {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CustomerDiscountMarshgallingService customerDiscountMarshgallingService;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext (this);
@@ -36,8 +41,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDTO userDTO = new UserDTO(
                 req.getParameter("username"), req.getParameter("password"), req.getParameter("username") );
-
-
         //Авторизируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
             userDTO = UserConverter.convertToDTO(userService.login(userDTO));
