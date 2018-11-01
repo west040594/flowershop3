@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Service("marshgallingService")
+@Service("userMarshgallingService")
 public class UserMarshgallingServiceImpl implements UserMarshgallingService {
 
     @Autowired

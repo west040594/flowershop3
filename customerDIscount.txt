@@ -1,0 +1,4 @@
+<customer>
+     <customer-id>1</customer-id>
+     <new-discount>123</new-discount>
+</customer>

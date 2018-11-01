@@ -18,9 +18,15 @@
               type="org.apache.activemq.ActiveMQConnectionFactory"
               factory="org.apache.activemq.jndi.JNDIReferenceFactory"
               brokerURL="tcp://localhost:61616" brokerName="MyActiveMqBroker"/>
+
     <Resource name="jms/outQueue" auth="Container"
               type="org.apache.activemq.command.ActiveMQQueue"
               factory="org.apache.activemq.jndi.JNDIReferenceFactory"
               physicalName="OUT_QUEUE"/>
+
+    <Resource name="jms/inQueue" auth="Container"
+              type="org.apache.activemq.command.ActiveMQQueue"
+              factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+              physicalName="IN_QUEUE"/>
 
 </Context>

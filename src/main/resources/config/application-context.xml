@@ -43,7 +43,8 @@
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/flowerShopDS"/>
     <jee:jndi-lookup id="connectionFactory" jndi-name="jms/connectionFactory"/>
-    <jee:jndi-lookup id="esbToMcpRequestQueue" jndi-name="jms/outQueue"/>
+    <jee:jndi-lookup id="outQueue" jndi-name="jms/outQueue"/>
+    <jee:jndi-lookup id="inQueue" jndi-name="jms/inQueue"/>
 
 
     <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
