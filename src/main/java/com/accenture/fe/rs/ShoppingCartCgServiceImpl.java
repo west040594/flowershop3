@@ -5,10 +5,8 @@ import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.cart.CartItem;
 import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
-import com.accenture.fe.dto.cart.AjaxDataCart;
 import com.accenture.fe.dto.product.ProductDTO;
 import com.accenture.fe.dto.user.UserDTO;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -103,7 +101,6 @@ public class ShoppingCartCgServiceImpl implements ShoppingCartCgService {
             Cart cart = (Cart)((UserDTO)session.getAttribute("user")).getCustomer().getCart();
             cart.removeAllItem();
             //Отправляем json с данными корзины
-            AjaxDataCart ajaxDataCart = new AjaxDataCart(cart.getTotalRub(), cart.getItemCount());
             response = Response.status(Response.Status.OK).entity(cart).build();
         }
         return response;

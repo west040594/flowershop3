@@ -30,7 +30,6 @@ $(document).ready(function () {
             //Цикл по предметам корзины
             //Если айдишники совпали меняем значения tr, ставим флаг что нашли и выходим из цикла
             for(var i = 0; i < data.itemList.length; i++) {
-                console.log($(this).data("id") + data.itemList[i].product.id);
                 if($(this).data("id") == data.itemList[i].product.id) {
                     $(this).find('.ciQuantity').html(data.itemList[i].quantity);
                     $(this).find('.ciTotalRub').html('<del>' + data.itemList[i].cartItemTotalRub + '</del>');

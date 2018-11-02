@@ -103,7 +103,6 @@ public class OrderServiceImpl implements OrderService {
         //Изменяем дату закрытия заказа и статус в  -  Закрыто
         Order order = orderDAO.findById(orderId);
         order.setStatus(OrderStatus.PAID);
-        order.setClosetAt(new Date());
 
         //Изменяем число "В наличиии" у продуктов
         for (OrderProduct orderProduct : order.getOrderProducts()) {
@@ -118,6 +117,15 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    @Transactional
+    @Override
+    public Order changeOrderStatusToClosed(Long orderId) {
+        Order order = orderDAO.findById(orderId);
+        order.setStatus(OrderStatus.CLOSED);
+        order.setClosetAt(new Date());
+        orderDAO.update(order);
+        return order;
+    }
 
     @Override
     public String formDeliveryAddress(Customer customer) {

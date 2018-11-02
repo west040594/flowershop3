@@ -13,8 +13,6 @@ import javax.ws.rs.core.MediaType;
 @Component("userCgService")
 @Path("/user")
 public class UserCgServiceImpl implements UserCgService {
-
-
     @Autowired
     private UserDAO userDAO;
 

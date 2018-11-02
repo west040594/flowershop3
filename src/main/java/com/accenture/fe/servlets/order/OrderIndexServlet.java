@@ -24,9 +24,6 @@ import java.util.List;
 @WebServlet(urlPatterns = "/orders/index")
 public class OrderIndexServlet extends HttpServlet {
 
-    // TODO: 26.10.2018 Изменить модуль в заказы пользователей с возможностью закрытия заказа. Смотреть на роль админа
-
-
     @Autowired
     private OrderService orderService;
 

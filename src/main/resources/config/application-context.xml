@@ -51,7 +51,7 @@
         <property name="locations">
             <array><value>db.migration</value></array>
         </property>
-        <property name="baselineOnMigrate" value="true"/>
+        <property name="baselineOnMigrate" value="false"/>
         <property name="outOfOrder" value="true"/>
         <property name="sqlMigrationPrefix" value="V"/>
         <property name="sqlMigrationSeparator" value="__"/>

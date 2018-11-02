@@ -13,20 +13,24 @@
             <th scope="col">Сумма</th>
             <th scope="col">Статус</th>
             <th scope="col">Создан</th>
+            <th scope="col">Закрыть</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="order" items="${orders}">
-            <tr>
+            <tr data-id = "${order.id}">
                 <th scope="row">${order.id}</th>
                 <td>${order.customer.firstName} ${order.customer.lastName}</td>
                 <td>${order.deliveryAddress}</td>
                 <td>${order.totalRub}</td>
+                <td class="orderStatus">${order.status}</td>
                 <td>${order.createdAt}</td>
-                <td>${order.status}</td>
-                <td>${order.orderProduct.}</td>
-                <c:if test="order.status = 'PAID'">
-
+                <c:if test="${order.status == 'PAID'}">
+                    <td>
+                        <btn class="btn btn-danger btn-sm" role="closeOrder" data-id="${order.id}">
+                            Закрыть
+                        </btn>
+                    </td>
                 </c:if>
             </tr>
         </c:forEach>

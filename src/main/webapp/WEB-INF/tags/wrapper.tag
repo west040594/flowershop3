@@ -14,7 +14,8 @@
             <jsp:doBody/>
         </div>
 
-    <script src="/js/addCartItem.js"></script>
+    <script src="/js/cart.js"></script>
     <script src="/js/usernameValidation.js"></script>
+    <script src="/js/order.js"></script>
     </body>
 </html>

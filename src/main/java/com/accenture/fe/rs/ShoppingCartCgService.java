@@ -6,7 +6,6 @@ import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
-@WebService
 public interface ShoppingCartCgService {
     Cart getAll(HttpServletRequest request);
     Response addToCart(String json, HttpServletRequest request);

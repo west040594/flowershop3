@@ -7,11 +7,14 @@
       <thead>
             <tr>
                 <th colspan="1" scope="col">Заказ</th>
+
                 <th scope="col">
-                <form method="post" action="view">
-                    <input type="hidden" name="orderId" value="${order.id}" />
-                    <button type="submit" class="btn btn-success">Оплатить</button>
-                </form>
+                    <c:if test="${order.status == 'CREATED'}">
+                        <form method="post" action="view">
+                            <input type="hidden" name="orderId" value="${order.id}" />
+                            <button type="submit" class="btn btn-success">Оплатить</button>
+                        </form>
+                    </c:if>
                 </th>
            </tr>
       </thead>
@@ -32,7 +35,7 @@
             <td>Создано</td>
             <td>${order.createdAtFormat}</td>
         </tr>
-        <c:if test="${order.closetAt != null}">
+        <c:if test="${order.status == 'CLOSED'}">
             <tr>
                 <td>Закрыто</td>
                 <td>${order.closetAtFormat}</td>
