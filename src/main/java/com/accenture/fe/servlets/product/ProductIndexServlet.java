@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 
@@ -31,8 +32,15 @@ public class ProductIndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        List<ProductDTO> productDTOS = ProductConverter.convertToDTO(productService.findAllProduct());
+        List<ProductDTO> productDTOS = null;
+        if(req.getParameter("productname") != null) {
+            String productName = new String(req.getParameter("productname").getBytes("iso-8859-1"),
+                    "UTF-8");
+            req.setAttribute("search", productName);
+            productDTOS = ProductConverter.convertToDTO(productService.findProductByName(productName));
+        } else {
+            productDTOS = ProductConverter.convertToDTO(productService.findAllProduct());
+        }
         req.setAttribute("products", productDTOS);
         req.getRequestDispatcher("/product/index.jsp").forward(req,resp);
     }

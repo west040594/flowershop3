@@ -6,6 +6,9 @@
         <link rel="stylesheet"
                   href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
 
+        <link rel = "stylesheet"
+        href="/webjars/bootstrap-glyphicons/bdd2cbfba0/css/bootstrap-glyphicons.css" />
+
         <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
     </head>
     <body>

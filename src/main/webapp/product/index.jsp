@@ -4,7 +4,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:wrapper>
-
+    <form method="get" action="/products/index">
+      <div class="input-group">
+        <input type="text" name="productname" id="productname"
+        value="${search}" class="form-control" placeholder="Поиск">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
     <div class="row">
         <c:forEach var="product" items="${products}">
         <div class="col-sm-6 col-md-4 col-lg-4 mb-lg-4">

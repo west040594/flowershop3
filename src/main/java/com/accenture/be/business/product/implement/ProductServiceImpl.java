@@ -30,6 +30,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findProductByName(String productName) {
+        List<Product> products = productDAO.findByName(productName);
+        return  products.stream().filter(product -> product.getInStock() > 0)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Product getProductById(long productId) {
         return productDAO.findById(productId);
     }

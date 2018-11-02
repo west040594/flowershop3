@@ -51,7 +51,15 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public List<Product> findByName(String name) {
-        return null;
+        List<Product> products = null;
+        try {
+            TypedQuery<Product> query  = entityManager.createNamedQuery("Product.findByName", Product.class)
+                    .setParameter("name", name);
+            products = query.getResultList();
+        } catch (NoResultException nr) {
+            products = Collections.emptyList();
+        }
+        return products;
     }
 
     @Override
