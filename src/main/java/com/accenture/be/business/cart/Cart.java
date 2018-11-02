@@ -30,7 +30,6 @@ public class Cart {
         if(items.containsKey(newItem.getProduct().getId())) {
             CartItem item = items.get(newItem.getProduct().getId());
             item.setQuantity(item.getQuantity() + 1);
-            newItem.setQuantity(newItem.getQuantity() + 1);
         //Иначае добавляем новый элемент в корзину
         } else {
             items.put(newItem.getProduct().getId(), newItem);
@@ -40,12 +39,19 @@ public class Cart {
         calculateCount();
     }
 
-    public boolean removeItem(CartItem item) {
-        if(items.containsKey(item.getProduct().getId())) {
-            items.remove(item.getProduct().getId());
-            return true;
+    public void removeItem(CartItem removeItem) {
+        if(items.containsKey(removeItem.getProduct().getId())) {
+            CartItem item = items.get(removeItem.getProduct().getId());
+            //Если в корзине количество предметов больше 1 то уменьшаем количество на 1
+            //Иначае удаляем предмет из корзины полностью
+            if(item.getQuantity() > 1) {
+                item.setQuantity(item.getQuantity() - 1);
+            } else {
+                items.remove(item.getProduct().getId());
+            }
+            calculateTotalCost();
+            calculateCount();
         }
-        return false;
     }
 
     public void removeAllItem() {

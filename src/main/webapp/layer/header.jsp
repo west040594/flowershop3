@@ -41,8 +41,8 @@
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user.customer.cart != null}">
                 <div class="navbar-text"><b>Корзина:</b> &nbsp;</div>
-                <div class="navbar-text">Количество: <span id ="cart-quantity">${sessionScope.user.customer.cart.itemCount}</span>&nbsp;</div>
-                <div class="navbar-text">Цена: <span id= "cart-total">${sessionScope.user.customer.cart.totalRub}</span>&nbsp;</div>
+                <div class="navbar-text">Количество: <span class ="cart-quantity">${sessionScope.user.customer.cart.itemCount}</span>&nbsp;</div>
+                <div class="navbar-text">Цена: <span class="cart-total">${sessionScope.user.customer.cart.totalRub}</span>&nbsp;</div>
                 <div class="navbar-text"><a href="/cart" class="btn btn-warning btn-sm">Перейти</a></div>
             </c:if>
         </ul>
