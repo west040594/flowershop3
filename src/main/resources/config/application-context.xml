@@ -26,8 +26,7 @@
     <jpa:repositories base-package="com.accenture.be.repository"/>
     <!--<mvc:annotation-driven />-->
     <context:annotation-config/>
-    <tx:annotation-driven proxy-target-class="true"
-                          transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <!--<context:spring-configured/>-->
     <context:component-scan base-package="com.accenture.be.access" />
@@ -45,6 +44,7 @@
 
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/flowerShopDS"/>
+
     <jee:jndi-lookup id="connectionFactory" jndi-name="jms/connectionFactory"/>
     <jee:jndi-lookup id="outQueue" jndi-name="jms/outQueue"/>
     <jee:jndi-lookup id="inQueue" jndi-name="jms/inQueue"/>
@@ -74,9 +74,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
-        <property name="jpaDialect">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-        </property>
+        <property name="jpaDialect" ref="jpaDialect" />
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
@@ -100,6 +98,8 @@
         </property>
     </bean>
 
+    <bean id="org.dozer.Mapper" class="org.dozer.DozerBeanMapper">
+    </bean>
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location">

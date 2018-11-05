@@ -24,7 +24,7 @@
         <form method="get" action="/products/index">
           <div class="input-group">
             <input type="text" name="productname" id="productname"
-            value="${search}" class="form-control" placeholder="Поиск">
+            value="${searchProductName}" class="form-control" placeholder="Поиск">
             <div class="input-group-btn">
               <button class="btn btn-default" type="submit">
                 <i class="glyphicon glyphicon-search"></i>
@@ -46,7 +46,12 @@
                         <p class="card-text">${product.description}</p>
                         <div class="btn-group d-flex" role="group">
                             <a href="/products/view?id=${product.id}" class="btn btn-info w-100" role="button">Открыть</a>
-                            <btn class="btn btn-success w-100" role="addCartItem" data-id="${product.id}">В корзину</btn>
+                            <c:if test="${sessionScope.user != null}">
+                                <btn class="btn btn-success w-100" role="addCartItem" data-id="${product.id}">В корзину</btn>
+                            </c:if>
+                            <c:if test="${sessionScope.user == null}">
+                                <a href="/login" class="btn btn-success w-100">В корзину</a>
+                            </c:if>
                         </div>
                     </div>
                     <div class="card-footer">

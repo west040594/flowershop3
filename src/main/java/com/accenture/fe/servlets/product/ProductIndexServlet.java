@@ -2,7 +2,9 @@ package com.accenture.fe.servlets.product;
 
 import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
+import com.accenture.be.entity.product.Product;
 import com.accenture.fe.dto.product.ProductDTO;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @WebServlet(urlPatterns = "/products/index")
@@ -23,6 +26,9 @@ public class ProductIndexServlet extends HttpServlet {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private Mapper mapper;
 
 
     @Override
@@ -33,21 +39,26 @@ public class ProductIndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         List<ProductDTO> productDTOS = null;
-
         if(req.getParameter("productname") != null) {
             String productName = new String(req.getParameter("productname").getBytes("iso-8859-1"),
                     "UTF-8");
-            req.setAttribute("search", productName);
-            productDTOS = ProductConverter.convertToDTO(productService.findProductByName(productName));
+            req.setAttribute("searchProductName", productName);
+            productDTOS  = productService.findProductByName(productName).stream().
+                    map(product -> mapper.map(product, ProductDTO.class))
+                    .collect(Collectors.toList());
+
         } else if(req.getParameter("minPrice") != null && req.getParameter("minPrice") != null) {
-            productDTOS = ProductConverter.convertToDTO(productService.findProductByRangePrice(
+            productDTOS  = productService.findProductByRangePrice(
                     new BigDecimal(req.getParameter("minPrice")),
-                    new BigDecimal(req.getParameter("maxPrice"))
-            ));
+                    new BigDecimal(req.getParameter("maxPrice"))).stream().
+                    map(product -> mapper.map(product, ProductDTO.class))
+                    .collect(Collectors.toList());
+
         } else {
-            productDTOS = ProductConverter.convertToDTO(productService.findAllProduct());
+            productDTOS  = productService.findAllProduct().stream().
+                    map(product -> mapper.map(product, ProductDTO.class))
+                    .collect(Collectors.toList());
         }
         req.setAttribute("products", productDTOS);
         req.getRequestDispatcher("/product/index.jsp").forward(req,resp);

@@ -29,7 +29,7 @@ public class Category {
     @Column(name = "status", columnDefinition = "smallint")
     private CategoryStatus status;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Product> products = new ArrayList<>();
 
     public Category() {
