@@ -13,12 +13,13 @@
     </head>
     <body>
         <jsp:include page="/layer/header.jsp"/>
-        <div class="my-lg-4 container">
+        <div class="my-md-4 container">
             <jsp:doBody/>
         </div>
 
     <script src="/js/cart.js"></script>
     <script src="/js/usernameValidation.js"></script>
     <script src="/js/order.js"></script>
+    <script src="/js/product.js"></script>
     </body>
 </html>

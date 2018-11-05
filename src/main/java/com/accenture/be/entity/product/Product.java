@@ -19,8 +19,8 @@ import java.util.Objects;
         @NamedQuery(name = "Product.findById",
                 query = "SELECT p FROM Product p WHERE p.id = :id"),
 
-        @NamedQuery(name = "Product.findByName",
-                query = "SELECT p FROM Product p WHERE lower(p.name) LIKE CONCAT('%', :name, '%')"),
+        /*@NamedQuery(name = "Product.findByName",
+                query = "SELECT p FROM Product p WHERE lower(p.name) LIKE CONCAT('%', :name, '%')"),*/
 
         @NamedQuery(name = "Product.findByCategory",
                 query = "SELECT p FROM Product p WHERE p.category.name = :category"),
