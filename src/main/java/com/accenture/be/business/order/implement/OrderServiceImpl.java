@@ -1,12 +1,10 @@
 package com.accenture.be.business.order.implement;
 
 import com.accenture.be.business.cart.CartItem;
-import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.order.validators.CreateOrderValidator;
 import com.accenture.be.business.orderproduct.interfaces.OrderProductService;
-import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
@@ -15,6 +13,7 @@ import com.accenture.be.entity.product.Product;
 import com.accenture.be.repository.OrderRepository;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.enums.order.OrderStatus;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private CreateOrderValidator createOrderValidator;
 
+    @Autowired
+    private Mapper mapper;
+
     @Override
     public List<Order> findAllOrder() {
         return (List<Order>) orderDAO.findAll();
@@ -53,7 +55,6 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Order createOrder(OrderDTO orderDTO) throws OrderException {
-
         //Валидация формы заказа
         StringBuilder errors = new StringBuilder();
         DataBinder dataBinder = new DataBinder(orderDTO);
@@ -69,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
             //Иначе берем общую стоимость, назначаем статус заказа и дату создания
             //После сохраняем заказ
         } else {
-            Order order = OrderConverter.convertToEntity(orderDTO);
+            Order order = mapper.map(orderDTO, Order.class);
             order.setTotal(orderDTO.getCustomer().getCart().getTotal());
             order.setStatus(OrderStatus.CREATED);
             order.setCreatedAt(new Date());
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
             //Берем предметы из корзины и формируем новые OrderProducts
             List<OrderProduct> orderProducts = new ArrayList<>();
             for (CartItem cartItem : orderDTO.getCustomer().getCart().getItemList()) {
-                Product product = ProductConverter.convertToEntity(cartItem.getProduct());
+                Product product = mapper.map(cartItem.getProduct(), Product.class);
                 orderProducts.add(new OrderProduct(product, order, cartItem.getQuantity()));
             }
             //Устанавливаем заказу его orderProducts для сохранения строк в бд и сохраняем заказ

@@ -12,7 +12,6 @@ public class CategoryDTO {
     private String description;
     private String imageUrl;
     private CategoryStatus status;
-    private List<ProductDTO> products = new ArrayList<>();
 
     public CategoryDTO() {
     }
@@ -65,11 +64,4 @@ public class CategoryDTO {
         this.status = status;
     }
 
-    public List<ProductDTO> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductDTO> products) {
-        this.products = products;
-    }
 }

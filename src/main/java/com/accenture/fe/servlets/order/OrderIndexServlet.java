@@ -1,10 +1,6 @@
 package com.accenture.fe.servlets.order;
 
 import com.accenture.be.business.order.interfaces.OrderService;
-import com.accenture.be.business.user.converters.UserConverter;
-import com.accenture.be.business.user.interfaces.UserService;
-import com.accenture.be.entity.order.Order;
-import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;

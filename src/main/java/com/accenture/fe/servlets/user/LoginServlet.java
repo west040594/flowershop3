@@ -1,11 +1,10 @@
 package com.accenture.fe.servlets.user;
 
-import com.accenture.be.business.customer.implement.CustomerDiscount;
 import com.accenture.be.business.customer.interfaces.CustomerDiscountMarshgallingService;
-import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.fe.dto.user.UserDTO;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -25,6 +24,9 @@ public class LoginServlet extends HttpServlet {
     private UserService userService;
 
     @Autowired
+    private Mapper mapper;
+
+    @Autowired
     private CustomerDiscountMarshgallingService customerDiscountMarshgallingService;
 
     @Override
@@ -39,11 +41,13 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDTO userDTO = new UserDTO(
-                req.getParameter("username"), req.getParameter("password"), req.getParameter("username") );
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String email = username;
+        UserDTO userDTO = new UserDTO(username, password, email);
         //Авторизируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
-            userDTO = UserConverter.convertToDTO(userService.login(userDTO));
+            userDTO = mapper.map(userService.login(userDTO), UserDTO.class);
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);

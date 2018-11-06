@@ -1,15 +1,14 @@
 package com.accenture.fe.rs;
 
-import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +24,9 @@ public class OrderCgServiceImpl implements OrderCgService {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private Mapper mapper;
+
     @Override
     @POST
     @Path("/close")
@@ -37,7 +39,7 @@ public class OrderCgServiceImpl implements OrderCgService {
         JsonElement jsonTree  = parser.parse(new StringReader(json));
         JsonObject jsonObject = jsonTree.getAsJsonObject();
         Long orderId = jsonObject.get("orderId").getAsLong();
-        OrderDTO orderDTO = OrderConverter.convertToDTO(orderService.changeOrderStatusToClosed(orderId));
+        OrderDTO orderDTO = mapper.map(orderService.changeOrderStatusToClosed(orderId), OrderDTO.class);
         if (orderDTO != null) {
             //Отправляем json с данными корзины
             response = Response.status(Response.Status.OK).entity(orderDTO).build();

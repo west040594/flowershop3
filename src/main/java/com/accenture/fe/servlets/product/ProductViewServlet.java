@@ -1,8 +1,8 @@
 package com.accenture.fe.servlets.product;
 
-import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.fe.dto.product.ProductDTO;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -22,6 +22,8 @@ public class ProductViewServlet extends HttpServlet {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private Mapper mapper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -34,14 +36,13 @@ public class ProductViewServlet extends HttpServlet {
         ProductDTO productDTO = null;
 
         if (productId != null) {
-            productDTO = ProductConverter.convertToDTO(
-                    productService.getProductById(Long.parseLong(productId)));
+            productDTO = mapper.map(
+                    productService.getProductById(Long.parseLong(productId)), ProductDTO.class);
         }
 
         if(productDTO != null) {
             req.setAttribute("product", productDTO);
             req.getRequestDispatcher("/product/view.jsp").forward(req,resp);
-
         }
         else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -1,14 +1,11 @@
 package com.accenture.fe.servlets.cart;
 
-import com.accenture.be.business.cart.Cart;
-import com.accenture.be.business.customer.converters.CustomerConverter;
-import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
-import com.accenture.be.entity.order.Order;
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.user.UserDTO;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -26,6 +23,9 @@ public class CartOrderServlet extends HttpServlet {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private Mapper mapper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -46,7 +46,6 @@ public class CartOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         if(session.getAttribute("user") != null) {
-
             //Берем поля из формы, заполняем покупателя
             UserDTO userDTO = (UserDTO)session.getAttribute("user");
             CustomerDTO customerDTO = userDTO.getCustomer();
@@ -63,7 +62,7 @@ public class CartOrderServlet extends HttpServlet {
 
             //Создаем новый заказ, при ошибки перезугружаем сраницу с списком errors
             try {
-                orderDTO = OrderConverter.convertToDTO(orderService.createOrder(orderDTO));
+                orderDTO = mapper.map(orderService.createOrder(orderDTO), OrderDTO.class);;
             } catch (OrderException e) {
                 req.setAttribute("error", e.getMessage());
                 doGet(req, resp);

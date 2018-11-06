@@ -1,8 +1,6 @@
 package com.accenture.fe.servlets.product;
 
-import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
-import com.accenture.be.entity.product.Product;
 import com.accenture.fe.dto.product.ProductDTO;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +26,6 @@ public class ProductIndexServlet extends HttpServlet {
 
     @Autowired
     private Mapper mapper;
-
 
     @Override
     public void init(ServletConfig config) throws ServletException {

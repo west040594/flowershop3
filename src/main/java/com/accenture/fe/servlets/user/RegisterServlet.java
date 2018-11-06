@@ -1,32 +1,28 @@
 package com.accenture.fe.servlets.user;
 
-import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
-import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.user.UserDTO;
-import com.accenture.fe.enums.user.UserRole;
-import com.accenture.fe.enums.user.UserStatus;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private Mapper mapper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -42,7 +38,6 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf8");
         //Формируем Пользователя и соотвествующего ему Покупателя
-        //Покупателю назначается стартовый бонус в размере 2000 и скидка 0%
         CustomerDTO customerDTO = new CustomerDTO(
                 req.getParameter("firstName"), req.getParameter("lastName"));
         UserDTO userDTO = new UserDTO(
@@ -53,12 +48,13 @@ public class RegisterServlet extends HttpServlet {
 
         //Регистрируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
-            userDTO = UserConverter.convertToDTO(userService.register(userDTO));
+            userDTO = mapper.map(userService.register(userDTO), UserDTO.class);
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);
             return;
         }
+        //Если ошибок не возникло устанавливаем пользователя в сессию
         userService.setUserSession(req.getSession(), userDTO);
         resp.sendRedirect("/products/index");
 

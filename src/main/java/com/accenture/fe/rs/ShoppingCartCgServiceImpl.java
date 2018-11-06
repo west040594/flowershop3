@@ -3,13 +3,13 @@ package com.accenture.fe.rs;
 
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.cart.CartItem;
-import com.accenture.be.business.product.converters.ProductConverter;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.fe.dto.product.ProductDTO;
 import com.accenture.fe.dto.user.UserDTO;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +27,9 @@ public class ShoppingCartCgServiceImpl implements ShoppingCartCgService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private Mapper mapper;
 
     @Override
     @GET
@@ -57,7 +60,7 @@ public class ShoppingCartCgServiceImpl implements ShoppingCartCgService {
             Long productId = jsonObject.get("productId").getAsLong();
             //Добавляем в карзину новый продукт
             Cart cart = (Cart)((UserDTO)session.getAttribute("user")).getCustomer().getCart();
-            ProductDTO productDTO = ProductConverter.convertToDTO(productService.getProductById(productId));
+            ProductDTO productDTO = mapper.map(productService.getProductById(productId), ProductDTO.class);
             CartItem cartItem = new CartItem(productDTO, 1);
             cart.addItem(cartItem);
             //Отправляем json с данными корзины
@@ -82,7 +85,7 @@ public class ShoppingCartCgServiceImpl implements ShoppingCartCgService {
             Long productId = jsonObject.get("productId").getAsLong();
             //Удаляем из корзины еденицу товара
             Cart cart = (Cart)((UserDTO)session.getAttribute("user")).getCustomer().getCart();
-            ProductDTO productDTO = ProductConverter.convertToDTO(productService.getProductById(productId));
+            ProductDTO productDTO = mapper.map(productService.getProductById(productId), ProductDTO.class);
             CartItem cartItem = new CartItem(productDTO, 1);
             cart.removeItem(cartItem);
             //Отправляем json с данными корзины

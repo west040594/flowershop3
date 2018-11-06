@@ -1,9 +1,7 @@
 package com.accenture.be.business.user.implement;
 
 import com.accenture.be.business.cart.Cart;
-import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.business.messages.JmsService;
-import com.accenture.be.business.user.converters.UserConverter;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserMarshgallingService;
 import com.accenture.be.business.user.interfaces.UserService;
@@ -16,6 +14,7 @@ import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;
 import com.accenture.fe.enums.user.UserStatus;
 import org.apache.cxf.helpers.IOUtils;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +45,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private LoginUserValidator loginUserValidator;
 
+    @Autowired
+    private Mapper mapper;
+
     @Override
     public List<User> findAllUser() {
         return (List<User>) userDAO.findAll();
@@ -70,13 +72,13 @@ public class UserServiceImpl implements UserService {
             throw new UserException(errors.toString());
             //Иначе сохраняем пользоватея с присвоиным ему покупателем, и возвращаем его DTO
         } else {
-            User user = UserConverter.convertToEntity(userDTO);
+            User user = mapper.map(userDTO, User.class);
             //Устаналвиваем дату роль и статус новому пользователю
             user.setStatus(UserStatus.ACTIVE);
             user.setRole(UserRole.USER);
             user.setCreatedUpdated(new Date(), new Date());
 
-            Customer customer = CustomerConverter.convertToEntity(userDTO.getCustomer());
+            Customer customer = mapper.map(userDTO.getCustomer(), Customer.class);
             //Устанавливаем начальный баланс и скидку покупателю
             customer.setBalance(new BigDecimal(2000));
             customer.setDiscount(3);
