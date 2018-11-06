@@ -15,6 +15,8 @@ import com.accenture.fe.enums.user.UserRole;
 import com.accenture.fe.enums.user.UserStatus;
 import org.apache.cxf.helpers.IOUtils;
 import org.dozer.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,8 @@ import java.util.Properties;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userDAO;
@@ -87,6 +91,8 @@ public class UserServiceImpl implements UserService {
             customer.setUser(user);
             user = saveUser(user);
             createUserXmlAndSent(user);
+            log.debug("User with id = {}, username = {}, email = {} was registered",
+                    user.getId(), user.getUsername(), user.getEmail());
             return user;
         }
     }
@@ -128,6 +134,9 @@ public class UserServiceImpl implements UserService {
             errors.append("Проверьте правильность пароля");
             throw new UserException(errors.toString());
         }
+
+        log.debug("User with id = {}, username = {}, was entered",
+                detectedUser.getId(), detectedUser.getUsername());
         return detectedUser;
     }
 

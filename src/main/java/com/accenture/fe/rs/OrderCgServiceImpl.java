@@ -42,6 +42,8 @@ public class OrderCgServiceImpl implements OrderCgService {
         OrderDTO orderDTO = mapper.map(orderService.changeOrderStatusToClosed(orderId), OrderDTO.class);
         if (orderDTO != null) {
             //Отправляем json с данными корзины
+            
+            orderDTO.setOrderProducts(null); // TODO: 06.11.2018 КОСТЫЛЬ 
             response = Response.status(Response.Status.OK).entity(orderDTO).build();
         }
         return response;

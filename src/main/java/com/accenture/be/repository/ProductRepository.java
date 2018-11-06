@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepository extends CrudRepository<Product, Long> {
+
     List<Product> findByNameContainingIgnoreCase(String name);
     List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
 }

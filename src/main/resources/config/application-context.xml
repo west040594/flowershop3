@@ -98,8 +98,11 @@
         </property>
     </bean>
 
-    <bean id="org.dozer.Mapper" class="org.dozer.DozerBeanMapper">
-    </bean>
+    <!--<bean id="logger" class="org.slf4j.Logger" factory-method="getLogger">
+        <constructor-arg type="java.lang.String" value="applicationLogger" />
+    </bean>-->
+
+    <bean id="org.dozer.Mapper" class="org.dozer.DozerBeanMapper" />
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location">

@@ -12,6 +12,7 @@ $(document).ready(function () {
                 dataType: "json",
                 data: JSON.stringify({orderId: orderId}),
             }).done(function(data) {
+                console.log(data);
                 $('tr[data-id=' + data.id + ']').find('.orderStatus').html(data.status);
                 $(that).remove();
             });

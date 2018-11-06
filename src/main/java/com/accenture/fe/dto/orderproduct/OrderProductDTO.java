@@ -2,10 +2,13 @@ package com.accenture.fe.dto.orderproduct;
 
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.product.ProductDTO;
+import org.dozer.Mapping;
 
 public class OrderProductDTO {
+
     private long id;
     private ProductDTO product;
+    @Mapping("this")
     private OrderDTO order;
     private int quantity;
 

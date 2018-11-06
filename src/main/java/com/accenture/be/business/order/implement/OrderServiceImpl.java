@@ -14,6 +14,8 @@ import com.accenture.be.repository.OrderRepository;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.enums.order.OrderStatus;
 import org.dozer.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,8 @@ import java.util.List;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     private OrderRepository orderDAO;
@@ -85,6 +89,8 @@ public class OrderServiceImpl implements OrderService {
             //Устанавливаем заказу его orderProducts для сохранения строк в бд и сохраняем заказ
             order.setOrderProducts(orderProducts);
             order = saveOrder(order);
+            log.debug("Order with id = {} was created. Total = {}",
+                    order.getId(), order.getTotal());
             return order;
         }
     }
@@ -108,9 +114,10 @@ public class OrderServiceImpl implements OrderService {
 
         //Снимаем деньги с покупателя и обновляем заказ
         order.getCustomer().setBalance(order.getCustomer().getBalance().subtract(order.getTotal()));
-        orderDAO.save(order);
 
-        return order;
+        log.debug("Order with id = {} changed status to {}",
+                order.getId(), order.getStatus());
+        return orderDAO.save(order);
     }
 
     @Transactional
@@ -119,8 +126,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDAO.findById(orderId).get();
         order.setStatus(OrderStatus.CLOSED);
         order.setClosetAt(new Date());
-        orderDAO.save(order);
-        return order;
+        log.debug("Order with id = {} changed status to {}",
+                order.getId(), order.getStatus());
+        return orderDAO.save(order);
     }
 
     @Override
