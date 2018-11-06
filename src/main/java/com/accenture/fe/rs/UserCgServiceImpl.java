@@ -1,6 +1,6 @@
 package com.accenture.fe.rs;
 
-import com.accenture.be.access.user.UserDAO;
+import com.accenture.be.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/user")
 public class UserCgServiceImpl implements UserCgService {
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userDAO;
 
     @Override
     @GET

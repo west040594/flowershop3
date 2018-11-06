@@ -26,8 +26,7 @@ public class CustomerConverter {
                     customerDTO.getFirstName(), customerDTO.getLastName(),
                     customerDTO.getBalance(), customerDTO.getDiscount(),
                     customerDTO.getPhoneNumber(), customerDTO.getStreet(),
-                    customerDTO.getCity(), customerDTO.getCountry(),
-                    UserConverter.convertToEntity(customerDTO.getUser()));
+                    customerDTO.getCity(), customerDTO.getCountry());
         }
         return customerEntity;
     }

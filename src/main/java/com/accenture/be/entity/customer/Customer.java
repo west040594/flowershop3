@@ -58,16 +58,15 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, BigDecimal balance, int discount, User user) {
+    public Customer(String firstName, String lastName, BigDecimal balance, int discount) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
         this.discount = discount;
-        this.user = user;
     }
 
-    public Customer(long id, String firstName, String lastName, BigDecimal balance, int discount, String phoneNumber, String street, String city, String country, User user) {
-        this(firstName, lastName, balance, discount, user);
+    public Customer(long id, String firstName, String lastName, BigDecimal balance, int discount, String phoneNumber, String street, String city, String country) {
+        this(firstName, lastName, balance, discount);
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.street = street;
@@ -181,7 +180,6 @@ public class Customer {
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
-                ", user=" + user +
                 '}';
     }
 }

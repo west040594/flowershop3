@@ -1,6 +1,5 @@
 package com.accenture.be.business.user.implement;
 
-import com.accenture.be.access.user.UserDAO;
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.business.messages.JmsService;
@@ -12,13 +11,13 @@ import com.accenture.be.business.user.validators.LoginUserValidator;
 import com.accenture.be.business.user.validators.RegistrationUserValidator;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
+import com.accenture.be.repository.UserRepository;
 import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;
 import com.accenture.fe.enums.user.UserStatus;
 import org.apache.cxf.helpers.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
 
@@ -33,7 +32,7 @@ import java.util.Properties;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userDAO;
 
     @Autowired
     private UserMarshgallingService userMarshgallingService;
@@ -49,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllUser() {
-        return userDAO.findAll();
+        return (List<User>) userDAO.findAll();
     }
 
 
@@ -141,7 +140,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         userDAO.save(user);
-        return userDAO.findById(user.getId());
+        return userDAO.findById(user.getId()).get();
     }
 
     @Override

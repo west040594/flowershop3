@@ -1,13 +1,9 @@
 package com.accenture.be.business.user.validators;
 
-import com.accenture.be.access.user.UserDAO;
-import com.accenture.be.entity.customer.Customer;
-import com.accenture.be.entity.user.User;
-import com.accenture.fe.dto.customer.CustomerDTO;
+import com.accenture.be.repository.UserRepository;
 import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -16,7 +12,7 @@ import org.springframework.validation.Validator;
 public class RegistrationUserValidator implements Validator {
 
     @Autowired
-    protected UserDAO userDAO;
+    private UserRepository userDAO;
 
     @Override
     public boolean supports(Class<?> aClass) {

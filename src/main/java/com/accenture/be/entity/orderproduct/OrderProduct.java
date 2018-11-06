@@ -16,8 +16,8 @@ import java.util.Objects;
         @NamedQuery(name = "OrderProduct.findById",
                 query = "SELECT op FROM OrderProduct op WHERE op.id = :id"),
 
-        @NamedQuery(name = "OrderProduct.findByOrder",
-                query = "SELECT op FROM OrderProduct op WHERE op.order.id = :orderId"),
+        /*@NamedQuery(name = "OrderProduct.findByOrder",
+                query = "SELECT op FROM OrderProduct op WHERE op.order.id = :orderId"),*/
 })
 public class OrderProduct {
     @Id

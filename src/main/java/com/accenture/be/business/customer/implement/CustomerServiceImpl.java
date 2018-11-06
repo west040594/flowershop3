@@ -1,11 +1,10 @@
 package com.accenture.be.business.customer.implement;
 
-import com.accenture.be.access.customer.CustomerDAO;
 import com.accenture.be.business.customer.interfaces.CustomerService;
 import com.accenture.be.entity.customer.Customer;
+import com.accenture.be.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -14,36 +13,34 @@ import java.math.BigDecimal;
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private CustomerDAO customerDAO;
+    private CustomerRepository customerDAO;
 
     public CustomerServiceImpl() {
-        System.out.println("customerService ACTIVE");
     }
 
     @Transactional
     @Override
     public Customer saveCustomer(Customer customer) {
-        Long customerId = customerDAO.save(customer);
-        return customerDAO.findById(customerId);
+        return customerDAO.save(customer);
     }
 
     @Transactional
     @Override
     public Customer withdrawFromBalance(BigDecimal withdrawCost, Long customerId) {
-        Customer customer = customerDAO.findById(customerId);
+        Customer customer = customerDAO.findById(customerId).get();
         customer.setBalance(customer.getBalance().subtract(withdrawCost));
-        customerDAO.update(customer);
+        customerDAO.save(customer);
         return customer;
     }
 
     @Transactional
     @Override
     public void changeCustomerDiscount(CustomerDiscount customerDiscount) {
-        Customer customer = customerDAO.findById(customerDiscount.getCustomerId());
+        Customer customer = customerDAO.findById(customerDiscount.getCustomerId()).get();
         if(customerDiscount.newDiscount > 0  &&  customerDiscount.newDiscount < 100)
         {
             customer.setDiscount(customerDiscount.newDiscount);
-            customerDAO.update(customer);
+            customerDAO.save(customer);
         }
     }
 }

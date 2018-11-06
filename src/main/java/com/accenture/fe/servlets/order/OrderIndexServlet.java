@@ -8,6 +8,7 @@ import com.accenture.be.entity.user.User;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -20,12 +21,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = "/orders/index")
 public class OrderIndexServlet extends HttpServlet {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private Mapper mapper;
 
 
     @Override
@@ -40,7 +45,9 @@ public class OrderIndexServlet extends HttpServlet {
         if(session.getAttribute("user") != null) {
             UserDTO sessionUser = (UserDTO)session.getAttribute("user");
             if(sessionUser.getRole() == UserRole.ADMIN) {
-                List<OrderDTO> orders = orderService.findAllOrder();
+                List<OrderDTO> orders  = orderService.findAllOrder().stream().
+                        map(product -> mapper.map(product, OrderDTO.class))
+                        .collect(Collectors.toList());
                 req.setAttribute("orders", orders);
                 req.getRequestDispatcher("/order/index.jsp").forward(req,resp);
                 return;

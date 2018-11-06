@@ -55,7 +55,7 @@ public class Order {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER) // TODO: 06.11.2018 EAGER? 
     @JoinTable(
             name = "tb_order_product",
             joinColumns = { @JoinColumn(name = "order_id") },

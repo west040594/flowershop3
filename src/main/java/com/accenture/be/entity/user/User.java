@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_user")
-@NamedQueries({
+/*@NamedQueries({
         @NamedQuery(name = "User.findAll",
                     query = "SELECT c FROM User c"),
 
@@ -25,7 +25,7 @@ import java.util.Objects;
 
         @NamedQuery(name = "User.findByEmail",
                     query = "SELECT c FROM User c WHERE c.email = :email"),
-})
+})*/
 public class User {
 
     @Id

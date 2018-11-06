@@ -1,10 +1,6 @@
 package com.accenture.be.business.order.validators;
 
-import com.accenture.be.access.order.OrderDAO;
-import com.accenture.be.access.user.UserDAO;
 import com.accenture.fe.dto.order.OrderDTO;
-import com.accenture.fe.dto.user.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

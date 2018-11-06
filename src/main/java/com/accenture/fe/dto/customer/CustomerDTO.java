@@ -17,7 +17,6 @@ public class CustomerDTO {
     private String street;
     private String city;
     private String country;
-    private UserDTO user;
     private Cart cart;
 
     public CustomerDTO() {
@@ -125,14 +124,6 @@ public class CustomerDTO {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
     }
 
     public Cart getCart() {

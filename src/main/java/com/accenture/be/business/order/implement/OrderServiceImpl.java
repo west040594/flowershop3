@@ -1,9 +1,6 @@
 package com.accenture.be.business.order.implement;
 
-import com.accenture.be.access.order.OrderDAO;
-import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.cart.CartItem;
-import com.accenture.be.business.customer.converters.CustomerConverter;
 import com.accenture.be.business.order.converters.OrderConverter;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
@@ -15,9 +12,8 @@ import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.orderproduct.OrderProduct;
 import com.accenture.be.entity.product.Product;
-import com.accenture.fe.dto.customer.CustomerDTO;
+import com.accenture.be.repository.OrderRepository;
 import com.accenture.fe.dto.order.OrderDTO;
-import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +28,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    private OrderDAO orderDAO;
+    private OrderRepository orderDAO;
 
     @Autowired
     private ProductService productService;
@@ -44,15 +40,14 @@ public class OrderServiceImpl implements OrderService {
     private CreateOrderValidator createOrderValidator;
 
     @Override
-    public List<OrderDTO> findAllOrder() {
-        return OrderConverter.convertToDTO(orderDAO.findAll());
+    public List<Order> findAllOrder() {
+        return (List<Order>) orderDAO.findAll();
     }
 
     @Transactional
     @Override
     public Order saveOrder(Order order) {
-        Long orderId = orderDAO.save(order);
-        return orderDAO.findById(orderId);
+        return orderDAO.save(order);
     }
 
     @Transactional
@@ -94,14 +89,14 @@ public class OrderServiceImpl implements OrderService {
     }
     @Override
     public Order getOrderById(long orderId) {
-        return orderDAO.findById(orderId);
+        return orderDAO.findById(orderId).get();
     }
 
     @Transactional
     @Override
     public Order changerOrderStatusToPaid(Long orderId) {
         //Изменяем дату закрытия заказа и статус в  -  Закрыто
-        Order order = orderDAO.findById(orderId);
+        Order order = orderDAO.findById(orderId).get();
         order.setStatus(OrderStatus.PAID);
 
         //Изменяем число "В наличиии" у продуктов
@@ -112,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 
         //Снимаем деньги с покупателя и обновляем заказ
         order.getCustomer().setBalance(order.getCustomer().getBalance().subtract(order.getTotal()));
-        orderDAO.update(order);
+        orderDAO.save(order);
 
         return order;
     }
@@ -120,10 +115,10 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Order changeOrderStatusToClosed(Long orderId) {
-        Order order = orderDAO.findById(orderId);
+        Order order = orderDAO.findById(orderId).get();
         order.setStatus(OrderStatus.CLOSED);
         order.setClosetAt(new Date());
-        orderDAO.update(order);
+        orderDAO.save(order);
         return order;
     }
 

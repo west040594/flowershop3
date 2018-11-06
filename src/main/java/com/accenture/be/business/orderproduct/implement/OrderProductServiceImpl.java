@@ -1,12 +1,9 @@
 package com.accenture.be.business.orderproduct.implement;
 
-import com.accenture.be.access.orderproduct.OrderProductDAO;
-import com.accenture.be.business.orderproduct.converters.OrderProductConverter;
 import com.accenture.be.business.orderproduct.interfaces.OrderProductService;
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.orderproduct.OrderProduct;
-import com.accenture.fe.dto.order.OrderDTO;
-import com.accenture.fe.dto.orderproduct.OrderProductDTO;
+import com.accenture.be.repository.OrderProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +14,11 @@ import java.util.List;
 public class OrderProductServiceImpl implements OrderProductService {
 
     @Autowired
-    private OrderProductDAO orderProductDAO;
+    private OrderProductRepository orderProductDAO;
 
     @Override
     public List<OrderProduct> findOrderProductByOrder(Order order) {
-        return orderProductDAO.findByOrder(order.getId());
+        return orderProductDAO.findByOrder_id(order.getId());
     }
 
     @Transactional
