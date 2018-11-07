@@ -17,6 +17,15 @@
             <input type="range" min="10" max="500" step="10" value="${param.maxPrice}"
             class="form-control custom-range" id="maxPrice" name="maxPrice" placeholder="max">
           </div>
+          <div class="form-group">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Категория</label>
+                <select class="custom-select mr-sm-2" id="category" name="category">
+                  <option disabled selected value>Выберите...</option>
+                  <c:forEach var="category" items="${categoryList}">
+                    <option value="${category.id}">${category.name}</option>
+                  </c:forEach>
+                </select>
+          </div>
           <button type="submit" class="btn btn-sm btn-success">Применить</button>
         </form>
     </div>

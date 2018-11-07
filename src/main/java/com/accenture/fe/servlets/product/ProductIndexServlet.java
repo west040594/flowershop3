@@ -1,11 +1,16 @@
 package com.accenture.fe.servlets.product;
 
+import com.accenture.be.business.category.interfaces.CategoryService;
 import com.accenture.be.business.product.interfaces.ProductService;
+import com.accenture.be.business.product.specification.ProductSpecification;
+import com.accenture.be.entity.product.Product;
 import com.accenture.fe.dto.product.ProductDTO;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import javax.persistence.criteria.Predicate;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +30,9 @@ public class ProductIndexServlet extends HttpServlet {
     private ProductService productService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private Mapper mapper;
 
     @Override
@@ -35,8 +43,30 @@ public class ProductIndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.setAttribute("categoryList", categoryService.findAllCategory());
         List<ProductDTO> productDTOS = null;
-        if(req.getParameter("productname") != null) {
+
+        /*Specification<Product> specification = new ProductSpecification(
+                *//*new String(req.getParameter("productname").getBytes("iso-8859-1"),
+                        "UTF-8"),*//*
+                req.getParameter("productname"),
+                req.getParameter("category"),
+                req.getParameter("minPrice"),
+                req.getParameter("maxPrice")
+        );*/
+        /*productDTOS = productService.findAllProduct(specification).stream().
+                map(product -> mapper.map(product, ProductDTO.class))
+                .collect(Collectors.toList());*/
+
+        /*QPassport qPassport = QPassport.passport;
+        Predicate productQuery = p.owner.lastName.startsWith("Te");*/
+
+        productDTOS = productService.findAllProduct().stream().
+                map(product -> mapper.map(product, ProductDTO.class))
+                .collect(Collectors.toList());
+
+        /*if(req.getParameter("productname") != null) {
             String productName = new String(req.getParameter("productname").getBytes("iso-8859-1"),
                     "UTF-8");
             req.setAttribute("searchProductName", productName);
@@ -55,7 +85,7 @@ public class ProductIndexServlet extends HttpServlet {
             productDTOS  = productService.findAllProduct().stream().
                     map(product -> mapper.map(product, ProductDTO.class))
                     .collect(Collectors.toList());
-        }
+        }*/
         req.setAttribute("products", productDTOS);
         req.getRequestDispatcher("/product/index.jsp").forward(req,resp);
     }

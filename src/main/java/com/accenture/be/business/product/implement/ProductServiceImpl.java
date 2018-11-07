@@ -4,6 +4,7 @@ import com.accenture.be.repository.ProductRepository;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,6 +25,14 @@ public class ProductServiceImpl implements ProductService {
         return  products.stream().filter(product -> product.getInStock() > 0)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<Product> findAllProduct(Specification<Product> specification) {
+        /*List<Product> products = productDAO.findAll(specification);
+        return  products.stream().filter(product -> product.getInStock() > 0)
+                .collect(Collectors.toList());*/
+        return null;
     }
 
     @Override

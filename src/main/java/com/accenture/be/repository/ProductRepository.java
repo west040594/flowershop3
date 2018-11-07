@@ -1,6 +1,8 @@
 package com.accenture.be.repository;
 
 import com.accenture.be.entity.product.Product;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.math.BigDecimal;

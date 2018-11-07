@@ -1,5 +1,6 @@
 package com.accenture.be.business.product.interfaces;
 import com.accenture.be.entity.product.Product;
+import org.springframework.data.jpa.domain.Specification;
 
 
 import javax.ws.rs.Produces;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public interface ProductService {
     List<Product> findAllProduct();
+    List<Product> findAllProduct(Specification<Product> specification);
     List<Product> findProductByName(String productName);
     List<Product> findProductByRangePrice(BigDecimal min, BigDecimal max);
     Product getProductById(long productId);
