@@ -1,7 +1,6 @@
 package com.accenture.be.access.user;
 
 import com.accenture.be.entity.user.User;
-
 import java.util.List;
 
 public interface UserDAO {

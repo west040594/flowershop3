@@ -2,11 +2,7 @@ package com.accenture.be.access.order;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -20,9 +16,6 @@ public class OrderDAOImpl implements OrderDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    /*@Autowired
-    private SessionFactory sessionFactory;*/
-
     @Override
     public List<Order> findAll() {
 
@@ -31,7 +24,6 @@ public class OrderDAOImpl implements OrderDAO {
             TypedQuery<Order> query  = entityManager.createNamedQuery("Order.findAll", Order.class);
             orders = query.getResultList();
         } catch (NoResultException nr) {
-            //users = new ArrayList<>(0);
             orders = Collections.emptyList();
         }
         return orders;
@@ -47,7 +39,7 @@ public class OrderDAOImpl implements OrderDAO {
             order = query.getSingleResult();
 
         }catch (NoResultException nr) {
-
+            nr.printStackTrace();
         }
         return order;
     }
@@ -59,23 +51,12 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Long save(Order order) {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Long orderId = (Long)session.save(order);
-        session.getTransaction().commit();
-        session.close();
-        return orderId;*/
         entityManager.persist(order);
         return order.getId();
     }
 
     @Override
     public void update(Order order) {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.update(order);
-        session.getTransaction().commit();
-        session.close();*/
         entityManager.merge(order);
     }
 

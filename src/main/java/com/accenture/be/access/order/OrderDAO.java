@@ -2,8 +2,6 @@ package com.accenture.be.access.order;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
-import com.accenture.be.entity.user.User;
-
 import java.util.List;
 
 public interface OrderDAO {

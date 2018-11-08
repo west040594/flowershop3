@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
@@ -18,25 +17,6 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerDAO;
 
     private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
-
-    public CustomerServiceImpl() {
-        log.info("CustomerServiceActive");
-    }
-
-    @Transactional
-    @Override
-    public Customer saveCustomer(Customer customer) {
-        return customerDAO.save(customer);
-    }
-
-    @Transactional
-    @Override
-    public Customer withdrawFromBalance(BigDecimal withdrawCost, Long customerId) {
-        Customer customer = customerDAO.findById(customerId).get();
-        customer.setBalance(customer.getBalance().subtract(withdrawCost));
-        customerDAO.save(customer);
-        return customer;
-    }
 
     @Transactional
     @Override

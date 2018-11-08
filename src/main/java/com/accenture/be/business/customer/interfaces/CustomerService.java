@@ -1,13 +1,15 @@
 package com.accenture.be.business.customer.interfaces;
 
 import com.accenture.be.business.customer.implement.CustomerDiscount;
-import com.accenture.be.entity.customer.Customer;
 
-import java.math.BigDecimal;
-
+/**
+ * Сервис для взаимодествия с Покупателями
+ */
 public interface CustomerService {
 
-    Customer saveCustomer(Customer customer);
+    /** Этот метод изменяет у существуюего покупателя его скидку
+     * Объект CustomerDiscount состоит из полей - id покупателя и новая скидка
+     * @param customerDiscount Объект CustomerDiscount
+     */
     void changeCustomerDiscount(CustomerDiscount customerDiscount);
-    Customer withdrawFromBalance(BigDecimal withdrawCost, Long customerId);
 }

@@ -3,6 +3,9 @@ package com.accenture.be.repository;
 import com.accenture.be.entity.user.User;
 import org.springframework.data.repository.CrudRepository;
 
+/**
+ * Репозиторий для работы с сущностями User
+ */
 public interface UserRepository extends CrudRepository<User, Long> {
 
     /**

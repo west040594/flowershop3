@@ -1,23 +1,19 @@
 package com.accenture.be.business.customer.converters;
 
 import com.accenture.be.business.customer.implement.CustomerDiscount;
-import com.accenture.be.business.customer.interfaces.CustomerDiscountMarshgallingService;
+import com.accenture.be.business.customer.interfaces.CustomerDiscountMarshallingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.Marshaller;
 import org.springframework.stereotype.Service;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
-@Service("customerDiscountMarshgallingService")
-public class CustomerDiscountMarshgallingServiceImpl implements CustomerDiscountMarshgallingService {
 
- /*   @Autowired
-    private Unmarshaller unmarshaller;*/
+@Service("customerDiscountMarshgallingService")
+public class CustomerDiscountMarshallingServiceImpl implements CustomerDiscountMarshallingService {
 
     @Autowired
     private Marshaller marshaller;
@@ -37,8 +33,6 @@ public class CustomerDiscountMarshgallingServiceImpl implements CustomerDiscount
 
     @Override
     public CustomerDiscount convertFromXMLToCustomerDiscount(String xmlFile) throws IOException {
-       /* StringReader reader = new StringReader(xmlFile);
-        return (CustomerDiscount) unmarshaller.unmarshal(new StreamSource(reader));*/
         JAXBContext jaxbContext = null;
         CustomerDiscount customerDiscount = null;
         try {

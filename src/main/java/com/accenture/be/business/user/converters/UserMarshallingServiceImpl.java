@@ -1,30 +1,25 @@
 package com.accenture.be.business.user.converters;
 
-import com.accenture.be.business.user.interfaces.UserMarshgallingService;
+import com.accenture.be.business.user.interfaces.UserMarshallingService;
 import com.accenture.be.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 import org.springframework.stereotype.Service;
-
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-@Service("userMarshgallingService")
-public class UserMarshgallingServiceImpl implements UserMarshgallingService {
+@Service("userMarshallingService")
+public class UserMarshallingServiceImpl implements UserMarshallingService {
 
     @Autowired
     private Marshaller marshaller;
 
     @Autowired
     private Unmarshaller unmarshaller;
-
-    /*@Value("${user.xml.path}")
-    private String filepath;*/
 
     @Override
     public void convertFromUserToXML(User user, String filepath) throws IOException {

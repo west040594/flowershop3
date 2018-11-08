@@ -1,12 +1,14 @@
 package com.accenture.be.entity.orderproduct;
 
-
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.product.Product;
 
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Сущность для таблицы order_product
+ */
 @Entity
 @Table(name = "tb_order_product")
 @NamedQueries({

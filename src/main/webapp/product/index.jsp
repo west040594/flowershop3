@@ -20,9 +20,10 @@
           <div class="form-group">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Категория</label>
                 <select class="custom-select mr-sm-2" id="category" name="category">
-                  <option disabled selected value>Выберите...</option>
+                  <option disabled value ${selectedCategory == null ? 'selected':''}>Выберите...</option>
+                  <option value="">Все</option>
                   <c:forEach var="category" items="${categoryList}">
-                    <option value="${category.id}">${category.name}</option>
+                      <option value="${category.id}" ${category.id == selectedCategory ? 'selected':''}>${category.name}</option>
                   </c:forEach>
                 </select>
           </div>

@@ -1,16 +1,16 @@
 package com.accenture.be.entity.user;
 
-
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.fe.enums.user.UserStatus;
 import com.accenture.fe.enums.user.UserRole;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Сущность для таблицы user
+ */
 @Entity
 @Table(name = "tb_user")
 /*@NamedQueries({

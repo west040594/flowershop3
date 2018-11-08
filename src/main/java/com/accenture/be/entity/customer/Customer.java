@@ -2,13 +2,15 @@ package com.accenture.be.entity.customer;
 
 import com.accenture.be.entity.order.Order;
 import com.accenture.be.entity.user.User;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Сущность для таблицы customer
+ */
 @Entity
 @Table(name = "tb_customer")
 @NamedQueries({

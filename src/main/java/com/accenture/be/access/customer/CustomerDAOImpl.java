@@ -2,27 +2,17 @@ package com.accenture.be.access.customer;
 
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Repository("customerDao")
 public class CustomerDAOImpl implements CustomerDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    /*@Autowired
-    private SessionFactory sessionFactory;*/
 
     @Override
     public Customer findById(long customerId) {
@@ -34,7 +24,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             customer = query.getSingleResult();
 
         }catch (NoResultException nr) {
-
+            nr.printStackTrace();
         }
         return customer;
     }
@@ -48,23 +38,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Long save(Customer customer)
     {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Long customerId = (Long)session.save(customer);
-        session.getTransaction().commit();
-        session.close();
-        return customerId;*/
         entityManager.persist(customer);
         return customer.getId();
     }
 
     @Override
     public void update(Customer customer) {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.update(customer);
-        session.getTransaction().commit();
-        session.close();*/
         entityManager.merge(customer);
     }
 }

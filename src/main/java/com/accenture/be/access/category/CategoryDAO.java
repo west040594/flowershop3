@@ -1,7 +1,6 @@
 package com.accenture.be.access.category;
 
 import com.accenture.be.entity.category.Category;
-
 import java.util.List;
 
 public interface CategoryDAO {

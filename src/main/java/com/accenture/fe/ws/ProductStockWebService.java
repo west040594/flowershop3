@@ -1,12 +1,17 @@
 package com.accenture.fe.ws;
 
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
 
+/**
+ * Web Сервис для работы с продуктами
+ */
 @WebService
 public interface ProductStockWebService {
+    /**
+     * Увеличиваем количество всех продуктов(цветков) в магазине на указаное количество
+     * @param count Количество для увелечения
+     */
     void increaseProductStockSize(@WebParam(name = "count") int count);
 }

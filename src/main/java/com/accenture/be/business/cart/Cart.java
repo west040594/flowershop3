@@ -1,11 +1,17 @@
 package com.accenture.be.business.cart;
 
-import com.accenture.fe.dto.product.ProductDTO;
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.*;
 
+/**
+ * Корзина для покупки цветов
+ * Основные поля:
+ * items - Коллекция предметов в корзине
+ * total - Общая стоимость корзины
+ * discount - Скидка, если таковая имеется
+ * itemCount - Количество продуктов в корзине
+ */
 public class Cart {
 
     private Map<Long, CartItem> items;
@@ -25,6 +31,10 @@ public class Cart {
         this.discount = discount;
     }
 
+    /**
+     * Этот метод добавит новый предмет в корзину
+     * @param newItem Новый предмет для добавления в корзину
+     */
     public void addItem(CartItem newItem) {
         //Если предмет содержится в корзине то увеличиваем его количество на 1
         if(items.containsKey(newItem.getProduct().getId())) {
@@ -35,10 +45,16 @@ public class Cart {
             items.put(newItem.getProduct().getId(), newItem);
             newItem.setDiscount(discount);
         }
+        //Подчитываем количество и общую стоимость после изменений в корзине
         calculateTotalCost();
         calculateCount();
     }
 
+
+    /**
+     * Этот метод удалит существующий предмет в корзине
+     * @param removeItem Существующий предмет в корзине
+     */
     public void removeItem(CartItem removeItem) {
         if(items.containsKey(removeItem.getProduct().getId())) {
             CartItem item = items.get(removeItem.getProduct().getId());
@@ -49,15 +65,56 @@ public class Cart {
             } else {
                 items.remove(item.getProduct().getId());
             }
+            //Подчитываем количество и общую стоимость после изменений в корзине
             calculateTotalCost();
             calculateCount();
         }
     }
 
+
+    /**
+     * Этот метод удалит все предметы из корзины
+     */
     public void removeAllItem() {
         items.clear();
         total = new BigDecimal(0);
         itemCount = 0;
+    }
+
+    /**
+     * Этот метод пересчитывает общую стомость в корзине
+     */
+    private void calculateTotalCost() {
+        BigDecimal result = BigDecimal.ZERO;
+        //Проходим по все предметам корзины,
+        //умножаем количество предметов на их цену и формируем общую стоимость
+        for (CartItem cartItem : items.values()) {
+            BigDecimal price =  cartItem.getProduct().getPrice();
+            int quantity = cartItem.getQuantity();
+            BigDecimal priceQuantity = price.multiply(new BigDecimal(quantity));
+            result = result.add(priceQuantity);
+        }
+        //Если присутствует скидка, то формируем общую стомиость по скидке,
+        // иначе общая цена учитывается без скидки
+        if(discount != 0) {
+            BigDecimal discountPrice =
+                    result.multiply(new BigDecimal(discount)).divide(new BigDecimal(100));
+            this.total = result.subtract(discountPrice);
+        } else {
+            this.total = result;
+        }
+    }
+
+    /**
+     * Этот метод пересчитывает общее количество продуктов в корзине
+     */
+    private void calculateCount() {
+        int count = 0;
+        for (CartItem cartItem : items.values()) {
+            int quantity = cartItem.getQuantity();
+            count+=quantity;
+        }
+        this.itemCount = count;
     }
 
     public int getDiscount() {
@@ -86,7 +143,6 @@ public class Cart {
         return formatter.format(total);
     }
 
-
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
@@ -99,30 +155,7 @@ public class Cart {
         this.items = items;
     }
 
-    private void calculateTotalCost() {
-        BigDecimal result = BigDecimal.ZERO;
-        for (CartItem cartItem : items.values()) {
-            BigDecimal price =  cartItem.getProduct().getPrice();
-            int quantity = cartItem.getQuantity();
-            BigDecimal priceQuantity = price.multiply(new BigDecimal(quantity));
-            result = result.add(priceQuantity);
-        }
-        BigDecimal discountPrice =
-                result.multiply(new BigDecimal(discount)).divide(new BigDecimal(100));
-        this.total = result.subtract(discountPrice);
-    }
-
-    private void calculateCount() {
-        int count = 0;
-        for (CartItem cartItem : items.values()) {
-            int quantity = cartItem.getQuantity();
-            count+=quantity;
-        }
-        this.itemCount = count;
-    }
-
     public List<CartItem> getItemList() {
-
        return new ArrayList<CartItem>(items.values());
     }
 

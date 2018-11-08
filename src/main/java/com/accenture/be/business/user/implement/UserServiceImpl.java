@@ -3,7 +3,7 @@ package com.accenture.be.business.user.implement;
 import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.messages.JmsService;
 import com.accenture.be.business.user.exceptions.UserException;
-import com.accenture.be.business.user.interfaces.UserMarshgallingService;
+import com.accenture.be.business.user.interfaces.UserMarshallingService;
 import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.be.business.user.validators.LoginUserValidator;
 import com.accenture.be.business.user.validators.RegistrationUserValidator;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userDAO;
 
     @Autowired
-    private UserMarshgallingService userMarshgallingService;
+    private UserMarshallingService userMarshallingService;
 
     @Autowired
     private JmsService jmsService;
@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
                     getClass().getClassLoader().getResourceAsStream("application.properties");
             properties.load(propertyInputStream);
             //Создаем xml файл
-            userMarshgallingService.convertFromUserToXML(user, properties.getProperty("user.xml.path"));
+            userMarshallingService.convertFromUserToXML(user, properties.getProperty("user.xml.path"));
             //Читаем xml файл и отправляем на почту
             FileInputStream xmlInputStream = new FileInputStream(properties.getProperty("user.xml.path"));
             String message = IOUtils.toString(xmlInputStream, "UTF-8");

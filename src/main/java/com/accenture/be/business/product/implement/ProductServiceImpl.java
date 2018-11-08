@@ -3,10 +3,9 @@ package com.accenture.be.business.product.implement;
 import com.accenture.be.repository.ProductRepository;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.product.Product;
+import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,11 +27,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAllProduct(Specification<Product> specification) {
-        /*List<Product> products = productDAO.findAll(specification);
+    public List<Product> findAllProduct(Predicate predicate) {
+        List<Product> products = (List<Product>) productDAO.findAll(predicate);
         return  products.stream().filter(product -> product.getInStock() > 0)
-                .collect(Collectors.toList());*/
-        return null;
+                .collect(Collectors.toList());
     }
 
     @Override

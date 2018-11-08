@@ -1,7 +1,6 @@
 package com.accenture.be.access.orderproduct;
 
 import com.accenture.be.entity.orderproduct.OrderProduct;
-
 import java.util.List;
 
 public interface OrderProductDAO {

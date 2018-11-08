@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static java.lang.Long.parseLong;
 
 @WebServlet(urlPatterns = "/products/view")
 public class ProductViewServlet extends HttpServlet {

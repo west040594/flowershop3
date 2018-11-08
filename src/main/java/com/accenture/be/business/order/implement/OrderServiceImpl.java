@@ -4,7 +4,6 @@ import com.accenture.be.business.cart.CartItem;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.order.validators.CreateOrderValidator;
-import com.accenture.be.business.orderproduct.interfaces.OrderProductService;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
@@ -35,9 +34,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductService productService;
-
-    @Autowired
-    private OrderProductService orderProductService;
 
     @Autowired
     private CreateOrderValidator createOrderValidator;

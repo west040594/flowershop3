@@ -1,6 +1,5 @@
 package com.accenture.be.entity.order;
 
-
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.orderproduct.OrderProduct;
 import com.accenture.be.entity.product.Product;
@@ -12,6 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Сущность для таблицы order
+ */
 @Entity
 @Table(name = "tb_order")
 @NamedQueries({

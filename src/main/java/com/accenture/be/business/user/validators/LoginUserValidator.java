@@ -6,6 +6,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * Валидатор формы авторизации
+ */
 @Component("loginFormValidator")
 public class LoginUserValidator implements Validator {
 

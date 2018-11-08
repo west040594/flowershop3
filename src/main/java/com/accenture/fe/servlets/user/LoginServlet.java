@@ -1,6 +1,5 @@
 package com.accenture.fe.servlets.user;
 
-import com.accenture.be.business.customer.interfaces.CustomerDiscountMarshgallingService;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.fe.dto.user.UserDTO;
@@ -26,8 +25,6 @@ public class LoginServlet extends HttpServlet {
     @Autowired
     private Mapper mapper;
 
-    @Autowired
-    private CustomerDiscountMarshgallingService customerDiscountMarshgallingService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {

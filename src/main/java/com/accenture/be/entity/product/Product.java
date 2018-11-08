@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Сущность для таблицы product
+ */
 @Entity
 @Table(name = "tb_product")
 @NamedQueries({

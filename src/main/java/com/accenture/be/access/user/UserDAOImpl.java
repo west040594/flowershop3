@@ -1,31 +1,16 @@
 package com.accenture.be.access.user;
 
 import com.accenture.be.entity.user.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.mapping.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-
 import javax.persistence.*;
-import javax.transaction.Transactional;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.springframework.transaction.annotation.Propagation.REQUIRED;
-
 
 @Repository("userDao")
 public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    /*@Autowired
-    private SessionFactory sessionFactory;*/
 
     @Override
     public List<User> findAll() {
@@ -35,7 +20,6 @@ public class UserDAOImpl implements UserDAO {
             TypedQuery<User> query  = entityManager.createNamedQuery("User.findAll", User.class);
             users = query.getResultList();
         } catch (NoResultException nr) {
-            //users = new ArrayList<>(0);
             users = Collections.emptyList();
         }
         return users;
@@ -51,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
             user = query.getSingleResult();
 
         }catch (NoResultException nr) {
-
+            nr.printStackTrace();
         }
         return user;
     }
@@ -64,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
                     .setParameter("username", username);
             user = query.getSingleResult();
         } catch (NoResultException nr) {
-
+            nr.printStackTrace();
         }
         return user;
     }
@@ -77,31 +61,19 @@ public class UserDAOImpl implements UserDAO {
                     .setParameter("email", email);
             user = query.getSingleResult();
         } catch (NoResultException nr) {
-
+            nr.printStackTrace();
         }
         return user;
     }
 
     @Override
     public Long save(User user) {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Long customerId = (Long)session.save(user);
-        session.getTransaction().commit();
-        session.close();
-        return customerId;*/
         entityManager.persist(user);
         return user.getId();
-        //return user.getId();
     }
 
     @Override
     public void update(User user) {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.update(user);
-        session.getTransaction().commit();
-        session.close();*/
         entityManager.merge(user);
     }
 

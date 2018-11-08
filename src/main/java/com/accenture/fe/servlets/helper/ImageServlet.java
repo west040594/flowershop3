@@ -1,12 +1,9 @@
 package com.accenture.fe.servlets.helper;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLDecoder;
-import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ImageServlet extends HttpServlet {
 
     private String imagePath;
-
 
     @Override
     public void init() throws ServletException {

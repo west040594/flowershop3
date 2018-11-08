@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Сущность для таблицы сategory
+ */
 @Entity
 @Table(name = "tb_category")
 public class Category {

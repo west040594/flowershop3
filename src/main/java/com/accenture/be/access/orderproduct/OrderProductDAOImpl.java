@@ -1,12 +1,7 @@
 package com.accenture.be.access.orderproduct;
 
 import com.accenture.be.entity.orderproduct.OrderProduct;
-import org.aspectj.weaver.ast.Or;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -19,9 +14,6 @@ public class OrderProductDAOImpl implements OrderProductDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    /*@Autowired
-    private SessionFactory sessionFactory;*/
 
     @Override
     public List<OrderProduct> findAll() {
@@ -55,12 +47,6 @@ public class OrderProductDAOImpl implements OrderProductDAO {
 
     @Override
     public Long save(OrderProduct orderProduct) {
-        /*Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Long orderProductId = (Long)session.save(orderProduct);
-        session.getTransaction().commit();
-        session.close();
-        return orderProductId;*/
         entityManager.persist(orderProduct);
         return orderProduct.getId();
     }

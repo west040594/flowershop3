@@ -95,6 +95,7 @@ public class ShoppingCartCgServiceImpl implements ShoppingCartCgService {
     }
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/removeall")
     @Override
     public Response deleteAllFromCart(@Context HttpServletRequest request) {
