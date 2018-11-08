@@ -4,6 +4,7 @@ import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.fe.dto.customer.CustomerDTO;
 import com.accenture.fe.dto.order.OrderDTO;
+import com.accenture.fe.dto.order.OrderForm;
 import com.accenture.fe.dto.user.UserDTO;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,21 +49,16 @@ public class CartOrderServlet extends HttpServlet {
         if(session.getAttribute("user") != null) {
             //Берем поля из формы, заполняем покупателя
             UserDTO userDTO = (UserDTO)session.getAttribute("user");
-            CustomerDTO customerDTO = userDTO.getCustomer();
-            customerDTO.setFirstName(req.getParameter("firstName"));
-            customerDTO.setLastName(req.getParameter("lastName"));
-            customerDTO.setPhoneNumber(req.getParameter("phone"));
-            customerDTO.setStreet(req.getParameter("street"));
-            customerDTO.setCity(req.getParameter("city"));
-            customerDTO.setCountry(req.getParameter("country"));
-
-            //формируем новый заказ DTO
-            OrderDTO orderDTO = new OrderDTO();
-            orderDTO.setCustomer(customerDTO);
+            OrderForm orderForm = new OrderForm(userDTO.getCustomer().getId(),
+                    req.getParameter("firstName"), req.getParameter("lastName"),
+                    req.getParameter("phone"), req.getParameter("street"),
+                    req.getParameter("city"), req.getParameter("country"),
+                    userDTO.getCustomer().getCart());
 
             //Создаем новый заказ, при ошибки перезугружаем сраницу с списком errors
+            OrderDTO orderDTO = null;
             try {
-                orderDTO = mapper.map(orderService.createOrder(orderDTO), OrderDTO.class);;
+                orderDTO = mapper.map(orderService.createOrder(orderForm), OrderDTO.class);;
             } catch (OrderException e) {
                 req.setAttribute("error", e.getMessage());
                 doGet(req, resp);

@@ -2,6 +2,8 @@ package com.accenture.be.business.user.interfaces;
 
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.entity.user.User;
+import com.accenture.fe.dto.user.LoginForm;
+import com.accenture.fe.dto.user.RegisterForm;
 import com.accenture.fe.dto.user.UserDTO;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +13,13 @@ import java.util.List;
  * Сервис для работы с Пользователями
  */
 public interface UserService {
+
+    /**
+     * Этот метод найдет пользователя, которому соотвествует указанный Id
+     * @param userId Id Пользователя
+     * @return Объект User
+     */
+    User findUserById(long userId);
 
     /**
      * Этот метод находит всех существующих пользователей
@@ -27,21 +36,21 @@ public interface UserService {
 
     /**
      * Этот метод авторизирует существующего пользователя в системе
-     * Так же провалидирует форму входа по объекту UserDTO
-     * @param userDTO UserDTO объект
+     * Так же провалидирует форму входа по объекту LoginForm
+     * @param loginForm LoginForm объект
      * @return Авторизированный пользователь
      * @throws UserException
      */
-    User login(UserDTO userDTO) throws UserException;
+    User login(LoginForm loginForm) throws UserException;
 
     /**
      * Этот метод зарегистрирует нового пользователя в системе
-     * Так же провалидиует форму регистрации по объекту UserDTO
-     * @param userDTO UserDTO объект
+     * Так же провалидиует форму регистрации по объекту RegisterForm
+     * @param registerForm RegisterForm объект
      * @return Новый зарегистрированный пользователь
      * @throws UserException
      */
-    User register(UserDTO userDTO) throws UserException;
+    User register(RegisterForm registerForm) throws UserException;
 
     /**
      * Устанавливает авторизированного пользователя в сессию

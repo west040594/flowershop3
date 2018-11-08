@@ -3,6 +3,7 @@ package com.accenture.fe.servlets.user;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
 import com.accenture.fe.dto.customer.CustomerDTO;
+import com.accenture.fe.dto.user.RegisterForm;
 import com.accenture.fe.dto.user.UserDTO;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,18 +38,16 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf8");
-        //Формируем Пользователя и соотвествующего ему Покупателя
-        CustomerDTO customerDTO = new CustomerDTO(
-                req.getParameter("firstName"), req.getParameter("lastName"));
-        UserDTO userDTO = new UserDTO(
-                req.getParameter("username"), req.getParameter("password"), req.getParameter("email") );
-
-        userDTO.setConfirmPassword(req.getParameter("confirmPassword"));
-        userDTO.setCustomer(customerDTO);
+        //Формируем форму регистрации
+        RegisterForm registerForm = new RegisterForm(
+                req.getParameter("firstName"), req.getParameter("lastName"),
+                req.getParameter("username"), req.getParameter("email"),
+                req.getParameter("password"), req.getParameter("confirmPassword"));
 
         //Регистрируем пользователя,при ошибки перезугружаем сраницу с списком errors
+        UserDTO userDTO = null;
         try {
-            userDTO = mapper.map(userService.register(userDTO), UserDTO.class);
+            userDTO = mapper.map(userService.register(registerForm), UserDTO.class);
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);

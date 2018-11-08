@@ -1,5 +1,6 @@
 package com.accenture.be.business.user.validators;
 
+import com.accenture.fe.dto.user.LoginForm;
 import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -14,17 +15,17 @@ public class LoginUserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return UserDTO.class.equals(aClass);
+        return LoginForm.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        UserDTO user = (UserDTO) o;
+        LoginForm loginForm = (LoginForm) o;
 
-        ValidationUtils.rejectIfEmpty(errors, "username", "user.username.empty",
+        ValidationUtils.rejectIfEmpty(errors, "username", "username.empty",
                 "Поле Логин/Email не должно быть пустым");
 
-        ValidationUtils.rejectIfEmpty(errors, "password", "user.password.empty",
+        ValidationUtils.rejectIfEmpty(errors, "password", "password.empty",
                 "Пароль не должен быть пустым");
 
 

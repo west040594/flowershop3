@@ -1,6 +1,7 @@
 package com.accenture.be.business.user.validators;
 
 import com.accenture.be.repository.UserRepository;
+import com.accenture.fe.dto.user.RegisterForm;
 import com.accenture.fe.dto.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,45 +20,41 @@ public class RegistrationUserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return UserDTO.class.equals(aClass);
+        return RegisterForm.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
 
-        UserDTO user = (UserDTO) o;
+        RegisterForm registerForm = (RegisterForm) o;
 
-        ValidationUtils.rejectIfEmpty(errors, "customer.firstName", "customer.firstName.empty",
+        ValidationUtils.rejectIfEmpty(errors, "firstName", "firstName.empty",
                 "Имя не должно быть пустым");
 
-        ValidationUtils.rejectIfEmpty(errors, "customer.lastName", "customer.lastName.empty",
+        ValidationUtils.rejectIfEmpty(errors, "lastName", "lastName.empty",
                 "Фамилия не должна быть пустой");
 
-        ValidationUtils.rejectIfEmpty(errors, "username", "user.username.empty",
+        ValidationUtils.rejectIfEmpty(errors, "username", "username.empty",
                 "Логин не должен быть пустым");
 
-
-        ValidationUtils.rejectIfEmpty(errors, "email", "user.email.empty",
+        ValidationUtils.rejectIfEmpty(errors, "email", "email.empty",
                 "Email не должен быть пустым");
 
-
-        ValidationUtils.rejectIfEmpty(errors, "password", "user.password.empty",
+        ValidationUtils.rejectIfEmpty(errors, "password", "password.empty",
                 "Пароль не должен быть пустым");
 
-        if(userDAO.findByUsername(user.getUsername()) != null) {
-            errors.reject("user.username.isBusy", "Пользователь с данным логином уже зарегестрирован");
+        if(userDAO.findByUsername(registerForm.getUsername()) != null) {
+            errors.reject("username.isBusy", "Пользователь с данным логином уже зарегестрирован");
         }
 
-        if(userDAO.findByEmail(user.getEmail())!= null) {
-            errors.reject("user.email.isBusy", "Пользователь с данным email уже зарегестрирован");
+        if(userDAO.findByEmail(registerForm.getEmail())!= null) {
+            errors.reject("email.isBusy", "Пользователь с данным email уже зарегестрирован");
         }
 
-
-        if(!user.getPassword().equals(user.getConfirmPassword())) {
-            errors.reject("user.confirmPassword.notMatch",
+        if(!registerForm.getPassword().equals(registerForm.getConfirmPassword())) {
+            errors.reject("confirmPassword.notMatch",
                     "Пароли не совпадают");
         }
-
 
     }
 }

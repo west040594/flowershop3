@@ -2,6 +2,7 @@ package com.accenture.fe.servlets.user;
 
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.interfaces.UserService;
+import com.accenture.fe.dto.user.LoginForm;
 import com.accenture.fe.dto.user.UserDTO;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,11 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        String email = username;
-        UserDTO userDTO = new UserDTO(username, password, email);
+        LoginForm loginForm = new LoginForm(username, password);
+        UserDTO userDTO = null;
         //Авторизируем пользователя,при ошибки перезугружаем сраницу с списком errors
         try {
-            userDTO = mapper.map(userService.login(userDTO), UserDTO.class);
+            userDTO = mapper.map(userService.login(loginForm), UserDTO.class);
         } catch (UserException e) {
             req.setAttribute("error", e.getMessage());
             doGet(req, resp);

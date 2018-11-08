@@ -18,6 +18,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
+    @Override
+    public Customer findCustomerById(long customerId) {
+        return customerDAO.findById(customerId).get();
+    }
+
     @Transactional
     @Override
     public void changeCustomerDiscount(CustomerDiscount customerDiscount) {

@@ -1,9 +1,12 @@
 package com.accenture.be.business.order.interfaces;
 
+import com.accenture.be.business.cart.Cart;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
 import com.accenture.fe.dto.order.OrderDTO;
+import com.accenture.fe.dto.order.OrderForm;
+
 import java.util.List;
 
 /**
@@ -25,12 +28,12 @@ public interface OrderService {
     Order saveOrder(Order order);
 
     /**
-     * Этот метод создаст новый заказ и провалидирует данные в объекте orderDTO
-     * @param orderDTO объект orderDTO с сохраннеными полями из формы
+     * Этот метод создаст новый заказ и провалидирует данные в объекте OrderForm
+     * @param orderForm объект OrderForm с сохраннеными полями из формы и корзиной
      * @return Новый заказ
      * @throws OrderException
      */
-    Order createOrder(OrderDTO orderDTO) throws OrderException;
+    Order createOrder(OrderForm orderForm) throws OrderException;
 
     /**
      * Этот метод найдет заказ по соответсвующему ему Id
@@ -56,9 +59,9 @@ public interface OrderService {
     Order changeOrderStatusToClosed(Long orderId);
 
     /**
-     * Этот метод сформирует строку адреса доставки заказа из данных покупателя
-     * @param customer Объект Покупателя
+     * Этот метод сформирует строку адреса доставки заказа из данных формы заказа
+     * @param orderForm Объект формы при создании заказа
      * @return Новая сформированная строка Адреса доставки заказа
      */
-    String formDeliveryAddress(Customer customer);
+    String formDeliveryAddress(OrderForm orderForm);
 }

@@ -10,6 +10,8 @@ import com.accenture.be.business.user.validators.RegistrationUserValidator;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.user.User;
 import com.accenture.be.repository.UserRepository;
+import com.accenture.fe.dto.user.LoginForm;
+import com.accenture.fe.dto.user.RegisterForm;
 import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;
 import com.accenture.fe.enums.user.UserStatus;
@@ -17,7 +19,6 @@ import org.apache.cxf.helpers.IOUtils;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.DataBinder;
@@ -33,24 +34,28 @@ import java.util.Properties;
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-
-    @Autowired
     private UserRepository userDAO;
-
-    @Autowired
     private UserMarshallingService userMarshallingService;
-
-    @Autowired
     private JmsService jmsService;
-
-    @Autowired
     private RegistrationUserValidator registrationUserValidator;
-
-    @Autowired
     private LoginUserValidator loginUserValidator;
-
-    @Autowired
     private Mapper mapper;
+
+    public UserServiceImpl(UserRepository userDAO, UserMarshallingService userMarshallingService,
+                           JmsService jmsService, RegistrationUserValidator registrationUserValidator,
+                           LoginUserValidator loginUserValidator, Mapper mapper) {
+        this.userDAO = userDAO;
+        this.userMarshallingService = userMarshallingService;
+        this.jmsService = jmsService;
+        this.registrationUserValidator = registrationUserValidator;
+        this.loginUserValidator = loginUserValidator;
+        this.mapper = mapper;
+    }
+
+    @Override
+    public User findUserById(long userId) {
+        return userDAO.findById(userId).get();
+    }
 
     @Override
     public List<User> findAllUser() {
@@ -60,11 +65,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User register(UserDTO userDTO) throws UserException {
+    public User register(RegisterForm registerForm) throws UserException {
 
         //Валидация формы регистрации
         StringBuilder errors = new StringBuilder();
-        DataBinder dataBinder = new DataBinder(userDTO);
+        DataBinder dataBinder = new DataBinder(registerForm);
         dataBinder.addValidators(registrationUserValidator);
         dataBinder.validate();
 
@@ -76,13 +81,13 @@ public class UserServiceImpl implements UserService {
             throw new UserException(errors.toString());
             //Иначе сохраняем пользоватея с присвоиным ему покупателем, и возвращаем его DTO
         } else {
-            User user = mapper.map(userDTO, User.class);
+            User user = mapper.map(registerForm, User.class);
             //Устаналвиваем дату роль и статус новому пользователю
             user.setStatus(UserStatus.ACTIVE);
             user.setRole(UserRole.USER);
             user.setCreatedUpdated(new Date(), new Date());
 
-            Customer customer = mapper.map(userDTO.getCustomer(), Customer.class);
+            Customer customer = mapper.map(registerForm, Customer.class);
             //Устанавливаем начальный баланс и скидку покупателю
             customer.setBalance(new BigDecimal(2000));
             customer.setDiscount(3);
@@ -98,11 +103,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(UserDTO userDTO) throws UserException {
+    public User login(LoginForm loginForm) throws UserException {
 
         //Валидация формы регистрации
         StringBuilder errors = new StringBuilder();
-        DataBinder dataBinder = new DataBinder(userDTO);
+        DataBinder dataBinder = new DataBinder(loginForm);
         dataBinder.addValidators(loginUserValidator);
         dataBinder.validate();
 
@@ -115,8 +120,8 @@ public class UserServiceImpl implements UserService {
         }
 
         //Если совпадение в бд по логину или почте не найдены - исключение
-        User userFindByEmail = userDAO.findByEmail(userDTO.getEmail());
-        User userFindByUsername = userDAO.findByUsername(userDTO.getUsername());
+        User userFindByEmail = userDAO.findByEmail(loginForm.getUsername());
+        User userFindByUsername = userDAO.findByUsername(loginForm.getUsername());
         if(userFindByEmail == null &&  userFindByUsername == null) {
             errors.append("Пользователь с таким логином или email не найден");
             throw new UserException(errors.toString());
@@ -130,7 +135,7 @@ public class UserServiceImpl implements UserService {
             detectedUser = userFindByEmail;
         }
 
-        if(!detectedUser.getPassword().equals(userDTO.getPassword())) {
+        if(!detectedUser.getPassword().equals(loginForm.getPassword())) {
             errors.append("Проверьте правильность пароля");
             throw new UserException(errors.toString());
         }
@@ -150,8 +155,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User user) {
-        userDAO.save(user);
-        return userDAO.findById(user.getId()).get();
+        return userDAO.save(user);
     }
 
     @Override
