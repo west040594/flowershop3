@@ -3,9 +3,12 @@ package com.accenture.be.business.user;
 import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.be.business.user.implement.UserServiceImpl;
 import com.accenture.be.business.user.validators.LoginUserValidator;
+import com.accenture.be.business.user.validators.RegistrationUserValidator;
 import com.accenture.be.entity.user.User;
 import com.accenture.be.repository.UserRepository;
 import com.accenture.fe.dto.user.LoginForm;
+import com.accenture.fe.dto.user.RegisterForm;
+import org.dozer.Mapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +32,13 @@ public class UserServiceTest {
 
     @Spy
     LoginUserValidator loginUserValidator;
+
+    @Spy
+    Mapper mapper;
+
+    @Spy
+    @InjectMocks
+    RegistrationUserValidator registrationUserValidator;
 
     @InjectMocks
     private UserServiceImpl userServiceImpl;
@@ -77,9 +87,6 @@ public class UserServiceTest {
     @Test
     public void testLogin() throws UserException {
         when(userRepository.findByUsername("User1")).thenReturn(userList.get(0));
-        when(userRepository.findByEmail("User2Email")).thenReturn(userList.get(0));
-
-        when(userRepository.findByUsername("User2")).thenReturn(userList.get(1));
         when(userRepository.findByEmail("User2Email")).thenReturn(userList.get(1));
 
         //Проверка входа по логину
@@ -118,7 +125,16 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testRegister() {
+    public void testRegister() throws UserException {
+        /*when(userRepository.save(userList.get(0))).thenReturn(userList.get(0));
 
+        RegisterForm registerForm =
+                new RegisterForm("User1F", "User1L", "User1",
+                        "User1Email", "User1Pass", "User1Pass");*/
+
+        /*//Проверка регистрации
+        assertEquals(userList.get(0),
+                userServiceImpl.register(registerForm));
+        Mockito.verify(userRepository).save(userList.get(0));*/
     }
 }
