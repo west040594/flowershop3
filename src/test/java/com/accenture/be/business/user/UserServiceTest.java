@@ -130,9 +130,9 @@ public class UserServiceTest {
 
         RegisterForm registerForm =
                 new RegisterForm("User1F", "User1L", "User1",
-                        "User1Email", "User1Pass", "User1Pass");*/
+                        "User1Email", "User1Pass", "User1Pass");
 
-        /*//Проверка регистрации
+        //Проверка регистрации
         assertEquals(userList.get(0),
                 userServiceImpl.register(registerForm));
         Mockito.verify(userRepository).save(userList.get(0));*/

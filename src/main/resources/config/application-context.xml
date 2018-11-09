@@ -2,114 +2,42 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jee="http://www.springframework.org/schema/jee"
-       xmlns:jaxws="http://cxf.apache.org/jaxws"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx.xsd
-    http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/jee
-    http://www.springframework.org/schema/jee/spring-jee.xsd
-    http://www.springframework.org/schema/data/jpa
-    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-    http://cxf.apache.org/jaxws
-    http://cxf.apache.org/schemas/jaxws.xsd">
+    http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <jpa:repositories base-package="com.accenture.be.repository"/>
-    <!--<mvc:annotation-driven />-->
+
     <context:annotation-config/>
-    <tx:annotation-driven transaction-manager="transactionManager" />
-
-    <!--<context:spring-configured/>-->
     <context:component-scan base-package="com.accenture.be.access" />
     <context:component-scan base-package="com.accenture.be.business" />
     <context:component-scan base-package="com.accenture.fe.ws" />
     <context:component-scan base-package="com.accenture.fe.rs" />
-
-    <!-- import for web services -->
-    <import resource="classpath:META-INF/cxf/cxf.xml" />
-    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-    <!-- -->
-
-    <jaxws:endpoint id="productStockWebService1" implementor="#productStockWebService"
-                    address="/ProductStockWebService"/>
+    <context:property-placeholder properties-ref="configProperties" />
+    
+    
+    <import resource="classpath:config/data-beans.xml" />
+    <import resource="classpath:config/converter-beans.xml" />
+    <import resource="classpath:config/jaxws.xml" />
 
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/flowerShopDS"/>
-
     <jee:jndi-lookup id="connectionFactory" jndi-name="jms/connectionFactory"/>
     <jee:jndi-lookup id="outQueue" jndi-name="jms/outQueue"/>
     <jee:jndi-lookup id="inQueue" jndi-name="jms/inQueue"/>
-
-
-    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="locations">
-            <array><value>db.migration</value></array>
-        </property>
-        <property name="baselineOnMigrate" value="false"/>
-        <property name="outOfOrder" value="true"/>
-        <property name="sqlMigrationPrefix" value="V"/>
-        <property name="sqlMigrationSeparator" value="__"/>
-        <property name="placeholderPrefix" value="@{"/>
-        <property name="placeholderSuffix" value="}"/>
-    </bean>
-
-    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
-
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan">
-            <list><value>com.accenture.be.entity.*</value></list>
-        </property>
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-        </property>
-        <property name="jpaDialect" ref="jpaDialect" />
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-	            <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-        <property name="jpaDialect" ref="jpaDialect"/>
-    </bean>
-
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-    <bean id="XMLConverter" class="org.springframework.oxm.castor.CastorMarshaller">
-        <property name="targetClasses">
-            <list>
-                <value>com.accenture.be.business.customer.implement.CustomerDiscount</value>
-            </list>
-        </property>
-    </bean>
-
-    <!--<bean id="logger" class="org.slf4j.Logger" factory-method="getLogger">
-        <constructor-arg type="java.lang.String" value="applicationLogger" />
-    </bean>-->
-
-    <bean id="org.dozer.Mapper" class="org.dozer.DozerBeanMapper" />
 
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location">
             <value>classpath:application.properties</value>
         </property>
     </bean>
-
-    <context:property-placeholder properties-ref="configProperties" />
+    
+    <!--<bean id="logger" class="org.slf4j.Logger" factory-method="getLogger">
+        <constructor-arg type="java.lang.String" value="applicationLogger" />
+    </bean>-->
 
 </beans>
