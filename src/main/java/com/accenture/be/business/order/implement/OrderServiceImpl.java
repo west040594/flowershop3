@@ -5,6 +5,7 @@ import com.accenture.be.business.customer.interfaces.CustomerService;
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.be.business.order.validators.CreateOrderValidator;
+import com.accenture.be.business.product.exceptions.ProductException;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.entity.order.Order;
@@ -99,25 +100,31 @@ public class OrderServiceImpl implements OrderService {
         return orderDAO.findById(orderId).get();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = OrderException.class)
     @Override
-    public Order changerOrderStatusToPaid(Long orderId) {
-        //Изменяем дату закрытия заказа и статус в  -  Закрыто
-        Order order = orderDAO.findById(orderId).get();
-        order.setStatus(OrderStatus.PAID);
-
+    public Order changerOrderStatusToPaid(Long orderId) throws OrderException {
+        StringBuilder errors = new StringBuilder();
+        Order order = getOrderById(orderId);
         //Изменяем число "В наличиии" у продуктов
         for (OrderProduct orderProduct : order.getOrderProducts()) {
-            productService.changeProductQuantityInStock(
-                    orderProduct.getProduct().getId(), orderProduct.getQuantity());
+            try {
+                productService.changeProductQuantityInStock(
+                        orderProduct.getProduct().getId(), orderProduct.getQuantity());
+            } catch (ProductException e) {
+                errors.append(e.getMessage()).append("<br/>");
+            }
         }
-
-        //Снимаем деньги с покупателя и обновляем заказ
-        order.getCustomer().setBalance(order.getCustomer().getBalance().subtract(order.getTotal()));
-
-        log.debug("Order with id = {} changed status to {}",
-                order.getId(), order.getStatus());
-        return orderDAO.save(order);
+        //Если ошибок не возникло снимаем деньги с покупателя и меняем заказ в - Оплачен
+        //Иначе выкидываем ошибку, что требуемого количества продукта недостаточно
+        if(errors.toString().isEmpty()) {
+            order.setStatus(OrderStatus.PAID);
+            order.getCustomer().setBalance(order.getCustomer().getBalance().subtract(order.getTotal()));
+            log.debug("Order with id = {} changed status to {}",
+                    order.getId(), order.getStatus());
+            return orderDAO.save(order);
+        } else  {
+            throw new OrderException(errors.toString());
+        }
     }
 
     @Transactional

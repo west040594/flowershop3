@@ -1,5 +1,7 @@
 package com.accenture.be.business.product.implement;
 
+import com.accenture.be.business.order.exceptions.OrderException;
+import com.accenture.be.business.product.exceptions.ProductException;
 import com.accenture.be.repository.ProductRepository;
 import com.accenture.be.business.product.interfaces.ProductService;
 import com.accenture.be.entity.product.Product;
@@ -54,11 +56,14 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void changeProductQuantityInStock(Long productId, int quantity) {
+    public void changeProductQuantityInStock(Long productId, int quantity) throws ProductException {
         Product product = productDAO.findById(productId).get();
         int inStock = product.getInStock();
         if(inStock > quantity) {
             product.setInStock(inStock - quantity);
+        } else {
+            throw new ProductException("Требуемого количества " + quantity + "." +
+                    "Продукта: " + product.getName() + " нету в наличии на складе. Подождите поступления.");
         }
         productDAO.save(product);
     }

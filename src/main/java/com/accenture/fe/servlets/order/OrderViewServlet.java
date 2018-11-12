@@ -1,5 +1,6 @@
 package com.accenture.fe.servlets.order;
 
+import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.user.UserDTO;
@@ -54,9 +55,19 @@ public class OrderViewServlet extends HttpServlet {
             //Берем пользователя из сессии, id заказа и оформляем заказ
             UserDTO userDTO = (UserDTO)session.getAttribute("user");
             String orderId = req.getParameter("orderId");
-            OrderDTO orderDTO = mapper.map(
-                            orderService.changerOrderStatusToPaid(Long.parseLong(orderId)), OrderDTO.class);
-            //Изменяем баланс у пользователя в сессии
+            OrderDTO orderDTO = null;
+
+            //При ошибки перезугружаем сраницу с списком errors
+            try {
+                orderDTO = mapper.map(
+                                orderService.changerOrderStatusToPaid(Long.parseLong(orderId)), OrderDTO.class);
+            } catch (OrderException e) {
+                req.getSession().setAttribute("orderError", e.getMessage());
+                resp.sendRedirect("/orders/view?id="+orderId);
+                return;
+            }
+            //Если ошибок не возникло
+            //Изменяем баланс у пользователя в сессии и делаем редирект на страницу продуктов
             userDTO.getCustomer().setBalance(orderDTO.getCustomer().getBalance());
             resp.sendRedirect("/products/index");
         } else {

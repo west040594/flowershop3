@@ -13,4 +13,7 @@
     <jaxws:endpoint id="productStockWebService1" implementor="#productStockWebService"
                     address="/ProductStockWebService"/>
 
+    <jaxws:client id="ProductStockWebServiceClient"
+                  serviceClass="com.accenture.fe.ws.ProductStockWebService"
+                  address="http://localhost:8080/ws/ProductStockWebService" />
 </beans>

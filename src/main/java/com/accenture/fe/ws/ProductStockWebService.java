@@ -3,7 +3,6 @@ package com.accenture.fe.ws;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-
 /**
  * Web Сервис для работы с продуктами
  */

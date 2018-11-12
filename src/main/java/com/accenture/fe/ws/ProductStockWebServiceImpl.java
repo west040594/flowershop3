@@ -5,9 +5,12 @@ import com.accenture.be.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.jws.WebService;
 import java.util.List;
 
 @Service("productStockWebService")
+@WebService(endpointInterface = "com.accenture.fe.ws.ProductStockWebService")
 public class ProductStockWebServiceImpl implements ProductStockWebService {
 
     @Autowired

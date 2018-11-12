@@ -1,5 +1,7 @@
 package com.accenture.be.business.product.interfaces;
 
+import com.accenture.be.business.order.exceptions.OrderException;
+import com.accenture.be.business.product.exceptions.ProductException;
 import com.accenture.be.entity.product.Product;
 import com.querydsl.core.types.Predicate;
 import java.math.BigDecimal;
@@ -49,5 +51,5 @@ public interface ProductService {
      * @param productId Id Продукта
      * @param quantity Количество
      */
-    void changeProductQuantityInStock(Long productId, int quantity);
+    void changeProductQuantityInStock(Long productId, int quantity) throws ProductException;
 }

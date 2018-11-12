@@ -49,7 +49,7 @@ public interface OrderService {
      * @param orderId id Заказа
      * @return Измененный заказ
      */
-    Order changerOrderStatusToPaid(Long orderId);
+    Order changerOrderStatusToPaid(Long orderId) throws OrderException;
 
     /**
      * Этот метод изменит статус заказа на - Закрыт и назначет дату закрытия заказа

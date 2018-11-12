@@ -34,6 +34,7 @@ import java.util.Properties;
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private UserRepository userDAO;
     private UserMarshallingService userMarshallingService;
     private JmsService jmsService;

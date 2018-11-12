@@ -3,6 +3,12 @@
 <%@ page isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:wrapper>
+    <c:if test="${sessionScope.orderError != null}">
+      <div class="my-lg-4 alert alert-danger" role="alert">
+          ${sessionScope.orderError}
+          <c:remove var="orderError" scope="session" />
+      </div>
+    </c:if>
     <table class="table">
       <thead>
             <tr>
