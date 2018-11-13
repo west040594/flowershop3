@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
     }
     @Override
     public Order getOrderById(long orderId) throws OrderException {
-        return orderDAO.findById(orderId).orElseThrow(() ->  new OrderException("Заказ не найден"));
+        return orderDAO.findById(orderId).orElseThrow(() ->  new OrderException(OrderException.ORDER_NOT_FOUND));
     }
 
     @Transactional(rollbackFor = OrderException.class)

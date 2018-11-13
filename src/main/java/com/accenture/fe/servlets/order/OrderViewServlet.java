@@ -2,6 +2,7 @@ package com.accenture.fe.servlets.order;
 
 import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
+import com.accenture.be.business.user.exceptions.UserException;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.user.UserDTO;
 import com.accenture.fe.enums.user.UserRole;
@@ -38,7 +39,7 @@ public class OrderViewServlet extends HttpServlet {
         String orderId = req.getParameter("id");
         OrderDTO orderDTO = null;
         //Если гет параметр на заказ присутствует формируем заказ
-        //Если заказ не найден, то отправляем страницу ошибки - заказ не найден
+        //Если заказ не найден, то формируем ошибку - заказ не найден и отображаем страницу ошибки
         if (orderId != null) {
             try {
                 orderDTO = mapper.map(orderService.getOrderById(Long.parseLong(orderId)), OrderDTO.class);
@@ -48,17 +49,21 @@ public class OrderViewServlet extends HttpServlet {
                 return;
             }
         }
-        //Если заказ существует и заказ принадлежит авторизированому пользователю или это админ
-        //То показываем заказ, иначе выдаем ошибку
-        if(orderDTO != null &&
-                (orderService.orderBelongsToUser(orderDTO.getId(), userDTOSession.getId()))
-                || userDTOSession.getRole().equals(UserRole.ADMIN)
-        ) {
-            req.setAttribute("order", orderDTO);
-            req.getRequestDispatcher("/order/view.jsp").forward(req,resp);
+        //Если заказ существует и пользователь авторизован то показываем заказ, иначе выдаем ошибку
+        if(userDTOSession != null && orderDTO != null) {
+            //Если заказ принадлежит авторизированому пользователю или это админ, иначе выдаем ошибку
+            if(orderService.orderBelongsToUser(orderDTO.getId(), userDTOSession.getId())
+                    || userDTOSession.getRole().equals(UserRole.ADMIN)) {
+                req.setAttribute("order", orderDTO);
+                req.getRequestDispatcher("/order/view.jsp").forward(req,resp);
+            } else {
+                req.setAttribute("error", UserException.USER_GRANT);
+                req.getRequestDispatcher("/error.jsp").forward(req,resp);
+            }
         }
         else {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            req.setAttribute("error", UserException.USER_UNAUTHORIZED);
+            req.getRequestDispatcher("/error.jsp").forward(req,resp);
         }
     }
 
