@@ -14,6 +14,7 @@
             <th scope="col">Статус</th>
             <th scope="col">Создан</th>
             <th scope="col">Закрыть</th>
+            <th scope="col">Открыть</th>
         </tr>
         </thead>
         <tbody>
@@ -25,13 +26,14 @@
                 <td>${order.totalRub}</td>
                 <td class="orderStatus">${order.status}</td>
                 <td>${order.createdAt}</td>
-                <c:if test="${order.status == 'PAID'}">
-                    <td>
+                <td>
+                    <c:if test="${order.status == 'PAID'}">
                         <btn class="btn btn-danger btn-sm" role="closeOrder" data-id="${order.id}">
                             Закрыть
                         </btn>
-                    </td>
-                </c:if>
+                    </c:if>
+                </td>
+                <td><a href="/orders/view?id=${order.id}" class="btn btn-primary btn-sm">Открыть</a></td>
             </tr>
         </c:forEach>
         </tbody>

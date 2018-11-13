@@ -24,6 +24,7 @@ import org.springframework.validation.DataBinder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -96,8 +97,8 @@ public class OrderServiceImpl implements OrderService {
         }
     }
     @Override
-    public Order getOrderById(long orderId) {
-        return orderDAO.findById(orderId).get();
+    public Order getOrderById(long orderId) throws OrderException {
+        return orderDAO.findById(orderId).orElseThrow(() ->  new OrderException("Заказ не найден"));
     }
 
     @Transactional(rollbackFor = OrderException.class)
@@ -148,5 +149,11 @@ public class OrderServiceImpl implements OrderService {
                 .append("Город: " + orderForm.getCity()+ ". ")
                 .append("Страна: " + orderForm.getCountry()+ ". ");
         return  deliveryAddress.toString();
+    }
+
+    @Override
+    public Boolean orderBelongsToUser(Long orderId, Long userId) {
+        Order order = orderDAO.findById(orderId).get();
+        return order.getCustomer().getUser().getId() ==  userId;
     }
 }

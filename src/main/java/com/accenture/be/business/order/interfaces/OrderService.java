@@ -40,7 +40,7 @@ public interface OrderService {
      * @param orderId Id Заказа
      * @return Найденный заказ
      */
-    Order getOrderById(long orderId);
+    Order getOrderById(long orderId) throws OrderException;
 
     /**
      * Этот метод изменит статус заказа на - Оплачено.
@@ -64,4 +64,6 @@ public interface OrderService {
      * @return Новая сформированная строка Адреса доставки заказа
      */
     String formDeliveryAddress(OrderForm orderForm);
+
+    Boolean orderBelongsToUser(Long orderId, Long userId);
 }

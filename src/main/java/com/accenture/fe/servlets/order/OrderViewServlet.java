@@ -4,6 +4,7 @@ import com.accenture.be.business.order.exceptions.OrderException;
 import com.accenture.be.business.order.interfaces.OrderService;
 import com.accenture.fe.dto.order.OrderDTO;
 import com.accenture.fe.dto.user.UserDTO;
+import com.accenture.fe.enums.user.UserRole;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -33,13 +34,26 @@ public class OrderViewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDTO userDTOSession = (UserDTO) req.getSession().getAttribute("user");
         String orderId = req.getParameter("id");
         OrderDTO orderDTO = null;
         //Если гет параметр на заказ присутствует формируем заказ
+        //Если заказ не найден, то отправляем страницу ошибки - заказ не найден
         if (orderId != null) {
-            orderDTO = mapper.map(orderService.getOrderById(Long.parseLong(orderId)), OrderDTO.class);
+            try {
+                orderDTO = mapper.map(orderService.getOrderById(Long.parseLong(orderId)), OrderDTO.class);
+            } catch (OrderException e) {
+                req.setAttribute("error", e.getMessage());
+                req.getRequestDispatcher("/error.jsp").forward(req,resp);
+                return;
+            }
         }
-        if(orderDTO != null) {
+        //Если заказ существует и заказ принадлежит авторизированому пользователю или это админ
+        //То показываем заказ, иначе выдаем ошибку
+        if(orderDTO != null &&
+                (orderService.orderBelongsToUser(orderDTO.getId(), userDTOSession.getId()))
+                || userDTOSession.getRole().equals(UserRole.ADMIN)
+        ) {
             req.setAttribute("order", orderDTO);
             req.getRequestDispatcher("/order/view.jsp").forward(req,resp);
         }
