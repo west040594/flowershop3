@@ -1,6 +1,8 @@
 package com.accenture.be.business.messages;
 
+import com.accenture.be.business.customer.exceptions.CustomerException;
 import com.accenture.be.business.customer.implement.CustomerDiscount;
+import com.accenture.be.business.customer.implement.CustomerServiceImpl;
 import com.accenture.be.business.customer.interfaces.CustomerDiscountMarshallingService;
 import com.accenture.be.business.customer.interfaces.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class JmsConsumerMessageListener implements MessageListener {
             customerService.changeCustomerDiscount(customerDiscount);
         } catch (JMSException | IOException e) {
             e.printStackTrace();
+        } catch (CustomerException e) {
+            CustomerServiceImpl.log.error(e.getMessage());
         }
     }
 }

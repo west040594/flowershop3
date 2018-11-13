@@ -1,5 +1,6 @@
 package com.accenture.be.business.customer.implement;
 
+import com.accenture.be.business.customer.exceptions.CustomerException;
 import com.accenture.be.business.customer.interfaces.CustomerService;
 import com.accenture.be.entity.customer.Customer;
 import com.accenture.be.repository.CustomerRepository;
@@ -16,7 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerDAO;
 
-    private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
+    public static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     @Override
     public Customer findCustomerById(long customerId) {
@@ -25,8 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public void changeCustomerDiscount(CustomerDiscount customerDiscount) {
-        Customer customer = customerDAO.findById(customerDiscount.getCustomerId()).get();
+    public void changeCustomerDiscount(CustomerDiscount customerDiscount) throws CustomerException {
+        Customer customer = customerDAO.findById(customerDiscount.getCustomerId()).orElseThrow(() ->  new CustomerException(CustomerException.CUSTOMER_NOT_FOUND));
         if(customerDiscount.newDiscount > 0  &&  customerDiscount.newDiscount < 100)
         {
             log.debug("Customer with id = {}, changed discount from {} to {}",

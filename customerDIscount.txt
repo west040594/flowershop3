@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <customer-discount >
-     <customer-id>1</customer-id>
-     <new-discount>123</new-discount>
+     <customer-id>3</customer-id>
+     <new-discount>20</new-discount>
 </customer-discount>

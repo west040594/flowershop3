@@ -1,5 +1,6 @@
 package com.accenture.be.business.customer.interfaces;
 
+import com.accenture.be.business.customer.exceptions.CustomerException;
 import com.accenture.be.business.customer.implement.CustomerDiscount;
 import com.accenture.be.entity.customer.Customer;
 
@@ -20,5 +21,5 @@ public interface CustomerService {
      * Объект CustomerDiscount состоит из полей - id покупателя и новая скидка
      * @param customerDiscount Объект CustomerDiscount
      */
-    void changeCustomerDiscount(CustomerDiscount customerDiscount);
+    void changeCustomerDiscount(CustomerDiscount customerDiscount) throws CustomerException;
 }
